@@ -14,5 +14,10 @@ namespace YahooFantasySports
             internal const string ClientID = "dj0yJmk9VFZKWXZDeEJFTjNGJmQ9WVdrOVlVRnpZbFJUTkRnbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD04ZQ--";
             internal const string ClientSecret = "146e3ec4bb840f618131a2509da26b1a7092731e";
         }
+
+        public static class Leagues
+        {
+            public const string Rounders2018 = "378.l.5418";
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace YahooFantasySports
             return uriBuilder.Uri;
         }
 
-        public async Task<bool> AuthorizeAsync(string authorizationCode)
+        public async Task<bool> InitializeAuthorizationAsync(string authorizationCode)
         {
             if (this.getTokenResponse != null)
             {
@@ -33,14 +33,14 @@ namespace YahooFantasySports
             return this.getTokenResponse != null;
         }
 
-        public async Task<string> GetAuthTokenAsync()
+        public async Task AuthorizeRequestAsync(HttpWebRequest req)
         {
             if (this.getTokenResponse.IsExpired)
             {
                 this.getTokenResponse = new GetTokenResponse(await RefreshAuthTokenAsync(this.getTokenResponse));
             }
 
-            return this.getTokenResponse.AccessToken;
+            req.Headers[HttpRequestHeader.Authorization] = "Bearer " + this.getTokenResponse.AccessToken;
         }
 
         private static async Task<string> GetNewAuthTokenAsync(string authorizationCode)

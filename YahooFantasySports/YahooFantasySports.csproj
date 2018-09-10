@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="AuthManager.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DataModel\NSMgr.cs" />
+    <Compile Include="DataModel\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignInDialog.cs">
       <SubType>Form</SubType>
@@ -66,6 +68,7 @@
     <Compile Include="SignInDialog.Designer.cs">
       <DependentUpon>SignInDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="UrlGen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -76,5 +79,6 @@
       <DependentUpon>SignInDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

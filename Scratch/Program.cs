@@ -10,8 +10,6 @@ namespace Scratch
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(YahooFantasySports.AuthManager.Instance.GetAuthTokenAsync().Result);
-            Console.WriteLine(YahooFantasySports.AuthManager.Instance.GetAuthTokenAsync().Result);
         }
     }
 }
