@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="AuthManager.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DataModel\League.cs" />
     <Compile Include="DataModel\NSMgr.cs" />
     <Compile Include="DataModel\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +80,8 @@
       <DependentUpon>SignInDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DataModel\League.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

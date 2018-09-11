@@ -11,6 +11,11 @@ namespace YahooFantasySports
             return new Uri(string.Format("{0}/league/{1}", BaseUrl, leagueId));
         }
 
+        public static Uri LeagueSettingsUrl(string leagueId)
+        {
+            return new Uri(string.Format("{0}/settings", LeagueUrl(leagueId)));
+        }
+
         public static Uri PaginatedPlayers(string leagueId, int start)
         {
             return new Uri(string.Format("{0}/players;start={1}/stats", LeagueUrl(leagueId), start));
