@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using YahooFantasySports;
+using YahooFantasySports.DataModel;
 
 namespace Scratch
 {
@@ -32,6 +34,12 @@ namespace Scratch
         {
             InitializeAuthManager().Wait();
             GetLeagueStats().Wait();
+
+            List<Player> players = Player.GetAllPlayers(Constants.Leagues.Rounders2018).Result;
+            foreach (Player player in players)
+            {
+                Console.WriteLine(player.Name);
+            }
         }
     }
 }

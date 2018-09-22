@@ -10,6 +10,7 @@ namespace YahooFantasySports.DataModel
     {
         public string Key { get; }
         public string Id { get; }
+        public bool IsBatter { get; }
         public string FirstName { get; }
         public string LastName { get; }
         public string Name { get { return FirstName + " " + LastName; } }
@@ -51,16 +52,46 @@ namespace YahooFantasySports.DataModel
 
         private static Player Create(XmlNode node, NSMgr nsmgr)
         {
-            string key = nsmgr.GetValue(node, "player_key");
-            string id = nsmgr.GetValue(node, "player_id");
+            string positionType = nsmgr.GetValue(node, "position_type");
+            string playerKey = nsmgr.GetValue(node, "player_key");
+            string playerId = nsmgr.GetValue(node, "player_id");
+            string firstName = nsmgr.GetValue(node, "name", "ascii_first");
+            string lastName = nsmgr.GetValue(node, "name", "ascii_last");
 
-            return new Player(key, id);
+            List<string> positions = new List<string>();
+            XmlNode eligiblePositions = node["eligible_positions"];
+            if (eligiblePositions != null)
+            {
+                foreach (XmlNode position in eligiblePositions.SelectNodes(NSMgr.GetNodeName("position"), nsmgr))
+                {
+                    positions.Add(position.InnerText);
+                }
+            }
+
+            Dictionary<int, string> stats = new Dictionary<int, string>();
+            foreach (XmlNode stat in node.SelectNodes(nsmgr.GetXPath("player_stats", "stats", "stat"), nsmgr))
+            {
+                string keyString = nsmgr.GetValue(stat, "stat_id").Trim();
+                string value = nsmgr.GetValue(stat, "value").Trim();
+                int key;
+                if (int.TryParse(keyString, out key) && !string.IsNullOrEmpty(value) && value != "-")
+                {
+                    stats[key] = value;
+                }
+            }
+
+            return new Player(playerKey, playerId, positionType == "B", firstName, lastName, positions, stats);
         }
 
-        private Player(string key, string id)
+        private Player(string key, string id, bool isBatter, string firstName, string lastName, IReadOnlyList<string> positions, IReadOnlyDictionary<int, string> stats)
         {
             this.Key = key;
             this.Id = id;
+            this.IsBatter = isBatter;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Positions = positions;
+            this.Stats = stats;
         }
     }
 }
