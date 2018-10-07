@@ -15,7 +15,7 @@ namespace YahooFantasySports
         public SignInDialog()
         {
             InitializeComponent();
-            this.wb.Url = AuthManager.GetAuthUrl();
+            this.wb.Url = Services.AuthManager.GetAuthUrl();
         }
     }
 }

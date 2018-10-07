@@ -57,12 +57,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthManager.cs" />
+    <Compile Include="Services\AuthManager.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataModel\League.cs" />
     <Compile Include="DataModel\NSMgr.cs" />
     <Compile Include="DataModel\Player.cs" />
+    <Compile Include="DataModel\RosterPosition.cs" />
+    <Compile Include="DataModel\StatDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Http.cs" />
     <Compile Include="SignInDialog.cs">
       <SubType>Form</SubType>
     </Compile>

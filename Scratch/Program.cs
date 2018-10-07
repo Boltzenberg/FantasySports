@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using YahooFantasySports;
 using YahooFantasySports.DataModel;
+using YahooFantasySports.Services;
 
 namespace Scratch
 {
@@ -15,27 +16,24 @@ namespace Scratch
             Console.WriteLine("Browse to: {0}", AuthManager.GetAuthUrl());
             Console.Write("Enter Authorization Code: ");
             string authorizationCode = Console.ReadLine();
-            await AuthManager.Instance.InitializeAuthorizationAsync(authorizationCode);
+            if (!string.IsNullOrEmpty(authorizationCode))
+            {
+                await AuthManager.Instance.InitializeAuthorizationAsync(authorizationCode);
+            }
         }
 
         static async Task GetLeagueStats()
         {
-            HttpWebRequest req = WebRequest.CreateHttp(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2018));
-            await AuthManager.Instance.AuthorizeRequestAsync(req);
-
-            using (HttpWebResponse res = await req.GetResponseAsync() as HttpWebResponse)
-            using (StreamReader responseBody = new StreamReader(res.GetResponseStream()))
-            {
-                Console.WriteLine(await responseBody.ReadToEndAsync());
-            }
+            string stats = await Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2018));
+            Console.WriteLine(stats);
         }
 
         static void Main(string[] args)
         {
             InitializeAuthManager().Wait();
-            GetLeagueStats().Wait();
 
-            List<Player> players = Player.GetAllPlayers(Constants.Leagues.Rounders2018).Result;
+            League league = League.Create(Constants.Leagues.Rounders2018).Result;
+            List<Player> players = Player.GetAllPlayers(league.Key).Result;
             foreach (Player player in players)
             {
                 Console.WriteLine(player.Name);

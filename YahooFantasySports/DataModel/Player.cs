@@ -23,27 +23,21 @@ namespace YahooFantasySports.DataModel
             int start = 1;
             while (true)
             {
-                HttpWebRequest req = WebRequest.CreateHttp(UrlGen.PaginatedPlayers(leagueId, start));
-                await YahooFantasySports.AuthManager.Instance.AuthorizeRequestAsync(req);
+                string playerXml = await Services.Http.GetRawDataAsync(UrlGen.PaginatedPlayers(leagueId, start));
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(playerXml);
+                NSMgr nsmgr = new NSMgr(doc);
 
-                using (HttpWebResponse res = await req.GetResponseAsync() as HttpWebResponse)
-                using (StreamReader responseBody = new StreamReader(res.GetResponseStream()))
+                XmlNodeList playerRoots = doc.SelectNodes("//" + NSMgr.GetNodeName("player"), nsmgr);
+                if (playerRoots.Count == 0)
                 {
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(await responseBody.ReadToEndAsync());
-                    NSMgr nsmgr = new NSMgr(doc);
+                    break;
+                }
 
-                    XmlNodeList playerRoots = doc.SelectNodes("//" + NSMgr.GetNodeName("player"), nsmgr);
-                    if (playerRoots.Count == 0)
-                    {
-                        break;
-                    }
-
-                    start += playerRoots.Count;
-                    foreach (XmlNode playerRoot in playerRoots)
-                    {
-                        players.Add(Player.Create(playerRoot, nsmgr));
-                    }
+                start += playerRoots.Count;
+                foreach (XmlNode playerRoot in playerRoots)
+                {
+                    players.Add(Player.Create(playerRoot, nsmgr));
                 }
             }
 

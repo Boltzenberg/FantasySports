@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ScratchUI
@@ -21,7 +16,7 @@ namespace ScratchUI
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            await YahooFantasySports.AuthManager.Instance.InitializeAuthorizationAsync(this.tbAuthCode.Text.Trim());
+            await YahooFantasySports.Services.AuthManager.Instance.InitializeAuthorizationAsync(this.tbAuthCode.Text.Trim());
         }
 
         private void OnLoad(object sender, EventArgs e)
@@ -32,26 +27,12 @@ namespace ScratchUI
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            HttpWebRequest req = WebRequest.CreateHttp(this.tbUrl.Text.Trim());
-            await YahooFantasySports.AuthManager.Instance.AuthorizeRequestAsync(req);
-
-            using (HttpWebResponse res = await req.GetResponseAsync() as HttpWebResponse)
-            using (StreamReader responseBody = new StreamReader(res.GetResponseStream()))
-            {
-                this.wbOut.DocumentText = await responseBody.ReadToEndAsync();
-            }
+            this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(new Uri(this.tbUrl.Text.Trim()));
         }
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            HttpWebRequest req = WebRequest.CreateHttp(YahooFantasySports.UrlGen.LeagueUrl(YahooFantasySports.Constants.Leagues.Rounders2018));
-            await YahooFantasySports.AuthManager.Instance.AuthorizeRequestAsync(req);
-
-            using (HttpWebResponse res = await req.GetResponseAsync() as HttpWebResponse)
-            using (StreamReader responseBody = new StreamReader(res.GetResponseStream()))
-            {
-                this.wbOut.DocumentText = await responseBody.ReadToEndAsync();
-            }
+            this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(YahooFantasySports.UrlGen.LeagueUrl(YahooFantasySports.Constants.Leagues.Rounders2018));
         }
 
         private string GetPositionList(YahooFantasySports.DataModel.Player player)
