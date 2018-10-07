@@ -14,6 +14,7 @@ namespace Scratch
         static async Task InitializeAuthManager()
         {
             Console.WriteLine("Browse to: {0}", AuthManager.GetAuthUrl());
+            System.Diagnostics.Process.Start(AuthManager.GetAuthUrl().AbsoluteUri);
             Console.Write("Enter Authorization Code: ");
             string authorizationCode = Console.ReadLine();
             if (!string.IsNullOrEmpty(authorizationCode))
@@ -33,10 +34,22 @@ namespace Scratch
             InitializeAuthManager().Wait();
 
             League league = League.Create(Constants.Leagues.Rounders2018).Result;
-            List<Player> players = Player.GetAllPlayers(league.Key).Result;
-            foreach (Player player in players)
+            Console.WriteLine("{0} ({1})", league.Name, league.Key);
+
+            Console.WriteLine("Stats:");
+            foreach (StatDefinition stat in league.Stats)
             {
-                Console.WriteLine(player.Name);
+                Console.WriteLine(" {0} ({1})", stat.Name, stat.Id);
+            }
+
+            Console.WriteLine("Teams:");
+            foreach (Team team in league.Teams)
+            {
+                Console.WriteLine(" {0} ({1}) - {2} ({3})", team.Name, team.Key, team.ManagerName, team.ManagerEmail);
+                foreach (string playerKey in team.PlayerKeys)
+                {
+                    Console.WriteLine("   {0}", league.Players[playerKey].Name);
+                }
             }
         }
     }
