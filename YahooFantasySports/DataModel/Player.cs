@@ -16,6 +16,7 @@ namespace YahooFantasySports.DataModel
         public string Name { get { return FirstName + " " + LastName; } }
         public IReadOnlyList<string> Positions { get; }
         public IReadOnlyDictionary<int, string> Stats { get; }
+        public IReadOnlyDictionary<int, StatValue> StatValues { get; private set; }
 
         public static async Task<List<Player>> GetAllPlayers(string leagueId)
         {
@@ -68,7 +69,7 @@ namespace YahooFantasySports.DataModel
                 string keyString = nsmgr.GetValue(stat, "stat_id").Trim();
                 string value = nsmgr.GetValue(stat, "value").Trim();
                 int key;
-                if (int.TryParse(keyString, out key) && !string.IsNullOrEmpty(value) && value != "-")
+                if (int.TryParse(keyString, out key) && !string.IsNullOrEmpty(value))
                 {
                     stats[key] = value;
                 }
@@ -86,6 +87,17 @@ namespace YahooFantasySports.DataModel
             this.LastName = lastName;
             this.Positions = positions;
             this.Stats = stats;
+        }
+
+        public void SetStatValues(IReadOnlyDictionary<int, StatDefinition> stats)
+        {
+            Dictionary<int, StatValue> statValues = new Dictionary<int, StatValue>();
+            foreach (int statId in this.Stats.Keys)
+            {
+                statValues[statId] = StatValue.Create(this.Stats[statId], stats[statId]);
+            }
+
+            this.StatValues = statValues;
         }
     }
 }
