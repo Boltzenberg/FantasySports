@@ -49,6 +49,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESPNProjections\ESPNProjections.csproj">
+      <Project>{1dd560c2-66ec-45c5-8dbe-10e571344c95}</Project>
+      <Name>ESPNProjections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FantasyAuction\FantasyAuction.csproj">
+      <Project>{c22e7c45-e183-46df-8951-5b39a51c3bfd}</Project>
+      <Name>FantasyAuction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YahooFantasySports\YahooFantasySports.csproj">
       <Project>{ceb059f5-c8f0-4358-b3f0-4d6fba8b76b4}</Project>
       <Name>YahooFantasySports</Name>

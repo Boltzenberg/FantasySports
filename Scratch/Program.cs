@@ -31,6 +31,49 @@ namespace Scratch
 
         static void Main(string[] args)
         {
+            InitializeYear();
+            AnalyzeYear();
+        }
+
+        static void InitializeYear()
+        {
+            FantasyAuction.Year.Create("batters2019.json", "pitchers2019.json");
+        }
+
+        static void AnalyzeYear()
+        {
+            FantasyAuction.DataModel.Batter[] batters = FantasyAuction.DataModel.Batter.Load(File.ReadAllText("batters2019.json"));
+            FantasyAuction.DataModel.Pitcher[] pitchers = FantasyAuction.DataModel.Pitcher.Load(File.ReadAllText("pitchers2019.json"));
+
+            foreach (var batter in batters)
+            {
+                Console.WriteLine(batter.Name);
+            }
+
+            foreach (var pitcher in pitchers)
+            {
+                Console.WriteLine(pitcher.Name);
+            }
+        }
+
+        static void ESPNStuff()
+        {
+            Console.WriteLine(ESPNProjections.Batter.CSVHeader());
+            foreach (var b in ESPNProjections.Batter.Load())
+            {
+                Console.WriteLine(b.ToCSV());
+            }
+            Console.WriteLine();
+
+            Console.WriteLine(ESPNProjections.Pitcher.CSVHeader());
+            foreach (var p in ESPNProjections.Pitcher.Load())
+            {
+                Console.WriteLine(p.ToCSV());
+            }
+        }
+
+        static void YahooStuff()
+        {
             InitializeAuthManager().Wait();
 
             League league = League.Create(Constants.Leagues.Rounders2018).Result;
