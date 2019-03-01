@@ -26,7 +26,9 @@ namespace FantasyAuction.DataModel
         public int ProjectedHR { get; set; }
         public int ProjectedRBI { get; set; }
         public int ProjectedSB { get; set; }
+        public int ProjectedWalksPlusHits { get { return (int)(this.ProjectedAB * this.ProjectedOBP); } }
         public float ProjectedOBP { get; set; }
+        public string SeasonOutlook { get; set; }
 
         public override string ToString()
         {
@@ -50,6 +52,7 @@ namespace FantasyAuction.DataModel
             sb.AppendFormat("<TR><TD>Projected RBIs</TD><TD>{0}</TD></TR>", this.ProjectedRBI);
             sb.AppendFormat("<TR><TD>Projected Steals</TD><TD>{0}</TD></TR>", this.ProjectedSB);
             sb.AppendFormat("<TR><TD>Projected OBP</TD><TD>{0}</TD></TR>", this.ProjectedOBP);
+            sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
             sb.AppendLine("</TABLE></BODY></HTML>");
             return sb.ToString();
         }
@@ -57,24 +60,30 @@ namespace FantasyAuction.DataModel
         public static Batter Create(ESPNProjections.Batter batter)
         {
             Batter b = new Batter();
-            b.Name = batter.FullName;
-            b.IsC = batter.Positions.Contains(ESPNProjections.Constants.Positions.C);
-            b.Is1B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B1);
-            b.Is2B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B2);
-            b.IsSS = batter.Positions.Contains(ESPNProjections.Constants.Positions.SS);
-            b.Is3B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B3);
-            b.IsOF = batter.Positions.Contains(ESPNProjections.Constants.Positions.OF);
             b.AuctionPrice = 0;
             b.FantasyTeam = string.Empty;
-            b.ProjectedAB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.AB], 0);
-            b.ProjectedR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.R], 0);
-            b.ProjectedHR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.HR], 0);
-            b.ProjectedRBI = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.RBI], 0);
-            b.ProjectedSB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.SB], 0);
-            b.ProjectedOBP = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.OBP], 0.0f);
+            b.Update(batter);
             return b;
         }
-        
+
+        public void Update(ESPNProjections.Batter batter)
+        {
+            this.Name = batter.FullName;
+            this.IsC = batter.Positions.Contains(ESPNProjections.Constants.Positions.C);
+            this.Is1B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B1);
+            this.Is2B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B2);
+            this.IsSS = batter.Positions.Contains(ESPNProjections.Constants.Positions.SS);
+            this.Is3B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B3);
+            this.IsOF = batter.Positions.Contains(ESPNProjections.Constants.Positions.OF);
+            this.ProjectedAB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.AB], 0);
+            this.ProjectedR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.R], 0);
+            this.ProjectedHR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.HR], 0);
+            this.ProjectedRBI = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.RBI], 0);
+            this.ProjectedSB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.SB], 0);
+            this.ProjectedOBP = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.OBP], 0.0f);
+            this.SeasonOutlook = batter.SeasonOutlook;
+        }
+
         public static Batter[] Load(string serialized)
         {
             return JsonConvert.DeserializeObject<Batter[]>(serialized);

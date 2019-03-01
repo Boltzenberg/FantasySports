@@ -13,10 +13,16 @@ namespace FantasyAuction.DataModel
         public float AuctionPrice { get; set; }
         public string FantasyTeam { get; set; }
 
-        public float ProjectedIP { get; set; }
+        public int ProjectedOutsRecorded { get; set; }
         public int ProjectedW { get; set; }
         public int ProjectedSV { get; set; }
         public int ProjectedK { get; set; }
+        public int ProjectedHits { get; set; }
+        public int ProjectedWalks { get; set; }
+        public int ProjectedER { get; set; }
+        public string SeasonOutlook { get; set; }
+
+        public float ProjectedIP { get; set; }
         public float ProjectedERA { get; set; }
         public float ProjectedWHIP { get; set; }
 
@@ -38,6 +44,11 @@ namespace FantasyAuction.DataModel
             sb.AppendFormat("<TR><TD>Projected Strikeouts</TD><TD>{0}</TD></TR>", this.ProjectedK);
             sb.AppendFormat("<TR><TD>Projected ERA</TD><TD>{0}</TD></TR>", this.ProjectedERA);
             sb.AppendFormat("<TR><TD>Projected WHIP</TD><TD>{0}</TD></TR>", this.ProjectedWHIP);
+            sb.AppendFormat("<TR><TD>Projected Outs Recorded</TD><TD>{0}</TD></TR>", this.ProjectedOutsRecorded);
+            sb.AppendFormat("<TR><TD>Projected Hits</TD><TD>{0}</TD></TR>", this.ProjectedHits);
+            sb.AppendFormat("<TR><TD>Projected Walks</TD><TD>{0}</TD></TR>", this.ProjectedWalks);
+            sb.AppendFormat("<TR><TD>Projected Earned Runs</TD><TD>{0}</TD></TR>", this.ProjectedER);
+            sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
             sb.AppendLine("</TABLE></BODY></HTML>");
             return sb.ToString();
         }
@@ -45,20 +56,30 @@ namespace FantasyAuction.DataModel
         public static Pitcher Create(ESPNProjections.Pitcher pitcher)
         {
             Pitcher p = new Pitcher();
-            p.Name = pitcher.FullName;
-            p.IsSP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.SP);
-            p.IsRP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.RP);
             p.AuctionPrice = 0;
             p.FantasyTeam = string.Empty;
-            p.ProjectedIP = pitcher.InningsPitched;
-            p.ProjectedW = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.W], 0);
-            p.ProjectedSV = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.SV], 0);
-            p.ProjectedK = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.K], 0);
-            p.ProjectedERA = pitcher.ERA;
-            p.ProjectedWHIP = pitcher.WHIP;
+            p.Update(pitcher);
             return p;
         }
-        
+
+        public void Update(ESPNProjections.Pitcher pitcher)
+        {
+            this.Name = pitcher.FullName;
+            this.IsSP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.SP);
+            this.IsRP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.RP);
+            this.ProjectedOutsRecorded = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.OutsRecorded], 0);
+            this.ProjectedW = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.W], 0);
+            this.ProjectedSV = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.SV], 0);
+            this.ProjectedK = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.K], 0);
+            this.ProjectedHits = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.H], 0);
+            this.ProjectedWalks = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.BB], 0);
+            this.ProjectedER = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.ER], 0);
+            this.ProjectedIP = pitcher.InningsPitched;
+            this.ProjectedERA = pitcher.ERA;
+            this.ProjectedWHIP = pitcher.WHIP;
+            this.SeasonOutlook = pitcher.SeasonOutlook;
+        }
+
         public static Pitcher[] Load(string serialized)
         {
             return JsonConvert.DeserializeObject<Pitcher[]>(serialized);

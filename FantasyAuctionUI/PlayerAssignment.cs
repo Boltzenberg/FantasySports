@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
 {
-    public partial class Form1 : Form
+    public partial class PlayerAssignment : Form
     {
         private List<FantasyAuction.DataModel.Batter> batters;
         private List<FantasyAuction.DataModel.Pitcher> pitchers;
         private FantasyAuction.DataModel.IPlayer currentPlayer;
+        private DraftCenter draftCenter;
 
-        public Form1()
+        public PlayerAssignment()
         {
             InitializeComponent();
+            this.draftCenter = new DraftCenter();
             this.tbDir.Text = "C:\\users\\jonro\\documents";
         }
 
@@ -86,6 +82,17 @@ namespace FantasyAuctionUI
 
             File.WriteAllText(batterFile, FantasyAuction.DataModel.Batter.Serialize(this.batters.ToArray()));
             File.WriteAllText(pitcherFile, FantasyAuction.DataModel.Pitcher.Serialize(this.pitchers.ToArray()));
+        }
+
+        private void draftCenterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.draftCenter.SetData(this.batters, this.pitchers);
+            this.draftCenter.Show();
+        }
+
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FantasyAuction.Year.Update(this.batters, this.pitchers);
         }
     }
 }
