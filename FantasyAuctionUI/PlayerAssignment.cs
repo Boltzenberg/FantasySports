@@ -1,98 +1,106 @@
-﻿using System;
+﻿using FantasyAuction;
+using FantasyAuction.DataModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
 {
     public partial class PlayerAssignment : Form
     {
-        private List<FantasyAuction.DataModel.Batter> batters;
-        private List<FantasyAuction.DataModel.Pitcher> pitchers;
-        private FantasyAuction.DataModel.IPlayer currentPlayer;
-        private DraftCenter draftCenter;
+        private League league;
+        private List<IPlayer> allPlayers;
+        private IPlayer currentPlayer;
 
         public PlayerAssignment()
         {
             InitializeComponent();
-            this.draftCenter = new DraftCenter();
             this.tbDir.Text = "C:\\users\\jonro\\documents";
+            this.LoadPlayers(Path.Combine(this.tbDir.Text, Constants.Files.League));
         }
 
-        private void UpdateCurrentPlayer(FantasyAuction.DataModel.IPlayer newCurrentPlayer)
+        private void WriteUIToCurrentPlayer()
         {
             if (this.currentPlayer != null)
             {
-                this.currentPlayer.FantasyTeam = this.tbFantasyTeam.Text;
+                if (Array.Exists(this.league.Teams, x => x == this.tbFantasyTeam.Text))
+                {
+                    this.currentPlayer.FantasyTeam = this.tbFantasyTeam.Text;
+                }
+
                 float price;
                 if (float.TryParse(this.tbAuctionPrice.Text, out price))
                 {
                     this.currentPlayer.AuctionPrice = price;
                 }
             }
+        }
 
+        private void UpdateCurrentPlayer(FantasyAuction.DataModel.IPlayer newCurrentPlayer)
+        {
+            this.WriteUIToCurrentPlayer();
             this.tbAuctionPrice.Text = newCurrentPlayer.AuctionPrice.ToString();
             this.tbFantasyTeam.Text = newCurrentPlayer.FantasyTeam;
             this.wbOut.DocumentText = newCurrentPlayer.GetHTML();
             this.currentPlayer = newCurrentPlayer;
         }
 
-        private void OnSelectBatter(object sender, EventArgs e)
+        private void OnSelectPlayer(object sender, EventArgs e)
         {
-            UpdateCurrentPlayer(this.lbBatters.SelectedItem as FantasyAuction.DataModel.Batter);
-        }
-
-        private void OnSelectPitcher(object sender, EventArgs e)
-        {
-            UpdateCurrentPlayer(this.lbPitchers.SelectedItem as FantasyAuction.DataModel.Pitcher);
+            UpdateCurrentPlayer(this.lbPlayers.SelectedItem as FantasyAuction.DataModel.IPlayer);
         }
 
         private void OnLoadData(object sender, EventArgs e)
         {
-            string batterFile = Path.Combine(this.tbDir.Text, Constants.Files.Batters);
-            string pitcherFile = Path.Combine(this.tbDir.Text, Constants.Files.Pitchers);
-            if (!File.Exists(batterFile) || !File.Exists(pitcherFile))
+            this.LoadPlayers(Path.Combine(this.tbDir.Text, Constants.Files.League));
+        }
+
+        private void LoadPlayers(string fileName)
+        {
+            if (!File.Exists(fileName))
             {
-                FantasyAuction.Year.Create(batterFile, pitcherFile);
+                return;
             }
 
-            this.batters = new List<FantasyAuction.DataModel.Batter>(FantasyAuction.DataModel.Batter.Load(File.ReadAllText(batterFile)));
-            this.pitchers = new List<FantasyAuction.DataModel.Pitcher>(FantasyAuction.DataModel.Pitcher.Load(File.ReadAllText(pitcherFile)));
-
-            this.batters.Sort((x, y) => x.Name.CompareTo(y.Name));
-            this.pitchers.Sort((x, y) => x.Name.CompareTo(y.Name));
-
-            foreach (var batter in this.batters)
-            {
-                this.lbBatters.Items.Add(batter);
-            }
-
-            foreach (var pitcher in this.pitchers)
-            {
-                this.lbPitchers.Items.Add(pitcher);
-            }
-
+            this.league = League.Load(fileName);
+            this.allPlayers = new List<IPlayer>();
+            this.allPlayers.AddRange(this.league.AllPlayers);
+            this.allPlayers.Sort((x, y) => x.Name.CompareTo(y.Name));
+            this.lbPlayers.Items.AddRange(this.allPlayers.ToArray());
             this.currentPlayer = null;
         }
 
         private void OnSave(object sender, EventArgs e)
         {
-            string batterFile = Path.Combine(this.tbDir.Text, Constants.Files.Batters);
-            string pitcherFile = Path.Combine(this.tbDir.Text, Constants.Files.Pitchers);
-
-            File.WriteAllText(batterFile, FantasyAuction.DataModel.Batter.Serialize(this.batters.ToArray()));
-            File.WriteAllText(pitcherFile, FantasyAuction.DataModel.Pitcher.Serialize(this.pitchers.ToArray()));
-        }
-
-        private void draftCenterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.draftCenter.SetData(this.batters, this.pitchers);
-            this.draftCenter.Show();
+            this.WriteUIToCurrentPlayer();
+            this.league.Save(Path.Combine(this.tbDir.Text, Constants.Files.League));
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FantasyAuction.Year.Update(this.batters, this.pitchers);
+            this.league.UpdateProjections();
+        }
+
+        private void OnLaunchStatCenter(object sender, EventArgs e)
+        {
+            StatCenter sc = new StatCenter(this.league.Clone());
+            sc.Show();
+        }
+
+        private void OnLaunchRosterCenter(object sender, EventArgs e)
+        {
+            RosterCenter rc = new RosterCenter(this.league.Clone());
+            rc.Show();
+        }
+
+        private void OnWordWheel(object sender, EventArgs e)
+        {
+            this.lbPlayers.BeginUpdate();
+            this.lbPlayers.Items.Clear();
+            this.lbPlayers.Items.AddRange(this.allPlayers.Where(x => x.Name.StartsWith(this.tbWordWheel.Text, StringComparison.OrdinalIgnoreCase)).ToArray());
+            this.lbPlayers.EndUpdate();
         }
     }
 }

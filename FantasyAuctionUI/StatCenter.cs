@@ -1,21 +1,19 @@
-﻿using System;
+﻿using FantasyAuction;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
 {
-    public partial class DraftCenter : Form
+    public partial class StatCenter : Form
     {
-        public DraftCenter()
+        public StatCenter(League league)
         {
             InitializeComponent();
-        }
 
-        public void SetData(List<FantasyAuction.DataModel.Batter> batters, List<FantasyAuction.DataModel.Pitcher> pitchers)
-        {
             Dictionary<string, ListViewStats> teams = new Dictionary<string, ListViewStats>();
-            foreach (var b in batters)
+            foreach (var b in league.Batters)
             {
                 if (!string.IsNullOrEmpty(b.FantasyTeam))
                 {
@@ -29,7 +27,7 @@ namespace FantasyAuctionUI
                 }
             }
 
-            foreach (var p in pitchers)
+            foreach (var p in league.Pitchers)
             {
                 if (!string.IsNullOrEmpty(p.FantasyTeam))
                 {

@@ -28,11 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbBatters = new System.Windows.Forms.ListBox();
-            this.lbPitchers = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tbAuctionPrice = new System.Windows.Forms.TextBox();
@@ -43,54 +39,25 @@
             this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.draftCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.draftCenterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rosterCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lbPlayers = new System.Windows.Forms.ListBox();
+            this.tbWordWheel = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lbBatters
-            // 
-            this.lbBatters.FormattingEnabled = true;
-            this.lbBatters.Location = new System.Drawing.Point(13, 51);
-            this.lbBatters.Name = "lbBatters";
-            this.lbBatters.Size = new System.Drawing.Size(151, 290);
-            this.lbBatters.TabIndex = 0;
-            this.lbBatters.SelectedIndexChanged += new System.EventHandler(this.OnSelectBatter);
-            // 
-            // lbPitchers
-            // 
-            this.lbPitchers.FormattingEnabled = true;
-            this.lbPitchers.Location = new System.Drawing.Point(13, 378);
-            this.lbPitchers.Name = "lbPitchers";
-            this.lbPitchers.Size = new System.Drawing.Size(151, 290);
-            this.lbPitchers.TabIndex = 1;
-            this.lbPitchers.SelectedIndexChanged += new System.EventHandler(this.OnSelectPitcher);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(11, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Batters:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 362);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Pitchers:";
-            // 
-            // tbFantasyTeam
-            // 
-            this.tbFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbFantasyTeam.Location = new System.Drawing.Point(253, 622);
-            this.tbFantasyTeam.Name = "tbFantasyTeam";
-            this.tbFantasyTeam.Size = new System.Drawing.Size(415, 20);
-            this.tbFantasyTeam.TabIndex = 5;
+            this.label1.Text = "Players:";
             // 
             // label3
             // 
@@ -114,7 +81,8 @@
             // 
             // tbAuctionPrice
             // 
-            this.tbAuctionPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbAuctionPrice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbAuctionPrice.Location = new System.Drawing.Point(253, 648);
             this.tbAuctionPrice.Name = "tbAuctionPrice";
             this.tbAuctionPrice.Size = new System.Drawing.Size(415, 20);
@@ -181,10 +149,26 @@
             // 
             // draftCenterToolStripMenuItem
             // 
+            this.draftCenterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.draftCenterToolStripMenuItem1,
+            this.rosterCenterToolStripMenuItem});
             this.draftCenterToolStripMenuItem.Name = "draftCenterToolStripMenuItem";
-            this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.draftCenterToolStripMenuItem.Text = "Draft Center";
-            this.draftCenterToolStripMenuItem.Click += new System.EventHandler(this.draftCenterToolStripMenuItem_Click);
+            this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.draftCenterToolStripMenuItem.Text = "Centers";
+            // 
+            // draftCenterToolStripMenuItem1
+            // 
+            this.draftCenterToolStripMenuItem1.Name = "draftCenterToolStripMenuItem1";
+            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.draftCenterToolStripMenuItem1.Text = "Stat Center";
+            this.draftCenterToolStripMenuItem1.Click += new System.EventHandler(this.OnLaunchStatCenter);
+            // 
+            // rosterCenterToolStripMenuItem
+            // 
+            this.rosterCenterToolStripMenuItem.Name = "rosterCenterToolStripMenuItem";
+            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rosterCenterToolStripMenuItem.Text = "Roster Center";
+            this.rosterCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchRosterCenter);
             // 
             // fantasyDataToolStripMenuItem
             // 
@@ -197,15 +181,54 @@
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
+            // 
+            // lbPlayers
+            // 
+            this.lbPlayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lbPlayers.FormattingEnabled = true;
+            this.lbPlayers.Location = new System.Drawing.Point(13, 77);
+            this.lbPlayers.Name = "lbPlayers";
+            this.lbPlayers.Size = new System.Drawing.Size(151, 589);
+            this.lbPlayers.TabIndex = 0;
+            this.lbPlayers.SelectedIndexChanged += new System.EventHandler(this.OnSelectPlayer);
+            // 
+            // tbWordWheel
+            // 
+            this.tbWordWheel.Location = new System.Drawing.Point(13, 54);
+            this.tbWordWheel.Name = "tbWordWheel";
+            this.tbWordWheel.Size = new System.Drawing.Size(151, 20);
+            this.tbWordWheel.TabIndex = 15;
+            this.tbWordWheel.TextChanged += new System.EventHandler(this.OnWordWheel);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(592, 1246);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 16;
+            // 
+            // tbFantasyTeam
+            // 
+            this.tbFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbFantasyTeam.Location = new System.Drawing.Point(253, 622);
+            this.tbFantasyTeam.Name = "tbFantasyTeam";
+            this.tbFantasyTeam.Size = new System.Drawing.Size(415, 20);
+            this.tbFantasyTeam.TabIndex = 17;
             // 
             // PlayerAssignment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 677);
+            this.Controls.Add(this.tbFantasyTeam);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.tbWordWheel);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tbDir);
@@ -214,11 +237,8 @@
             this.Controls.Add(this.tbAuctionPrice);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.tbFantasyTeam);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lbPitchers);
-            this.Controls.Add(this.lbBatters);
+            this.Controls.Add(this.lbPlayers);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "PlayerAssignment";
@@ -231,12 +251,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lbBatters;
-        private System.Windows.Forms.ListBox lbPitchers;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbFantasyTeam;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbAuctionPrice;
@@ -249,6 +264,12 @@
         private System.Windows.Forms.ToolStripMenuItem draftCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fantasyDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
+        private System.Windows.Forms.ListBox lbPlayers;
+        private System.Windows.Forms.TextBox tbWordWheel;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ToolStripMenuItem draftCenterToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem rosterCenterToolStripMenuItem;
+        private System.Windows.Forms.TextBox tbFantasyTeam;
     }
 }
 

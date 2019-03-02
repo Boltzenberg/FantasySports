@@ -31,8 +31,40 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            InitializeYear();
-            AnalyzeYear();
+            TranslateToLeague();
+        }
+
+        static void TranslateToLeague()
+        {
+            const string Batters = "Batters2019.json";
+            const string Pitchers = "Pitchers2019.json";
+            string dir = "C:\\users\\jonro\\documents";
+
+            FantasyAuction.DataModel.Batter[] batters = FantasyAuction.DataModel.Batter.Load(File.ReadAllText(Path.Combine(dir, Batters)));
+            FantasyAuction.DataModel.Pitcher[] pitchers = FantasyAuction.DataModel.Pitcher.Load(File.ReadAllText(Path.Combine(dir, Pitchers)));
+            FantasyAuction.League league = new FantasyAuction.League();
+            league.Batters = batters;
+            league.Pitchers = pitchers;
+
+            HashSet<string> teams = new HashSet<string>();
+            foreach (var b in batters)
+            {
+                if (!string.IsNullOrEmpty(b.FantasyTeam))
+                {
+                    teams.Add(b.FantasyTeam);
+                }
+            }
+
+            foreach (var p in pitchers)
+            {
+                if (!string.IsNullOrEmpty(p.FantasyTeam))
+                {
+                    teams.Add(p.FantasyTeam);
+                }
+            }
+
+            league.Teams = new List<string>(teams).ToArray();
+            league.Save(Path.Combine(dir, "FantasyLeague2019.json"));
         }
 
         static void InitializeYear()

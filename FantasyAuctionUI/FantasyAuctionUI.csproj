@@ -46,11 +46,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="DraftCenter.cs">
+    <Compile Include="RosterCenter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DraftCenter.Designer.cs">
-      <DependentUpon>DraftCenter.cs</DependentUpon>
+    <Compile Include="RosterCenter.Designer.cs">
+      <DependentUpon>RosterCenter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StatCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatCenter.Designer.cs">
+      <DependentUpon>StatCenter.cs</DependentUpon>
     </Compile>
     <Compile Include="PlayerAssignment.cs">
       <SubType>Form</SubType>
@@ -60,8 +66,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DraftCenter.resx">
-      <DependentUpon>DraftCenter.cs</DependentUpon>
+    <EmbeddedResource Include="RosterCenter.resx">
+      <DependentUpon>RosterCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatCenter.resx">
+      <DependentUpon>StatCenter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayerAssignment.resx">
       <DependentUpon>PlayerAssignment.cs</DependentUpon>

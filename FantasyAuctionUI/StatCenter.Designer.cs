@@ -1,6 +1,6 @@
 ﻿namespace FantasyAuctionUI
 {
-    partial class DraftCenter
+    partial class StatCenter
     {
         /// <summary>
         /// Required designer variable.
@@ -40,6 +40,7 @@
             this.chStrikeouts = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chERA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chWHIP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvStats = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -54,7 +55,6 @@
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.chTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvPoints
@@ -132,6 +132,10 @@
             // 
             this.chWHIP.Tag = "asc";
             this.chWHIP.Text = "WHIP";
+            // 
+            // chTotal
+            // 
+            this.chTotal.Text = "Total";
             // 
             // lvStats
             // 
@@ -231,11 +235,7 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Points";
             // 
-            // chTotal
-            // 
-            this.chTotal.Text = "Total";
-            // 
-            // DraftCenter
+            // StatCenter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -244,8 +244,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lvStats);
             this.Controls.Add(this.lvPoints);
-            this.Name = "DraftCenter";
-            this.Text = "Draft Center";
+            this.Name = "StatCenter";
+            this.Text = "Stat Center";
             this.ResumeLayout(false);
             this.PerformLayout();
 
