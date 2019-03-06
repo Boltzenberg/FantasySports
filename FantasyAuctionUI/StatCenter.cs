@@ -1,4 +1,5 @@
-﻿using FantasyAuction;
+﻿using FantasyAlgorithms;
+using FantasyAuction;
 using System;
 using System.Collections;
 using System.Collections.Generic;

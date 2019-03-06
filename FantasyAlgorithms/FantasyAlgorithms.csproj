@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extractors.cs" />
+    <Compile Include="Ratios.cs" />
     <Compile Include="RatioStatExtractor.cs" />
     <Compile Include="CountingStatExtractor.cs" />
     <Compile Include="IStatExtractor.cs" />

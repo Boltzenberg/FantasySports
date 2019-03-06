@@ -6,11 +6,14 @@ namespace FantasyAlgorithms
 {
     public class RatioStatExtractor : IStatExtractor
     {
-        public RatioStatExtractor(string statName, bool moreIsBetter, Func<IPlayer, int> extractNumerator, Func<IPlayer, int> extractDenominator)
+        private Func<int, int, float> ratio;
+
+        public RatioStatExtractor(string statName, bool moreIsBetter, Func<IPlayer, int?> extractNumerator, Func<IPlayer, int?> extractDenominator, Func<int, int, float> ratio)
         {
             this.StatName = statName;
             this.MoreIsBetter = moreIsBetter;
-            this.Extract = p => new RatioStatValue(extractNumerator(p), extractDenominator(p));
+            this.Extract = p => DoExtract(extractNumerator(p), extractDenominator(p));
+            this.ratio = ratio;
         }
 
         public string StatName { get; private set; }
@@ -30,7 +33,17 @@ namespace FantasyAlgorithms
                 totalDenominator += r.Denominator;
             }
 
-            return new RatioStatValue(totalNumerator, totalDenominator);
+            return new RatioStatValue(totalNumerator, totalDenominator, this.ratio);
+        }
+
+        private IStatValue DoExtract(int? numerator, int? denominator)
+        {
+            if (numerator == null || denominator == null)
+            {
+                return null;
+            }
+
+            return new RatioStatValue(numerator.Value, denominator.Value, this.ratio);
         }
 
         private class RatioStatValue : IStatValue
@@ -39,11 +52,11 @@ namespace FantasyAlgorithms
             public int Numerator { get; set; }
             public int Denominator { get; set; }
 
-            public RatioStatValue(int numerator, int denominator)
+            public RatioStatValue(int numerator, int denominator, Func<int, int, float> ratio)
             {
                 this.Numerator = numerator;
                 this.Denominator = denominator;
-                this.Value = (float)this.Numerator / this.Denominator;
+                this.Value = ratio(this.Numerator, this.Denominator);
             }
         }
     }

@@ -90,8 +90,9 @@ namespace FantasyAuctionUI
 
         private void OnLaunchStatCenter(object sender, EventArgs e)
         {
-            StatCenter sc = new StatCenter(this.league.Clone());
+            StatCenter2 sc = new StatCenter2(this.league.Clone());
             sc.Show();
+            new StatCenter(this.league.Clone()).Show();
         }
 
         private void OnLaunchRosterCenter(object sender, EventArgs e)

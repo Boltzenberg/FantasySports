@@ -57,11 +57,11 @@ namespace FantasyAlgorithms
             {
                 if (extractor.MoreIsBetter)
                 {
-                    teams.Sort((x, y) => x.Stats[extractor.StatName].CompareTo(y.Stats[extractor.StatName]));
+                    teams.Sort((x, y) => y.Stats[extractor.StatName].CompareTo(x.Stats[extractor.StatName]));
                 }
                 else
                 {
-                    teams.Sort((x, y) => y.Stats[extractor.StatName].CompareTo(x.Stats[extractor.StatName]));
+                    teams.Sort((x, y) => x.Stats[extractor.StatName].CompareTo(y.Stats[extractor.StatName]));
                 }
 
                 for (int i = 0; i < teams.Count;)

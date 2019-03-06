@@ -6,11 +6,11 @@ namespace FantasyAlgorithms
 {
     public class CountingStatExtractor : IStatExtractor
     {
-        public CountingStatExtractor(string statName, bool moreIsBetter, Func<IPlayer, int> extractFunc)
+        public CountingStatExtractor(string statName, bool moreIsBetter, Func<IPlayer, int?> extractFunc)
         {
             this.StatName = statName;
             this.MoreIsBetter = moreIsBetter;
-            this.Extract = p => new CountingStatValue(extractFunc(p));
+            this.Extract = p => DoExtract(extractFunc(p));
         }
 
         public string StatName { get; private set; }
@@ -30,15 +30,25 @@ namespace FantasyAlgorithms
             return new CountingStatValue(total);
         }
 
+        private IStatValue DoExtract(int? value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            return new CountingStatValue(value.Value);
+        }
+
         private class CountingStatValue : IStatValue
         {
             public float Value { get; private set; }
-            public int IntValue { get; set; }
+            public int IntValue { get; private set; }
 
             public CountingStatValue(int val)
             {
+                this.Value = val;
                 this.IntValue = val;
-                this.Value = (float)val;
             }
         }
     }
