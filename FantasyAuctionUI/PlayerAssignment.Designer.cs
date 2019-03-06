@@ -47,6 +47,7 @@
             this.tbWordWheel = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
+            this.analysisCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -151,7 +152,8 @@
             // 
             this.draftCenterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.draftCenterToolStripMenuItem1,
-            this.rosterCenterToolStripMenuItem});
+            this.rosterCenterToolStripMenuItem,
+            this.analysisCenterToolStripMenuItem});
             this.draftCenterToolStripMenuItem.Name = "draftCenterToolStripMenuItem";
             this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.draftCenterToolStripMenuItem.Text = "Centers";
@@ -221,6 +223,13 @@
             this.tbFantasyTeam.Size = new System.Drawing.Size(415, 20);
             this.tbFantasyTeam.TabIndex = 17;
             // 
+            // analysisCenterToolStripMenuItem
+            // 
+            this.analysisCenterToolStripMenuItem.Name = "analysisCenterToolStripMenuItem";
+            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.analysisCenterToolStripMenuItem.Text = "Analysis Center";
+            this.analysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAnalysisCenter);
+            // 
             // PlayerAssignment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,6 +279,7 @@
         private System.Windows.Forms.ToolStripMenuItem draftCenterToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem rosterCenterToolStripMenuItem;
         private System.Windows.Forms.TextBox tbFantasyTeam;
+        private System.Windows.Forms.ToolStripMenuItem analysisCenterToolStripMenuItem;
     }
 }
 

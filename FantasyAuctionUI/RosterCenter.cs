@@ -12,10 +12,10 @@ namespace FantasyAuctionUI
         {
             InitializeComponent();
 
-            Dictionary<string, Team> teamsMap = new Dictionary<string, Team>();
-            foreach (string team in league.Teams)
+            Dictionary<string, Roster> teamsMap = new Dictionary<string, Roster>();
+            foreach (var team in league.Teams)
             {
-                teamsMap[team] = new Team(team);
+                teamsMap[team.Name] = new Roster(team);
             }
 
             foreach (var player in league.AllPlayers)
@@ -26,8 +26,8 @@ namespace FantasyAuctionUI
                 }
             }
 
-            List<Team> teams = new List<Team>(teamsMap.Values);
-            teams.Sort((x, y) => x.Name.CompareTo(y.Name));
+            List<Roster> teams = new List<Roster>(teamsMap.Values);
+            teams.Sort((x, y) => x.Team.Name.CompareTo(y.Team.Name));
 
             int maxPlayers = 0;
             foreach (var team in teams)
@@ -40,7 +40,7 @@ namespace FantasyAuctionUI
             sb.AppendLine("<HTML><BODY><TABLE BORDER='1' style='font-size:12px'><TR><TD>&nbsp;</TD>");
             for (int col = 0; col < teams.Count; col++)
             {
-                sb.AppendFormat("<TD>{0}</TD>", teams[col].Name);
+                sb.AppendFormat("<TD>{0}<BR>{1}<BR>{2,12:C2}</TD>", teams[col].Team.Name, teams[col].Team.Owner, teams[col].Team.Budget);
             }
             sb.AppendLine("</TR>");
             for (int row = 0; row < maxPlayers; row++)
@@ -63,14 +63,14 @@ namespace FantasyAuctionUI
             this.wb.DocumentText = sb.ToString();
         }
 
-        private class Team
+        private class Roster
         {
-            public string Name { get; private set; }
+            public FantasyAuction.DataModel.Team Team { get; private set; }
             public List<string> Players { get; set; }
 
-            public Team(string name)
+            public Roster(FantasyAuction.DataModel.Team team)
             {
-                this.Name = name;
+                this.Team = team;
                 this.Players = new List<string>();
             }
         }

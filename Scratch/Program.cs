@@ -31,61 +31,25 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            TranslateToLeague();
+            UpdateTeams();
         }
 
-        static void TranslateToLeague()
+        static void UpdateTeams()
         {
-            const string Batters = "Batters2019.json";
-            const string Pitchers = "Pitchers2019.json";
-            string dir = "C:\\users\\jonro\\documents";
-
-            FantasyAuction.DataModel.Batter[] batters = FantasyAuction.DataModel.Batter.Load(File.ReadAllText(Path.Combine(dir, Batters)));
-            FantasyAuction.DataModel.Pitcher[] pitchers = FantasyAuction.DataModel.Pitcher.Load(File.ReadAllText(Path.Combine(dir, Pitchers)));
-            FantasyAuction.League league = new FantasyAuction.League();
-            league.Batters = batters;
-            league.Pitchers = pitchers;
-
-            HashSet<string> teams = new HashSet<string>();
-            foreach (var b in batters)
-            {
-                if (!string.IsNullOrEmpty(b.FantasyTeam))
-                {
-                    teams.Add(b.FantasyTeam);
-                }
-            }
-
-            foreach (var p in pitchers)
-            {
-                if (!string.IsNullOrEmpty(p.FantasyTeam))
-                {
-                    teams.Add(p.FantasyTeam);
-                }
-            }
-
-            league.Teams = new List<string>(teams).ToArray();
-            league.Save(Path.Combine(dir, "FantasyLeague2019.json"));
-        }
-
-        static void InitializeYear()
-        {
-            FantasyAuction.Year.Create("batters2019.json", "pitchers2019.json");
-        }
-
-        static void AnalyzeYear()
-        {
-            FantasyAuction.DataModel.Batter[] batters = FantasyAuction.DataModel.Batter.Load(File.ReadAllText("batters2019.json"));
-            FantasyAuction.DataModel.Pitcher[] pitchers = FantasyAuction.DataModel.Pitcher.Load(File.ReadAllText("pitchers2019.json"));
-
-            foreach (var batter in batters)
-            {
-                Console.WriteLine(batter.Name);
-            }
-
-            foreach (var pitcher in pitchers)
-            {
-                Console.WriteLine(pitcher.Name);
-            }
+            const string file = "C:\\users\\jonro\\documents\\FantasyLeague2019.json";
+            FantasyAuction.League league = FantasyAuction.League.Load(file);
+            league.Teams = new FantasyAuction.DataModel.Team[10];
+            league.Teams[0] = new FantasyAuction.DataModel.Team() { Name = "Mitch's Bitches", Owner = "Nir Modiano", Budget = 208.29f };
+            league.Teams[1] = new FantasyAuction.DataModel.Team() { Name = "Peanut Tossers", Owner = "Josh Kornblit", Budget = 216.83f };
+            league.Teams[2] = new FantasyAuction.DataModel.Team() { Name = "Kirby SMASH", Owner = "Bobby Ronaghy", Budget = 192.37f };
+            league.Teams[3] = new FantasyAuction.DataModel.Team() { Name = "See You In McCourt", Owner = "Eric Rudin", Budget = 205.72f };
+            league.Teams[4] = new FantasyAuction.DataModel.Team() { Name = "LeClerking for LeJudge", Owner = "Macus", Budget = 206.26f };
+            league.Teams[5] = new FantasyAuction.DataModel.Team() { Name = "Machado Chop House", Owner = "Michael Sneag", Budget = 189.77f };
+            league.Teams[6] = new FantasyAuction.DataModel.Team() { Name = "Jews on First", Owner = "Steve Lesser", Budget = 215.71f };
+            league.Teams[7] = new FantasyAuction.DataModel.Team() { Name = "Putz on Second", Owner = "Jon Rosenberg", Budget = 216.09f };
+            league.Teams[8] = new FantasyAuction.DataModel.Team() { Name = "Cool WHIP", Owner = "Jeff Selman", Budget = 242.71f };
+            league.Teams[9] = new FantasyAuction.DataModel.Team() { Name = "The S stand for OPS", Owner = "Jared Hersh", Budget = 206.25f };
+            league.Save(file);
         }
 
         static void ESPNStuff()

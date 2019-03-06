@@ -40,7 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RatioStatExtractor.cs" />
+    <Compile Include="CountingStatExtractor.cs" />
+    <Compile Include="IStatExtractor.cs" />
+    <Compile Include="LeagueAnalysis.cs" />
+    <Compile Include="RatioStatAnalyzer.cs" />
+    <Compile Include="CountingStatAnalyzer.cs" />
+    <Compile Include="IPlayerAnalyzer.cs" />
+    <Compile Include="PlayerAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TeamAnalysis.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FantasyAuction\FantasyAuction.csproj">
+      <Project>{C22E7C45-E183-46DF-8951-5B39A51C3BFD}</Project>
+      <Name>FantasyAuction</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

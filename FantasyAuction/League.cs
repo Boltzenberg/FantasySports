@@ -9,7 +9,11 @@ namespace FantasyAuction
     {
         public DataModel.Batter[] Batters;
         public DataModel.Pitcher[] Pitchers;
-        public string[] Teams;
+        public DataModel.Team[] Teams;
+
+        public const int TeamCount = 10;
+        public const int RosterableBatterCountPerTeam = 14;
+        public const int RosterablePitcherCountPerTeam = 13;
 
         public static League Create()
         {

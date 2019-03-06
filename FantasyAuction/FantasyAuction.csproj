@@ -46,6 +46,7 @@
     <Compile Include="DataModel\IPlayer.cs" />
     <Compile Include="DataModel\Pitcher.cs" />
     <Compile Include="DataModel\Batter.cs" />
+    <Compile Include="DataModel\Team.cs" />
     <Compile Include="League.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Year.cs" />

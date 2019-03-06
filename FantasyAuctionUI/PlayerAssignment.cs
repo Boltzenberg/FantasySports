@@ -25,7 +25,7 @@ namespace FantasyAuctionUI
         {
             if (this.currentPlayer != null)
             {
-                if (Array.Exists(this.league.Teams, x => x == this.tbFantasyTeam.Text))
+                if (Array.Exists(this.league.Teams, x => x.Name == this.tbFantasyTeam.Text))
                 {
                     this.currentPlayer.FantasyTeam = this.tbFantasyTeam.Text;
                 }
@@ -41,9 +41,12 @@ namespace FantasyAuctionUI
         private void UpdateCurrentPlayer(FantasyAuction.DataModel.IPlayer newCurrentPlayer)
         {
             this.WriteUIToCurrentPlayer();
-            this.tbAuctionPrice.Text = newCurrentPlayer.AuctionPrice.ToString();
-            this.tbFantasyTeam.Text = newCurrentPlayer.FantasyTeam;
-            this.wbOut.DocumentText = newCurrentPlayer.GetHTML();
+            if (newCurrentPlayer != null)
+            {
+                this.tbAuctionPrice.Text = newCurrentPlayer.AuctionPrice.ToString();
+                this.tbFantasyTeam.Text = newCurrentPlayer.FantasyTeam;
+                this.wbOut.DocumentText = newCurrentPlayer.GetHTML();
+            }
             this.currentPlayer = newCurrentPlayer;
         }
 
@@ -68,6 +71,8 @@ namespace FantasyAuctionUI
             this.allPlayers = new List<IPlayer>();
             this.allPlayers.AddRange(this.league.AllPlayers);
             this.allPlayers.Sort((x, y) => x.Name.CompareTo(y.Name));
+            this.tbWordWheel.Text = string.Empty;
+            this.lbPlayers.Items.Clear();
             this.lbPlayers.Items.AddRange(this.allPlayers.ToArray());
             this.currentPlayer = null;
         }
@@ -101,6 +106,12 @@ namespace FantasyAuctionUI
             this.lbPlayers.Items.Clear();
             this.lbPlayers.Items.AddRange(this.allPlayers.Where(x => x.Name.StartsWith(this.tbWordWheel.Text, StringComparison.OrdinalIgnoreCase)).ToArray());
             this.lbPlayers.EndUpdate();
+        }
+
+        private void OnLaunchAnalysisCenter(object sender, EventArgs e)
+        {
+            AnalysisCenter ac = new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Owner == "Jon Rosenberg"));
+            ac.Show();
         }
     }
 }
