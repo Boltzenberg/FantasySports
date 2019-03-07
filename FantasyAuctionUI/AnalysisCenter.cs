@@ -64,6 +64,51 @@ namespace FantasyAuctionUI
             this.UpdatePlayerFilter();
             this.WordWheelPlayers();
             this.UpdateWB();
+
+            this.lvAnalysis.BeginUpdate();
+            int columnWidth = this.lvAnalysis.Width / (League.ScoringStatExtractors.Count + 1);
+            this.lvAnalysis.Columns.Add("Player Name", columnWidth);
+            foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+            {
+                ColumnHeader column = new ColumnHeader();
+                column.Text = extractor.StatName;
+                column.Width = columnWidth;
+                if (!extractor.MoreIsBetter)
+                {
+                    column.Tag = "asc";
+                }
+
+                this.lvAnalysis.Columns.Add(column);
+            }
+            this.lvAnalysis.EndUpdate();
+
+            this.UpdatePlayerListView(league.AllPlayers);
+        }
+
+        private void UpdatePlayerListView(IEnumerable<IPlayer> players)
+        {
+            this.lvAnalysis.BeginUpdate();
+            this.lvAnalysis.Items.Clear();
+
+            foreach (IPlayer player in players)
+            {
+                ListViewItem item = new ListViewItem(player.Name);
+                foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+                {
+                    IStatValue value = extractor.Extract(player);
+                    if (value != null)
+                    {
+                        item.SubItems.Add(value.Value.ToString());
+                    }
+                    else
+                    {
+                        item.SubItems.Add(string.Empty);
+                    }
+                }
+                this.lvAnalysis.Items.Add(item);
+            }
+
+            this.lvAnalysis.EndUpdate();
         }
 
         private void UpdateWB()
@@ -137,11 +182,7 @@ namespace FantasyAuctionUI
 
             this.WordWheelPlayers();
             this.UpdateWB();
-        }
-
-        private void OnSelectPlayer(object sender, EventArgs e)
-        {
-            
+            this.UpdatePlayerListView(this.filteredAggregates.Select(p => p.Player));
         }
 
         private class PlayerAggregate
@@ -199,6 +240,13 @@ namespace FantasyAuctionUI
                 this.Name = name;
                 this.Analyzer = analyzer;
             }
+        }
+
+        private void OnColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ListView lv = sender as ListView;
+            object tag = lv.Columns[e.Column].Tag;
+            lv.ListViewItemSorter = new StatColumnSorter(e.Column, tag == null || tag.ToString() != "asc");
         }
     }
 }

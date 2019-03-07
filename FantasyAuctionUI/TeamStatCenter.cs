@@ -1,6 +1,6 @@
 ﻿using FantasyAlgorithms;
 using FantasyAlgorithms.DataModel;
-using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
@@ -13,9 +13,9 @@ namespace FantasyAuctionUI
             this.Text = string.Format("Team Stat Center: {0}", team.Team.Name);
 
             this.lv.BeginUpdate();
-            int columnWidth = lv.Width / (League.StatExtractors.Count + 1);
+            int columnWidth = lv.Width / (League.ScoringStatExtractors.Count + 1);
             lv.Columns.Add("Player Name", columnWidth);
-            foreach (IStatExtractor extractor in League.StatExtractors)
+            foreach (IStatExtractor extractor in League.ScoringStatExtractors)
             {
                 ColumnHeader column = new ColumnHeader();
                 column.Text = extractor.StatName;
@@ -23,15 +23,24 @@ namespace FantasyAuctionUI
                 lv.Columns.Add(column);
             }
 
+            Dictionary<string, int> statToPlayerCount = new Dictionary<string, int>();
             foreach (IPlayer player in team.AllPlayers)
             {
                 ListViewItem item = new ListViewItem(player.Name);
-                foreach (IStatExtractor extractor in League.StatExtractors)
+                foreach (IStatExtractor extractor in League.ScoringStatExtractors)
                 {
                     IStatValue value = extractor.Extract(player);
                     if (value != null)
                     {
                         item.SubItems.Add(value.Value.ToString());
+                        if (!statToPlayerCount.ContainsKey(extractor.StatName))
+                        {
+                            statToPlayerCount[extractor.StatName] = 1;
+                        }
+                        else
+                        {
+                            statToPlayerCount[extractor.StatName]++;
+                        }
                     }
                     else
                     {
@@ -42,19 +51,31 @@ namespace FantasyAuctionUI
             }
 
             ListViewItem total = new ListViewItem("Totals");
-            foreach (IStatExtractor extractor in League.StatExtractors)
+            ListViewItem average = new ListViewItem("Average");
+            foreach (IStatExtractor extractor in League.ScoringStatExtractors)
             {
                 float value;
                 if (team.Stats.TryGetValue(extractor.StatName, out value))
                 {
                     total.SubItems.Add(value.ToString());
+                    int count;
+                    if (statToPlayerCount.TryGetValue(extractor.StatName, out count))
+                    {
+                        average.SubItems.Add((value / (float)count).ToString());
+                    }
+                    else
+                    {
+                        average.SubItems.Add(string.Empty);
+                    }
                 }
                 else
                 {
                     total.SubItems.Add(string.Empty);
+                    average.SubItems.Add(string.Empty);
                 }
             }
             this.lv.Items.Add(total);
+            this.lv.Items.Add(average);
             this.lv.EndUpdate();
         }
     }

@@ -24,7 +24,7 @@ namespace FantasyAlgorithms
             int total = 0;
             foreach (IStatValue value in values)
             {
-                total += ((CountingStatValue)value).IntValue;
+                total += ((CountingStatValue)value).CountableValue;
             }
 
             return new CountingStatValue(total);
@@ -43,12 +43,12 @@ namespace FantasyAlgorithms
         private class CountingStatValue : IStatValue
         {
             public float Value { get; private set; }
-            public int IntValue { get; private set; }
+            public int CountableValue { get; private set; }
 
             public CountingStatValue(int val)
             {
                 this.Value = val;
-                this.IntValue = val;
+                this.CountableValue = val;
             }
         }
     }

@@ -72,6 +72,7 @@
     <Compile Include="StatCenter.Designer.cs">
       <DependentUpon>StatCenter.cs</DependentUpon>
     </Compile>
+    <Compile Include="StatColumnSorter.cs" />
     <Compile Include="TeamStatCenter.cs">
       <SubType>Form</SubType>
     </Compile>

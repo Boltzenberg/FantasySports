@@ -49,14 +49,16 @@ namespace FantasyAlgorithms
         private class RatioStatValue : IStatValue
         {
             public float Value { get; private set; }
-            public int Numerator { get; set; }
-            public int Denominator { get; set; }
+            public int CountableValue { get; private set; }
+            public int Numerator { get; private set; }
+            public int Denominator { get; private set; }
 
             public RatioStatValue(int numerator, int denominator, Func<int, int, float> ratio)
             {
                 this.Numerator = numerator;
                 this.Denominator = denominator;
                 this.Value = ratio(this.Numerator, this.Denominator);
+                this.CountableValue = this.Numerator;
             }
         }
     }

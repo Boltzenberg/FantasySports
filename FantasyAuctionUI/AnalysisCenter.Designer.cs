@@ -62,7 +62,6 @@
             this.lbPlayers.Name = "lbPlayers";
             this.lbPlayers.Size = new System.Drawing.Size(228, 693);
             this.lbPlayers.TabIndex = 1;
-            this.lbPlayers.SelectedIndexChanged += new System.EventHandler(this.OnSelectPlayer);
             // 
             // wb
             // 
@@ -235,6 +234,7 @@
             this.lvAnalysis.TabIndex = 14;
             this.lvAnalysis.UseCompatibleStateImageBehavior = false;
             this.lvAnalysis.View = System.Windows.Forms.View.Details;
+            this.lvAnalysis.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.OnColumnClick);
             // 
             // AnalysisCenter
             // 

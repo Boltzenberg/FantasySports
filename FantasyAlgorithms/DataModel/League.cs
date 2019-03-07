@@ -14,7 +14,7 @@ namespace FantasyAlgorithms.DataModel
         public const int RosterableBatterCountPerTeam = 14;
         public const int RosterablePitcherCountPerTeam = 13;
 
-        public static readonly List<IStatExtractor> StatExtractors = new List<IStatExtractor>()
+        public static readonly List<IStatExtractor> ScoringStatExtractors = new List<IStatExtractor>()
         {
             new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
             new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),

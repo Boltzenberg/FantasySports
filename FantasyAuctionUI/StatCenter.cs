@@ -14,14 +14,14 @@ namespace FantasyAuctionUI
         {
             InitializeComponent();
 
-            LeagueAnalysis leagueAnalysis = LeagueAnalysis.Analyze(league, League.StatExtractors);
+            LeagueAnalysis leagueAnalysis = LeagueAnalysis.Analyze(league, League.ScoringStatExtractors);
 
             this.lvStats.BeginUpdate();
             this.lvPoints.BeginUpdate();
 
-            int columnWidth = this.lvPoints.Width / (League.StatExtractors.Count + 2);
-            this.AddColumns(this.lvStats, League.StatExtractors, columnWidth);
-            this.AddColumns(this.lvPoints, League.StatExtractors, columnWidth);
+            int columnWidth = this.lvPoints.Width / (League.ScoringStatExtractors.Count + 2);
+            this.AddColumns(this.lvStats, League.ScoringStatExtractors, columnWidth);
+            this.AddColumns(this.lvPoints, League.ScoringStatExtractors, columnWidth);
             this.lvPoints.Columns.Add("Total Points", columnWidth);
 
             foreach (TeamAnalysis team in leagueAnalysis.Teams)
@@ -31,7 +31,7 @@ namespace FantasyAuctionUI
                 ListViewItem pointsItem = new ListViewItem(team.Team.Name);
                 statsItem.Tag = team;
                 pointsItem.Tag = team;
-                foreach (IStatExtractor extractor in League.StatExtractors)
+                foreach (IStatExtractor extractor in League.ScoringStatExtractors)
                 {
                     statsItem.SubItems.Add(team.Stats[extractor.StatName].ToString());
                     pointsItem.SubItems.Add(team.Points[extractor.StatName].ToString());
@@ -67,52 +67,6 @@ namespace FantasyAuctionUI
             ListView lv = sender as ListView;
             object tag = lv.Columns[e.Column].Tag;
             lv.ListViewItemSorter = new StatColumnSorter(e.Column, tag == null || tag.ToString() != "asc");
-        }
-
-        private class StatColumnSorter : IComparer
-        {
-            private int col;
-            private bool moreIsBetter;
-
-            public StatColumnSorter()
-            {
-                col = 0;
-            }
-
-            public StatColumnSorter(int column, bool moreIsBetter)
-            {
-                this.col = column;
-                this.moreIsBetter = moreIsBetter;
-            }
-
-            public int Compare(object x, object y)
-            {
-                string xStr = ((ListViewItem)x).SubItems[col].Text;
-                string yStr = ((ListViewItem)y).SubItems[col].Text;
-
-                float xVal, yVal;
-                if (float.TryParse(xStr, out xVal) &&
-                    float.TryParse(yStr, out yVal))
-                {
-                    if (this.moreIsBetter)
-                    {
-                        return yVal.CompareTo(xVal);
-                    }
-                    else
-                    {
-                        return xVal.CompareTo(yVal);
-                    }
-                }
-
-                if (this.moreIsBetter)
-                {
-                    return String.Compare(yStr, xStr);
-                }
-                else
-                {
-                    return String.Compare(xStr, yStr);
-                }
-            }
         }
 
         private void OnLaunchTeamStatCenter(object sender, EventArgs e)

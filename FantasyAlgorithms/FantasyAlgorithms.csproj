@@ -59,6 +59,7 @@
     <Compile Include="IPlayerAnalyzer.cs" />
     <Compile Include="PlayerAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatAnalyzer.cs" />
     <Compile Include="TeamAnalysis.cs" />
   </ItemGroup>
   <ItemGroup>

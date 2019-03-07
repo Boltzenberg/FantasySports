@@ -7,6 +7,8 @@ namespace FantasyAlgorithms
     public interface IStatValue
     {
         float Value { get; }
+
+        int CountableValue { get; }
     }
 
     public interface IStatExtractor
