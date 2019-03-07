@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\Batter.cs" />
+    <Compile Include="DataModel\IPlayer.cs" />
+    <Compile Include="DataModel\League.cs" />
+    <Compile Include="DataModel\Pitcher.cs" />
+    <Compile Include="DataModel\Team.cs" />
     <Compile Include="Extractors.cs" />
     <Compile Include="Ratios.cs" />
     <Compile Include="RatioStatExtractor.cs" />
@@ -54,9 +62,12 @@
     <Compile Include="TeamAnalysis.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FantasyAuction\FantasyAuction.csproj">
-      <Project>{C22E7C45-E183-46DF-8951-5B39A51C3BFD}</Project>
-      <Name>FantasyAuction</Name>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ESPNProjections\ESPNProjections.csproj">
+      <Project>{1dd560c2-66ec-45c5-8dbe-10e571344c95}</Project>
+      <Name>ESPNProjections</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

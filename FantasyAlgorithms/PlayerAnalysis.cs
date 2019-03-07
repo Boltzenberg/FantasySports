@@ -1,4 +1,4 @@
-﻿using FantasyAuction.DataModel;
+﻿using FantasyAlgorithms.DataModel;
 
 namespace FantasyAlgorithms
 {

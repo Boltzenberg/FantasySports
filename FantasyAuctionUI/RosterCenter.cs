@@ -1,4 +1,4 @@
-﻿using FantasyAuction;
+﻿using FantasyAlgorithms.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -65,10 +65,10 @@ namespace FantasyAuctionUI
 
         private class Roster
         {
-            public FantasyAuction.DataModel.Team Team { get; private set; }
+            public Team Team { get; private set; }
             public List<string> Players { get; set; }
 
-            public Roster(FantasyAuction.DataModel.Team team)
+            public Roster(Team team)
             {
                 this.Team = team;
                 this.Players = new List<string>();

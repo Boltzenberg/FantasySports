@@ -1,46 +1,27 @@
 ﻿using FantasyAlgorithms;
-using FantasyAuction;
+using FantasyAlgorithms.DataModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
 {
     public partial class StatCenter : Form
     {
-        public static readonly List<IStatExtractor> StatExtractors = new List<IStatExtractor>()
-        {
-            new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
-            new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
-            new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
-            new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
-            new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
-            new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
-            new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
-            new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
-            new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.ERA),
-            new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.WHIP)
-        };
-        
         public StatCenter(League league)
         {
             InitializeComponent();
 
-            LeagueAnalysis leagueAnalysis = LeagueAnalysis.Analyze(league, StatExtractors);
+            LeagueAnalysis leagueAnalysis = LeagueAnalysis.Analyze(league, League.StatExtractors);
 
             this.lvStats.BeginUpdate();
             this.lvPoints.BeginUpdate();
 
-            int columnWidth = this.lvPoints.Width / (StatExtractors.Count + 2);
-            this.AddColumns(this.lvStats, StatExtractors, columnWidth);
-            this.AddColumns(this.lvPoints, StatExtractors, columnWidth);
+            int columnWidth = this.lvPoints.Width / (League.StatExtractors.Count + 2);
+            this.AddColumns(this.lvStats, League.StatExtractors, columnWidth);
+            this.AddColumns(this.lvPoints, League.StatExtractors, columnWidth);
             this.lvPoints.Columns.Add("Total Points", columnWidth);
 
             foreach (TeamAnalysis team in leagueAnalysis.Teams)
@@ -50,7 +31,7 @@ namespace FantasyAuctionUI
                 ListViewItem pointsItem = new ListViewItem(team.Team.Name);
                 statsItem.Tag = team;
                 pointsItem.Tag = team;
-                foreach (IStatExtractor extractor in StatExtractors)
+                foreach (IStatExtractor extractor in League.StatExtractors)
                 {
                     statsItem.SubItems.Add(team.Stats[extractor.StatName].ToString());
                     pointsItem.SubItems.Add(team.Points[extractor.StatName].ToString());

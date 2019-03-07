@@ -1,4 +1,4 @@
-﻿using FantasyAuction.DataModel;
+﻿using FantasyAlgorithms.DataModel;
 using System;
 using System.Collections.Generic;
 

@@ -1,9 +1,5 @@
-﻿using FantasyAuction.DataModel;
-using System;
+﻿using FantasyAlgorithms.DataModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FantasyAlgorithms
 {

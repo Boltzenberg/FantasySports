@@ -53,9 +53,9 @@
       <Project>{1dd560c2-66ec-45c5-8dbe-10e571344c95}</Project>
       <Name>ESPNProjections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FantasyAuction\FantasyAuction.csproj">
-      <Project>{c22e7c45-e183-46df-8951-5b39a51c3bfd}</Project>
-      <Name>FantasyAuction</Name>
+    <ProjectReference Include="..\FantasyAlgorithms\FantasyAlgorithms.csproj">
+      <Project>{8f7dff1b-1d1c-4fd1-912e-22a7ecef5414}</Project>
+      <Name>FantasyAlgorithms</Name>
     </ProjectReference>
     <ProjectReference Include="..\YahooFantasySports\YahooFantasySports.csproj">
       <Project>{ceb059f5-c8f0-4358-b3f0-4d6fba8b76b4}</Project>

@@ -120,10 +120,6 @@
       <Project>{8F7DFF1B-1D1C-4FD1-912E-22A7ECEF5414}</Project>
       <Name>FantasyAlgorithms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FantasyAuction\FantasyAuction.csproj">
-      <Project>{c22e7c45-e183-46df-8951-5b39a51c3bfd}</Project>
-      <Name>FantasyAuction</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

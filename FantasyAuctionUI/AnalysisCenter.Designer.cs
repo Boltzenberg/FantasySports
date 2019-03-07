@@ -42,6 +42,7 @@
             this.cbSP = new System.Windows.Forms.CheckBox();
             this.cbRP = new System.Windows.Forms.CheckBox();
             this.cbUndrafted = new System.Windows.Forms.CheckBox();
+            this.lvAnalysis = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // tbWordWheel
@@ -71,7 +72,7 @@
             this.wb.Location = new System.Drawing.Point(247, 39);
             this.wb.MinimumSize = new System.Drawing.Size(20, 20);
             this.wb.Name = "wb";
-            this.wb.Size = new System.Drawing.Size(817, 693);
+            this.wb.Size = new System.Drawing.Size(817, 374);
             this.wb.TabIndex = 2;
             // 
             // lblTeam
@@ -224,11 +225,23 @@
             this.cbUndrafted.UseVisualStyleBackColor = true;
             this.cbUndrafted.CheckedChanged += new System.EventHandler(this.OnUpdatePlayerFilter);
             // 
+            // lvAnalysis
+            // 
+            this.lvAnalysis.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvAnalysis.Location = new System.Drawing.Point(247, 419);
+            this.lvAnalysis.Name = "lvAnalysis";
+            this.lvAnalysis.Size = new System.Drawing.Size(817, 313);
+            this.lvAnalysis.TabIndex = 14;
+            this.lvAnalysis.UseCompatibleStateImageBehavior = false;
+            this.lvAnalysis.View = System.Windows.Forms.View.Details;
+            // 
             // AnalysisCenter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1308, 737);
+            this.Controls.Add(this.lvAnalysis);
             this.Controls.Add(this.cbUndrafted);
             this.Controls.Add(this.cbRP);
             this.Controls.Add(this.cbSP);
@@ -266,5 +279,6 @@
         private System.Windows.Forms.CheckBox cbSP;
         private System.Windows.Forms.CheckBox cbRP;
         private System.Windows.Forms.CheckBox cbUndrafted;
+        private System.Windows.Forms.ListView lvAnalysis;
     }
 }

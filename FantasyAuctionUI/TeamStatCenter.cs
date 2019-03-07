@@ -1,13 +1,6 @@
 ﻿using FantasyAlgorithms;
-using FantasyAuction.DataModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using FantasyAlgorithms.DataModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
@@ -20,9 +13,9 @@ namespace FantasyAuctionUI
             this.Text = string.Format("Team Stat Center: {0}", team.Team.Name);
 
             this.lv.BeginUpdate();
-            int columnWidth = lv.Width / (StatCenter.StatExtractors.Count + 1);
+            int columnWidth = lv.Width / (League.StatExtractors.Count + 1);
             lv.Columns.Add("Player Name", columnWidth);
-            foreach (IStatExtractor extractor in StatCenter.StatExtractors)
+            foreach (IStatExtractor extractor in League.StatExtractors)
             {
                 ColumnHeader column = new ColumnHeader();
                 column.Text = extractor.StatName;
@@ -33,7 +26,7 @@ namespace FantasyAuctionUI
             foreach (IPlayer player in team.AllPlayers)
             {
                 ListViewItem item = new ListViewItem(player.Name);
-                foreach (IStatExtractor extractor in StatCenter.StatExtractors)
+                foreach (IStatExtractor extractor in League.StatExtractors)
                 {
                     IStatValue value = extractor.Extract(player);
                     if (value != null)
@@ -49,7 +42,7 @@ namespace FantasyAuctionUI
             }
 
             ListViewItem total = new ListViewItem("Totals");
-            foreach (IStatExtractor extractor in StatCenter.StatExtractors)
+            foreach (IStatExtractor extractor in League.StatExtractors)
             {
                 float value;
                 if (team.Stats.TryGetValue(extractor.StatName, out value))

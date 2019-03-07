@@ -49,7 +49,6 @@
     <Compile Include="DataModel\Team.cs" />
     <Compile Include="League.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Year.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ESPNProjections\ESPNProjections.csproj">

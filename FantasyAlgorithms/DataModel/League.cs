@@ -1,15 +1,14 @@
-﻿using FantasyAuction.DataModel;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 
-namespace FantasyAuction
+namespace FantasyAlgorithms.DataModel
 {
     public class League
     {
-        public DataModel.Batter[] Batters;
-        public DataModel.Pitcher[] Pitchers;
-        public DataModel.Team[] Teams;
+        public Batter[] Batters;
+        public Pitcher[] Pitchers;
+        public Team[] Teams;
 
         public const int TeamCount = 10;
         public const int RosterableBatterCountPerTeam = 14;

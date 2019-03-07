@@ -1,5 +1,4 @@
-﻿using FantasyAuction;
-using FantasyAuction.DataModel;
+﻿using FantasyAlgorithms.DataModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,7 +37,7 @@ namespace FantasyAuctionUI
             }
         }
 
-        private void UpdateCurrentPlayer(FantasyAuction.DataModel.IPlayer newCurrentPlayer)
+        private void UpdateCurrentPlayer(IPlayer newCurrentPlayer)
         {
             this.WriteUIToCurrentPlayer();
             if (newCurrentPlayer != null)
@@ -52,7 +51,7 @@ namespace FantasyAuctionUI
 
         private void OnSelectPlayer(object sender, EventArgs e)
         {
-            UpdateCurrentPlayer(this.lbPlayers.SelectedItem as FantasyAuction.DataModel.IPlayer);
+            UpdateCurrentPlayer(this.lbPlayers.SelectedItem as IPlayer);
         }
 
         private void OnLoadData(object sender, EventArgs e)
