@@ -34,7 +34,7 @@ namespace FantasyAlgorithms
                     countOfPlayersWithTotalStat++;
                     runningTotal += totalStat;
                 }
-                this.analysis.Add(new Tuple<int, PlayerAnalysis>(playerStat, new PlayerAnalysis(player, this.stat)));
+                this.analysis.Add(new Tuple<int, PlayerAnalysis>(playerStat, new PlayerAnalysis(player, this.stat, playerStat)));
             }
 
             float avgPerPlayer = (float)runningTotal / countOfPlayersWithTotalStat;

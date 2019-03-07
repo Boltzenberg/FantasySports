@@ -32,7 +32,7 @@ namespace FantasyAlgorithms
                 int playerDenominator = this.denominatorExtractor(player);
                 this.totalNumerator += playerNumerator;
                 this.totalDenominator += playerDenominator;
-                this.analysis.Add(new Tuple<int, int, PlayerAnalysis>(playerNumerator, playerDenominator, new PlayerAnalysis(player, this.stat)));
+                this.analysis.Add(new Tuple<int, int, PlayerAnalysis>(playerNumerator, playerDenominator, new PlayerAnalysis(player, this.stat, (float)playerNumerator / (float)playerDenominator)));
             }
 
             this.analysis.Sort(this.Compare);

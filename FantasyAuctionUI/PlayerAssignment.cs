@@ -90,15 +90,17 @@ namespace FantasyAuctionUI
 
         private void OnLaunchStatCenter(object sender, EventArgs e)
         {
-            StatCenter2 sc = new StatCenter2(this.league.Clone());
-            sc.Show();
             new StatCenter(this.league.Clone()).Show();
         }
 
         private void OnLaunchRosterCenter(object sender, EventArgs e)
         {
-            RosterCenter rc = new RosterCenter(this.league.Clone());
-            rc.Show();
+            new RosterCenter(this.league.Clone()).Show();
+        }
+
+        private void OnLaunchAnalysisCenter(object sender, EventArgs e)
+        {
+            new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Owner == "Jon Rosenberg")).Show();
         }
 
         private void OnWordWheel(object sender, EventArgs e)
@@ -107,12 +109,6 @@ namespace FantasyAuctionUI
             this.lbPlayers.Items.Clear();
             this.lbPlayers.Items.AddRange(this.allPlayers.Where(x => x.Name.StartsWith(this.tbWordWheel.Text, StringComparison.OrdinalIgnoreCase)).ToArray());
             this.lbPlayers.EndUpdate();
-        }
-
-        private void OnLaunchAnalysisCenter(object sender, EventArgs e)
-        {
-            AnalysisCenter ac = new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Owner == "Jon Rosenberg"));
-            ac.Show();
         }
     }
 }

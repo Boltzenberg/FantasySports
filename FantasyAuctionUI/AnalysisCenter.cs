@@ -171,7 +171,7 @@ namespace FantasyAuctionUI
                     if (a != null)
                     {
                         float statValue = budgetPerStat * a.Percentage;
-                        sb.AppendFormat("<TD>Rank: {0}<BR>Percentage: {1}<BR>Value: {2}</TD>", a.Rank, a.Percentage, statValue);
+                        sb.AppendFormat("<TD>Raw Value: {0}<BR>Rank: {1}<BR>Percentage: {2}<BR>Value: {3}</TD>", a.RawValue, a.Rank, a.Percentage, statValue);
                         this.ProjectedValue += statValue;
                     }
                     else
