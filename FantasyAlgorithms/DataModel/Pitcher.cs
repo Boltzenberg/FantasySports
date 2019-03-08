@@ -12,6 +12,7 @@ namespace FantasyAlgorithms.DataModel
 
         public float AuctionPrice { get; set; }
         public string FantasyTeam { get; set; }
+        public string AssumedFantasyTeam { get; set; }
 
         public int ProjectedOutsRecorded { get; set; }
         public int ProjectedW { get; set; }

@@ -1,20 +1,18 @@
 ﻿using FantasyAlgorithms;
 using FantasyAlgorithms.DataModel;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
 {
     public partial class StatCenter : Form
     {
-        public StatCenter(League league)
+        public StatCenter(League league, Func<IPlayer, string> extractTeam)
         {
             InitializeComponent();
 
-            LeagueAnalysis leagueAnalysis = LeagueAnalysis.Analyze(league, League.ScoringStatExtractors);
+            LeagueAnalysis leagueAnalysis = LeagueAnalysis.Analyze(league, League.ScoringStatExtractors, extractTeam);
 
             this.lvStats.BeginUpdate();
             this.lvPoints.BeginUpdate();

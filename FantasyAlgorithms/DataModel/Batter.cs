@@ -20,6 +20,7 @@ namespace FantasyAlgorithms.DataModel
 
         public float AuctionPrice { get; set; }
         public string FantasyTeam { get; set; }
+        public string AssumedFantasyTeam { get; set; }
 
         public int ProjectedAB { get; set; }
         public int ProjectedR { get; set; }

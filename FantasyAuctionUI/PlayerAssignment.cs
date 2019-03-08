@@ -29,6 +29,11 @@ namespace FantasyAuctionUI
                     this.currentPlayer.FantasyTeam = this.tbFantasyTeam.Text;
                 }
 
+                if (string.IsNullOrEmpty(this.currentPlayer.FantasyTeam) && Array.Exists(this.league.Teams, x => x.Name == this.tbAssumedFantasyTeam.Text))
+                {
+                    this.currentPlayer.AssumedFantasyTeam = this.tbAssumedFantasyTeam.Text;
+                }
+
                 float price;
                 if (float.TryParse(this.tbAuctionPrice.Text, out price))
                 {
@@ -44,6 +49,7 @@ namespace FantasyAuctionUI
             {
                 this.tbAuctionPrice.Text = newCurrentPlayer.AuctionPrice.ToString();
                 this.tbFantasyTeam.Text = newCurrentPlayer.FantasyTeam;
+                this.tbAssumedFantasyTeam.Text = newCurrentPlayer.AssumedFantasyTeam;
                 this.wbOut.DocumentText = newCurrentPlayer.GetHTML();
             }
             this.currentPlayer = newCurrentPlayer;
@@ -89,7 +95,7 @@ namespace FantasyAuctionUI
 
         private void OnLaunchStatCenter(object sender, EventArgs e)
         {
-            new StatCenter(this.league.Clone()).Show();
+            new StatCenter(this.league.Clone(), p => p.FantasyTeam).Show();
         }
 
         private void OnLaunchRosterCenter(object sender, EventArgs e)
@@ -100,6 +106,11 @@ namespace FantasyAuctionUI
         private void OnLaunchAnalysisCenter(object sender, EventArgs e)
         {
             new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Owner == "Jon Rosenberg")).Show();
+        }
+
+        private void OnLaunchSpeculationCenter(object sender, EventArgs e)
+        {
+            new StatCenter(this.league.Clone(), p => string.IsNullOrEmpty(p.FantasyTeam) ? p.AssumedFantasyTeam : p.FantasyTeam).Show();
         }
 
         private void OnWordWheel(object sender, EventArgs e)

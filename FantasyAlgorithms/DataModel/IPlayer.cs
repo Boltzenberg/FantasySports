@@ -4,6 +4,7 @@
     {
         string Name { get; }
         string FantasyTeam { get; set; }
+        string AssumedFantasyTeam { get; set; }
         float AuctionPrice { get; set; }
         string GetHTML();
     }
