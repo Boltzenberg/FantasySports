@@ -42,6 +42,7 @@
             this.draftCenterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rosterCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.speculationCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbPlayers = new System.Windows.Forms.ListBox();
@@ -50,7 +51,6 @@
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.speculationCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +65,7 @@
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(213, 645);
             this.label3.Name = "label3";
@@ -75,7 +75,7 @@
             // 
             // label4
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(217, 671);
             this.label4.Name = "label4";
@@ -165,23 +165,30 @@
             // draftCenterToolStripMenuItem1
             // 
             this.draftCenterToolStripMenuItem1.Name = "draftCenterToolStripMenuItem1";
-            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
             this.draftCenterToolStripMenuItem1.Text = "Stat Center";
             this.draftCenterToolStripMenuItem1.Click += new System.EventHandler(this.OnLaunchStatCenter);
             // 
             // rosterCenterToolStripMenuItem
             // 
             this.rosterCenterToolStripMenuItem.Name = "rosterCenterToolStripMenuItem";
-            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.rosterCenterToolStripMenuItem.Text = "Roster Center";
             this.rosterCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchRosterCenter);
             // 
             // analysisCenterToolStripMenuItem
             // 
             this.analysisCenterToolStripMenuItem.Name = "analysisCenterToolStripMenuItem";
-            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.analysisCenterToolStripMenuItem.Text = "Analysis Center";
             this.analysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAnalysisCenter);
+            // 
+            // speculationCenterToolStripMenuItem
+            // 
+            this.speculationCenterToolStripMenuItem.Name = "speculationCenterToolStripMenuItem";
+            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.speculationCenterToolStripMenuItem.Text = "Speculation Center";
+            this.speculationCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSpeculationCenter);
             // 
             // fantasyDataToolStripMenuItem
             // 
@@ -236,6 +243,8 @@
             // 
             // tbAssumedFantasyTeam
             // 
+            this.tbAssumedFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbAssumedFantasyTeam.Location = new System.Drawing.Point(296, 695);
             this.tbAssumedFantasyTeam.Name = "tbAssumedFantasyTeam";
             this.tbAssumedFantasyTeam.Size = new System.Drawing.Size(372, 20);
@@ -243,20 +252,13 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(170, 698);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(123, 13);
             this.label2.TabIndex = 19;
             this.label2.Text = "Assumed Fantasy Team:";
-            // 
-            // speculationCenterToolStripMenuItem
-            // 
-            this.speculationCenterToolStripMenuItem.Name = "speculationCenterToolStripMenuItem";
-            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.speculationCenterToolStripMenuItem.Text = "Speculation Center";
-            this.speculationCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSpeculationCenter);
             // 
             // PlayerAssignment
             // 

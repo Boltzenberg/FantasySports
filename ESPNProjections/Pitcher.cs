@@ -28,9 +28,22 @@ namespace ESPNProjections
                     p.SeasonOutlook = (string)player["player"]["seasonOutlook"];
                     p.Positions = new List<int>(((JArray)player["player"]["eligibleSlots"]).Select(s => (int)s).ToArray());
                     p.Stats = new Dictionary<string, string>();
-                    foreach (string stat in Constants.Stats.Pitchers.All)
+                    bool foundStats = false;
+                    foreach (JToken statSet in player["player"]["stats"].Children())
                     {
-                        p.Stats[stat] = (string)player["player"]["stats"][0]["stats"][stat];
+                        foreach (string stat in Constants.Stats.Pitchers.All)
+                        {
+                            p.Stats[stat] = (string)statSet["stats"][stat];
+                            if (!string.IsNullOrEmpty(p.Stats[stat]))
+                            {
+                                foundStats = true;
+                            }
+                        }
+
+                        if (foundStats)
+                        {
+                            break;
+                        }
                     }
                     yield return p;
                 }

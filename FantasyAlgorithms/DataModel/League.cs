@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace FantasyAlgorithms.DataModel
 {
@@ -28,6 +29,13 @@ namespace FantasyAlgorithms.DataModel
             new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.WHIP)
         };
 
+        public static readonly List<IStatExtractor> SupportingStatExtractors = new List<IStatExtractor>()
+        {
+            new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
+            new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
+            new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
+        };
+
         public static League Create()
         {
             League league = new League();
@@ -43,34 +51,54 @@ namespace FantasyAlgorithms.DataModel
 
         public void UpdateProjections()
         {
-            Dictionary<string, DataModel.Batter> batterMap = new Dictionary<string, DataModel.Batter>();
-            foreach (var batter in LoadBatters())
+            Dictionary<string, Batter> batterMap = new Dictionary<string, Batter>();
+            foreach (var batter in this.Batters)
             {
                 batterMap[batter.Name] = batter;
             }
 
-            Dictionary<string, DataModel.Pitcher> pitcherMap = new Dictionary<string, DataModel.Pitcher>();
-            foreach (var pitcher in LoadPitchers())
+            Dictionary<string, Pitcher> pitcherMap = new Dictionary<string, Pitcher>();
+            foreach (var pitcher in this.Pitchers)
             {
                 pitcherMap[pitcher.Name] = pitcher;
             }
 
             foreach (ESPNProjections.Batter batter in ESPNProjections.Batter.Load())
             {
-                DataModel.Batter b;
+                Batter b;
                 if (batterMap.TryGetValue(batter.FullName, out b))
                 {
                     b.Update(batter);
                 }
+                else
+                {
+                    b = Batter.Create(batter);
+                    batterMap[b.Name] = b;
+                }
+            }
+
+            if (this.Batters.Length != batterMap.Count)
+            {
+                this.Batters = new List<Batter>(batterMap.Values).ToArray();
             }
 
             foreach (ESPNProjections.Pitcher pitcher in ESPNProjections.Pitcher.Load())
             {
-                DataModel.Pitcher p;
+                Pitcher p;
                 if (pitcherMap.TryGetValue(pitcher.FullName, out p))
                 {
                     p.Update(pitcher);
                 }
+                else
+                {
+                    p = Pitcher.Create(pitcher);
+                    pitcherMap[p.Name] = p;
+                }
+            }
+
+            if (this.Pitchers.Length != pitcherMap.Count)
+            {
+                this.Pitchers = new List<Pitcher>(pitcherMap.Values).ToArray();
             }
         }
 
@@ -101,12 +129,12 @@ namespace FantasyAlgorithms.DataModel
             }
         }
 
-        private static List<DataModel.Batter> LoadBatters()
+        private static List<Batter> LoadBatters()
         {
-            List<DataModel.Batter> batters = new List<DataModel.Batter>();
+            List<Batter> batters = new List<Batter>();
             foreach (ESPNProjections.Batter batter in ESPNProjections.Batter.Load())
             {
-                batters.Add(DataModel.Batter.Create(batter));
+                batters.Add(Batter.Create(batter));
             }
 
             return batters;
@@ -114,10 +142,10 @@ namespace FantasyAlgorithms.DataModel
 
         private static List<DataModel.Pitcher> LoadPitchers()
         {
-            List<DataModel.Pitcher> pitchers = new List<DataModel.Pitcher>();
+            List<Pitcher> pitchers = new List<Pitcher>();
             foreach (ESPNProjections.Pitcher pitcher in ESPNProjections.Pitcher.Load())
             {
-                pitchers.Add(DataModel.Pitcher.Create(pitcher));
+                pitchers.Add(Pitcher.Create(pitcher));
             }
 
             return pitchers;

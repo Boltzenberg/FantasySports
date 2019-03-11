@@ -66,9 +66,9 @@ namespace FantasyAuctionUI
             this.UpdateWB();
 
             this.lvAnalysis.BeginUpdate();
-            int columnWidth = this.lvAnalysis.Width / (League.ScoringStatExtractors.Count + 1);
+            int columnWidth = this.lvAnalysis.Width / (League.ScoringStatExtractors.Count + League.SupportingStatExtractors.Count + 1);
             this.lvAnalysis.Columns.Add("Player Name", columnWidth);
-            foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+            foreach (IStatExtractor extractor in League.ScoringStatExtractors.Union(League.SupportingStatExtractors))
             {
                 ColumnHeader column = new ColumnHeader();
                 column.Text = extractor.StatName;
@@ -93,7 +93,7 @@ namespace FantasyAuctionUI
             foreach (IPlayer player in players)
             {
                 ListViewItem item = new ListViewItem(player.Name);
-                foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+                foreach (IStatExtractor extractor in League.ScoringStatExtractors.Union(League.SupportingStatExtractors))
                 {
                     IStatValue value = extractor.Extract(player);
                     if (value != null)

@@ -29,7 +29,8 @@ namespace FantasyAuctionUI
                     this.currentPlayer.FantasyTeam = this.tbFantasyTeam.Text;
                 }
 
-                if (string.IsNullOrEmpty(this.currentPlayer.FantasyTeam) && Array.Exists(this.league.Teams, x => x.Name == this.tbAssumedFantasyTeam.Text))
+                if (string.IsNullOrEmpty(this.currentPlayer.FantasyTeam) && 
+                    (string.IsNullOrEmpty(this.tbAssumedFantasyTeam.Text) || Array.Exists(this.league.Teams, x => x.Name == this.tbAssumedFantasyTeam.Text)))
                 {
                     this.currentPlayer.AssumedFantasyTeam = this.tbAssumedFantasyTeam.Text;
                 }
