@@ -51,6 +51,7 @@
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.targetCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,7 +158,8 @@
             this.draftCenterToolStripMenuItem1,
             this.rosterCenterToolStripMenuItem,
             this.analysisCenterToolStripMenuItem,
-            this.speculationCenterToolStripMenuItem});
+            this.speculationCenterToolStripMenuItem,
+            this.targetCenterToolStripMenuItem});
             this.draftCenterToolStripMenuItem.Name = "draftCenterToolStripMenuItem";
             this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.draftCenterToolStripMenuItem.Text = "Centers";
@@ -165,28 +167,28 @@
             // draftCenterToolStripMenuItem1
             // 
             this.draftCenterToolStripMenuItem1.Name = "draftCenterToolStripMenuItem1";
-            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
+            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.draftCenterToolStripMenuItem1.Text = "Stat Center";
             this.draftCenterToolStripMenuItem1.Click += new System.EventHandler(this.OnLaunchStatCenter);
             // 
             // rosterCenterToolStripMenuItem
             // 
             this.rosterCenterToolStripMenuItem.Name = "rosterCenterToolStripMenuItem";
-            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rosterCenterToolStripMenuItem.Text = "Roster Center";
             this.rosterCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchRosterCenter);
             // 
             // analysisCenterToolStripMenuItem
             // 
             this.analysisCenterToolStripMenuItem.Name = "analysisCenterToolStripMenuItem";
-            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.analysisCenterToolStripMenuItem.Text = "Analysis Center";
             this.analysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAnalysisCenter);
             // 
             // speculationCenterToolStripMenuItem
             // 
             this.speculationCenterToolStripMenuItem.Name = "speculationCenterToolStripMenuItem";
-            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.speculationCenterToolStripMenuItem.Text = "Speculation Center";
             this.speculationCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSpeculationCenter);
             // 
@@ -260,6 +262,13 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Assumed Fantasy Team:";
             // 
+            // targetCenterToolStripMenuItem
+            // 
+            this.targetCenterToolStripMenuItem.Name = "targetCenterToolStripMenuItem";
+            this.targetCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.targetCenterToolStripMenuItem.Text = "Target Center";
+            this.targetCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchTargetCenter);
+            // 
             // PlayerAssignment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,6 +324,7 @@
         private System.Windows.Forms.TextBox tbAssumedFantasyTeam;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem speculationCenterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem targetCenterToolStripMenuItem;
     }
 }
 

@@ -73,6 +73,12 @@
       <DependentUpon>StatCenter.cs</DependentUpon>
     </Compile>
     <Compile Include="StatColumnSorter.cs" />
+    <Compile Include="TargetCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TargetCenter.Designer.cs">
+      <DependentUpon>TargetCenter.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeamStatCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     </Compile>
     <EmbeddedResource Include="StatCenter.resx">
       <DependentUpon>StatCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TargetCenter.resx">
+      <DependentUpon>TargetCenter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeamStatCenter.resx">
       <DependentUpon>TeamStatCenter.cs</DependentUpon>

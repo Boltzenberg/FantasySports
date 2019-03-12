@@ -114,6 +114,11 @@ namespace FantasyAuctionUI
             new StatCenter(this.league.Clone(), p => string.IsNullOrEmpty(p.FantasyTeam) ? p.AssumedFantasyTeam : p.FantasyTeam).Show();
         }
 
+        private void OnLaunchTargetCenter(object sender, EventArgs e)
+        {
+            new TargetCenter(this.league.Clone()).Show();
+        }
+
         private void OnWordWheel(object sender, EventArgs e)
         {
             this.lbPlayers.BeginUpdate();
