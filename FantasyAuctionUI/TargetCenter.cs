@@ -47,7 +47,7 @@ namespace FantasyAuctionUI
             League l = this.league.Clone();
             foreach (IPlayer p in l.AllPlayers)
             {
-                if (!string.IsNullOrEmpty(p.FantasyTeam))
+                if (!string.IsNullOrEmpty(p.FantasyTeam) || !this.PlayerPassesFilters(p))
                 {
                     continue;
                 }
@@ -78,6 +78,24 @@ namespace FantasyAuctionUI
             ListView lv = sender as ListView;
             object tag = lv.Columns[e.Column].Tag;
             lv.ListViewItemSorter = new StatColumnSorter(e.Column, tag == null || tag.ToString() != "asc");
+        }
+
+        private bool PlayerPassesFilters(IPlayer player)
+        {
+            Batter b = player as Batter;
+            if (cb1B.Checked && b != null && b.Is1B) return true;
+            if (cb2B.Checked && b != null && b.Is2B) return true;
+            if (cb3B.Checked && b != null && b.Is3B) return true;
+            if (cbSS.Checked && b != null && b.IsSS) return true;
+            if (cbOF.Checked && b != null && b.IsOF) return true;
+            if (cbC.Checked && b != null && b.IsC) return true;
+            if (cbUtil.Checked && b != null) return true;
+
+            Pitcher p = player as Pitcher;
+            if (cbSP.Checked && p != null && p.IsSP) return true;
+            if (cbRP.Checked && p != null && p.IsRP) return true;
+
+            return false;
         }
     }
 }
