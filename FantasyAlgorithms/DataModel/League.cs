@@ -63,37 +63,39 @@ namespace FantasyAlgorithms.DataModel
                 pitcherMap[pitcher.Name] = pitcher;
             }
 
-            foreach (ESPNProjections.Batter batter in ESPNProjections.Batter.Load())
+            foreach (ESPNProjections.Player player in ESPNProjections.Player.LoadProjections())
             {
-                Batter b;
-                if (batterMap.TryGetValue(batter.FullName, out b))
+                if (player.IsBatter)
                 {
-                    b.Update(batter);
+                    Batter b;
+                    if (batterMap.TryGetValue(player.FullName, out b))
+                    {
+                        b.Update(player);
+                    }
+                    else
+                    {
+                        b = Batter.Create(player);
+                        batterMap[b.Name] = b;
+                    }
                 }
                 else
                 {
-                    b = Batter.Create(batter);
-                    batterMap[b.Name] = b;
+                    Pitcher p;
+                    if (pitcherMap.TryGetValue(player.FullName, out p))
+                    {
+                        p.Update(player);
+                    }
+                    else
+                    {
+                        p = Pitcher.Create(player);
+                        pitcherMap[p.Name] = p;
+                    }
                 }
             }
 
             if (this.Batters.Length != batterMap.Count)
             {
                 this.Batters = new List<Batter>(batterMap.Values).ToArray();
-            }
-
-            foreach (ESPNProjections.Pitcher pitcher in ESPNProjections.Pitcher.Load())
-            {
-                Pitcher p;
-                if (pitcherMap.TryGetValue(pitcher.FullName, out p))
-                {
-                    p.Update(pitcher);
-                }
-                else
-                {
-                    p = Pitcher.Create(pitcher);
-                    pitcherMap[p.Name] = p;
-                }
             }
 
             if (this.Pitchers.Length != pitcherMap.Count)

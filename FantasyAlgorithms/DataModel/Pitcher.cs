@@ -14,6 +14,7 @@ namespace FantasyAlgorithms.DataModel
         public string FantasyTeam { get; set; }
         public string AssumedFantasyTeam { get; set; }
 
+        public DateTime ProjectionsLastUpdated { get; set; }
         public int ProjectedOutsRecorded { get; set; }
         public int ProjectedW { get; set; }
         public int ProjectedSV { get; set; }
@@ -50,11 +51,12 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Projected Walks</TD><TD>{0}</TD></TR>", this.ProjectedWalks);
             sb.AppendFormat("<TR><TD>Projected Earned Runs</TD><TD>{0}</TD></TR>", this.ProjectedER);
             sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
+            sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
             sb.AppendLine("</TABLE></BODY></HTML>");
             return sb.ToString();
         }
 
-        public static Pitcher Create(ESPNProjections.Pitcher pitcher)
+        public static Pitcher Create(ESPNProjections.IPlayer pitcher)
         {
             Pitcher p = new Pitcher();
             p.AuctionPrice = 0;
@@ -63,7 +65,7 @@ namespace FantasyAlgorithms.DataModel
             return p;
         }
 
-        public void Update(ESPNProjections.Pitcher pitcher)
+        public void Update(ESPNProjections.IPlayer pitcher)
         {
             this.Name = pitcher.FullName;
             this.IsSP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.SP);
@@ -75,10 +77,11 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedHits = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.H], 0);
             this.ProjectedWalks = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.BB], 0);
             this.ProjectedER = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.ER], 0);
-            this.ProjectedIP = pitcher.InningsPitched;
-            this.ProjectedERA = pitcher.ERA;
-            this.ProjectedWHIP = pitcher.WHIP;
+            this.ProjectedIP = ((int)this.ProjectedOutsRecorded / 3) + (this.ProjectedOutsRecorded % 3) / 10;
+            this.ProjectedERA = this.ProjectedER / (this.ProjectedOutsRecorded / 27);
+            this.ProjectedWHIP = (this.ProjectedHits + this.ProjectedWalks) / (this.ProjectedOutsRecorded / 3);
             this.SeasonOutlook = pitcher.SeasonOutlook;
+            this.ProjectionsLastUpdated = DateTime.Now;
         }
 
         public static Pitcher[] Load(string serialized)
@@ -96,7 +99,12 @@ namespace FantasyAlgorithms.DataModel
             int val;
             if (!Int32.TryParse(stat, out val))
             {
-                return defaultValue;
+                float fVal;
+                if (!float.TryParse(stat, out fVal))
+                {
+                    return defaultValue;
+                }
+                return (int)fVal;
             }
 
             return val;

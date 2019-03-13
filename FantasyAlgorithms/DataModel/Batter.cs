@@ -22,6 +22,7 @@ namespace FantasyAlgorithms.DataModel
         public string FantasyTeam { get; set; }
         public string AssumedFantasyTeam { get; set; }
 
+        public DateTime ProjectionsLastUpdated { get; set; }
         public int ProjectedAB { get; set; }
         public int ProjectedR { get; set; }
         public int ProjectedHR { get; set; }
@@ -54,11 +55,12 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Projected Steals</TD><TD>{0}</TD></TR>", this.ProjectedSB);
             sb.AppendFormat("<TR><TD>Projected OBP</TD><TD>{0}</TD></TR>", this.ProjectedOBP);
             sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
+            sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
             sb.AppendLine("</TABLE></BODY></HTML>");
             return sb.ToString();
         }
 
-        public static Batter Create(ESPNProjections.Batter batter)
+        public static Batter Create(ESPNProjections.IPlayer batter)
         {
             Batter b = new Batter();
             b.AuctionPrice = 0;
@@ -67,7 +69,7 @@ namespace FantasyAlgorithms.DataModel
             return b;
         }
 
-        public void Update(ESPNProjections.Batter batter)
+        public void Update(ESPNProjections.IPlayer batter)
         {
             this.Name = batter.FullName;
             this.IsC = batter.Positions.Contains(ESPNProjections.Constants.Positions.C);
@@ -83,6 +85,7 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedSB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.SB], 0);
             this.ProjectedOBP = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.OBP], 0.0f);
             this.SeasonOutlook = batter.SeasonOutlook;
+            this.ProjectionsLastUpdated = DateTime.Now;
         }
 
         public static Batter[] Load(string serialized)

@@ -22,6 +22,7 @@ namespace FantasyAuctionUI
             this.lvPlayers.BeginUpdate();
             int columnWidth = this.lvPlayers.Width / (League.ScoringStatExtractors.Count + 2);
             this.lvPlayers.Columns.Add("Player Name", columnWidth);
+            this.lvPlayers.Columns.Add("Stat Delta");
             foreach (IStatExtractor extractor in League.ScoringStatExtractors)
             {
                 ColumnHeader column = new ColumnHeader();
@@ -29,7 +30,6 @@ namespace FantasyAuctionUI
                 column.Width = columnWidth;
                 this.lvPlayers.Columns.Add(column);
             }
-            this.lvPlayers.Columns.Add("Stat Delta");
             this.lvPlayers.EndUpdate();
         }
 
@@ -58,6 +58,7 @@ namespace FantasyAuctionUI
                 TeamAnalysis ta = la.Teams.Find(t => t.Team.Name == baselineTA.Team.Name);
 
                 ListViewItem item = new ListViewItem(p.Name);
+                item.SubItems.Add(string.Empty); // total delta
                 float totalDelta = 0f;
                 foreach (IStatExtractor extractor in League.ScoringStatExtractors)
                 {
@@ -65,7 +66,7 @@ namespace FantasyAuctionUI
                     totalDelta += delta;
                     item.SubItems.Add(delta.ToString());
                 }
-                item.SubItems.Add(totalDelta.ToString());
+                item.SubItems[1].Text = totalDelta.ToString();
                 this.lvPlayers.Items.Add(item);
 
                 p.FantasyTeam = string.Empty;

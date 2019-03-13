@@ -29,7 +29,16 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            UpdateTeams();
+            LoadESPNProjections();
+            //UpdateTeams();
+        }
+
+        static void LoadESPNProjections()
+        {
+            foreach (ESPNProjections.Player player in ESPNProjections.Player.LoadProjections())
+            {
+                Console.WriteLine(player.FullName);
+            }
         }
 
         static void UpdateTeams()

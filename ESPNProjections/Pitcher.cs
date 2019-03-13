@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ESPNProjections
 {
-    public class Pitcher
+    public class Pitcher : IPlayer
     {
         public static IEnumerable<Pitcher> Load()
         {
