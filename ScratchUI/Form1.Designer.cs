@@ -60,8 +60,8 @@
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(688, 20);
             this.tbUrl.TabIndex = 2;
-            this.tbUrl.Text = "https://fantasysports.yahooapis.com/fantasy/v2/league/378.l.5418/players;start=0;" +
-    "count=10;sort=OR";
+            this.tbUrl.Text = "https://fantasysports.yahooapis.com/fantasy/v2/league/388.l.21375/players;start=0" +
+    ";count=10;sort=OR";
             // 
             // button2
             // 

@@ -18,6 +18,7 @@ namespace YahooFantasySports
         public static class Leagues
         {
             public const string Rounders2018 = "378.l.5418";
+            public const string Rounders2019 = "388.l.21375";
         }
     }
 }

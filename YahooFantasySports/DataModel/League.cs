@@ -17,7 +17,7 @@ namespace YahooFantasySports.DataModel
 
         public static async Task<League> Create(string leagueId)
         {
-            string leagueXml = await Services.Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2018));
+            string leagueXml = await Services.Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2019));
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(leagueXml);
             NSMgr nsmgr = new NSMgr(doc);
@@ -38,7 +38,7 @@ namespace YahooFantasySports.DataModel
                 rosterPositions.Add(RosterPosition.Create(node, nsmgr));
             }
 
-            string leagueTeams = await Services.Http.GetRawDataAsync(UrlGen.TeamsWithRostersUrl(Constants.Leagues.Rounders2018));
+            string leagueTeams = await Services.Http.GetRawDataAsync(UrlGen.TeamsWithRostersUrl(Constants.Leagues.Rounders2019));
             doc.LoadXml(leagueTeams);
             nsmgr = new NSMgr(doc);
             league = doc.SelectSingleNode(nsmgr.GetXPath("fantasy_content", "league"), nsmgr);

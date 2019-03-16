@@ -23,14 +23,15 @@ namespace Scratch
 
         static async Task GetLeagueStats()
         {
-            string stats = await Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2018));
+            string stats = await Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2019));
             Console.WriteLine(stats);
         }
 
         static void Main(string[] args)
         {
-            LoadESPNProjections();
+            //LoadESPNProjections();
             //UpdateTeams();
+            YahooStuff();
         }
 
         static void LoadESPNProjections()
@@ -79,7 +80,7 @@ namespace Scratch
         {
             InitializeAuthManager().Wait();
 
-            League league = League.Create(Constants.Leagues.Rounders2018).Result;
+            League league = League.Create(Constants.Leagues.Rounders2019).Result;
             Console.WriteLine("{0} ({1})", league.Name, league.Key);
 
             Console.WriteLine("Stats:");

@@ -21,8 +21,7 @@ namespace ScratchUI
 
         private void OnLoad(object sender, EventArgs e)
         {
-            YahooFantasySports.SignInDialog dlg = new YahooFantasySports.SignInDialog();
-            dlg.ShowDialog();
+            System.Diagnostics.Process.Start(YahooFantasySports.Services.AuthManager.GetAuthUrl().AbsoluteUri);
         }
 
         private async void button2_Click(object sender, EventArgs e)
@@ -32,7 +31,7 @@ namespace ScratchUI
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(YahooFantasySports.UrlGen.LeagueUrl(YahooFantasySports.Constants.Leagues.Rounders2018));
+            this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(YahooFantasySports.UrlGen.LeagueUrl(YahooFantasySports.Constants.Leagues.Rounders2019));
         }
 
         private string GetPositionList(YahooFantasySports.DataModel.Player player)
@@ -61,7 +60,7 @@ namespace ScratchUI
 
         private async void button4_Click(object sender, EventArgs e)
         {
-            List<YahooFantasySports.DataModel.Player> players = await YahooFantasySports.DataModel.Player.GetAllPlayers(YahooFantasySports.Constants.Leagues.Rounders2018);
+            List<YahooFantasySports.DataModel.Player> players = await YahooFantasySports.DataModel.Player.GetAllPlayers(YahooFantasySports.Constants.Leagues.Rounders2019);
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<HTML><BODY><TABLE><TR><TH>Key</TH><TH>Id</TH><TH>Name</TH><TH>Positions</TH><TH>Stats</TH></TR>");
