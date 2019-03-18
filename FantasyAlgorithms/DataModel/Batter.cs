@@ -8,6 +8,8 @@ namespace FantasyAlgorithms.DataModel
     public class Batter : IPlayer
     {
         public string Name { get; set; }
+        public int ESPNId { get; set; }
+        public string YahooId { get; set; }
         public bool IsC { get; set; }
         public bool Is1B { get; set; }
         public bool Is2B { get; set; }
@@ -43,6 +45,7 @@ namespace FantasyAlgorithms.DataModel
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<HTML><BODY><TABLE BORDER='1'>");
             sb.AppendFormat("<TR><TD>Name</TD><TD>{0}</TD></TR>", this.Name);
+            sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
             sb.AppendFormat("<TR><TD>Is C</TD><TD>{0}</TD></TR>", this.IsC ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is 1B</TD><TD>{0}</TD></TR>", this.Is1B ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is 2B</TD><TD>{0}</TD></TR>", this.Is2B ? "Yes" : "No");
@@ -90,6 +93,7 @@ namespace FantasyAlgorithms.DataModel
         public void Update(ESPNProjections.IPlayer batter)
         {
             this.Name = batter.FullName;
+            this.ESPNId = batter.Id;
             this.IsC = batter.Positions.Contains(ESPNProjections.Constants.Positions.C);
             this.Is1B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B1);
             this.Is2B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B2);
@@ -104,6 +108,11 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedOBP = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.OBP], 0.0f);
             this.SeasonOutlook = batter.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;
+        }
+
+        public void Update(YahooFantasySports.DataModel.Player player)
+        {
+            this.YahooId = player.Id;
         }
 
         public static Batter[] Load(string serialized)

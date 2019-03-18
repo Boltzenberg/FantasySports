@@ -24,6 +24,7 @@ namespace ESPNProjections
 
                     Pitcher p = new Pitcher();
                     p.FullName = (string)player["player"]["fullName"];
+                    p.Id = int.Parse((string)player["player"]["id"]);
                     p.Rank = (string)player["player"]["draftRanksByRankType"]["STANDARD"]["rank"];
                     p.SeasonOutlook = (string)player["player"]["seasonOutlook"];
                     p.Positions = new List<int>(((JArray)player["player"]["eligibleSlots"]).Select(s => (int)s).ToArray());
@@ -51,6 +52,7 @@ namespace ESPNProjections
         }
 
         public string FullName { get; private set; }
+        public int Id { get; private set; }
         public string Rank { get; private set; }
         public List<int> Positions { get; private set; }
         public Dictionary<string, string> Stats { get; private set; }

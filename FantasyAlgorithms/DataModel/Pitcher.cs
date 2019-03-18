@@ -8,6 +8,8 @@ namespace FantasyAlgorithms.DataModel
     public class Pitcher : IPlayer
     {
         public string Name { get; set; }
+        public int ESPNId { get; set; }
+        public string YahooId { get; set; }
         public bool IsSP { get; set; }
         public bool IsRP { get; set; }
 
@@ -39,6 +41,7 @@ namespace FantasyAlgorithms.DataModel
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<HTML><BODY><TABLE BORDER='1'>");
             sb.AppendFormat("<TR><TD>Name</TD><TD>{0}</TD></TR>", this.Name);
+            sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
             sb.AppendFormat("<TR><TD>Is SP</TD><TD>{0}</TD></TR>", this.IsSP ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is RP</TD><TD>{0}</TD></TR>", this.IsRP ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Projected Innings Pitched</TD><TD>{0}</TD></TR>", this.ProjectedIP);
@@ -78,6 +81,7 @@ namespace FantasyAlgorithms.DataModel
         public void Update(ESPNProjections.IPlayer pitcher)
         {
             this.Name = pitcher.FullName;
+            this.ESPNId = pitcher.Id;
             this.IsSP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.SP);
             this.IsRP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.RP);
             this.ProjectedOutsRecorded = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.OutsRecorded], 0);

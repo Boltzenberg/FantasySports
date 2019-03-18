@@ -6,6 +6,8 @@ namespace ESPNProjections
     {
         string FullName { get; }
 
+        int Id { get; }
+
         string Rank { get; }
 
         List<int> Positions { get; }

@@ -5,6 +5,8 @@ namespace FantasyAlgorithms.DataModel
     public interface IPlayer
     {
         string Name { get; }
+        int ESPNId { get; }
+        string YahooId { get; }
         string FantasyTeam { get; set; }
         string AssumedFantasyTeam { get; set; }
         float AuctionPrice { get; set; }
