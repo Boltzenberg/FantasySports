@@ -12,6 +12,7 @@ namespace FantasyAuctionUI
         private League league;
         private List<IPlayer> allPlayers;
         private IPlayer currentPlayer;
+        private string yahooAuthToken = string.Empty;
 
         public PlayerAssignment()
         {
@@ -93,9 +94,28 @@ namespace FantasyAuctionUI
             this.league.Save(Path.Combine(this.tbDir.Text, Constants.Files.League));
         }
 
-        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnReloadESPNData(object sender, EventArgs e)
         {
-            this.league.UpdateProjections();
+            this.league.UpdateESPNProjections();
+        }
+
+        private async void OnReloadYahooData(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(this.yahooAuthToken))
+            {
+                System.Diagnostics.Process.Start(YahooFantasySports.Services.AuthManager.GetAuthUrl().AbsoluteUri);
+                Prompt prompt = new Prompt("Enter Auth Code:");
+                if (prompt.ShowDialog() == DialogResult.OK)
+                {
+                    await YahooFantasySports.Services.AuthManager.Instance.InitializeAuthorizationAsync(prompt.Answer);
+                    this.yahooAuthToken = prompt.Answer;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.yahooAuthToken))
+            {
+                await this.league.UpdateYahooData();
+            }
         }
 
         private void OnLaunchStatCenter(object sender, EventArgs e)

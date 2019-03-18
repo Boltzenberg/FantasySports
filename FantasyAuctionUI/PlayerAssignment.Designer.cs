@@ -43,6 +43,7 @@
             this.rosterCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speculationCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.targetCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbPlayers = new System.Windows.Forms.ListBox();
@@ -51,7 +52,7 @@
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.targetCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadYahooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -167,35 +168,43 @@
             // draftCenterToolStripMenuItem1
             // 
             this.draftCenterToolStripMenuItem1.Name = "draftCenterToolStripMenuItem1";
-            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
             this.draftCenterToolStripMenuItem1.Text = "Stat Center";
             this.draftCenterToolStripMenuItem1.Click += new System.EventHandler(this.OnLaunchStatCenter);
             // 
             // rosterCenterToolStripMenuItem
             // 
             this.rosterCenterToolStripMenuItem.Name = "rosterCenterToolStripMenuItem";
-            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.rosterCenterToolStripMenuItem.Text = "Roster Center";
             this.rosterCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchRosterCenter);
             // 
             // analysisCenterToolStripMenuItem
             // 
             this.analysisCenterToolStripMenuItem.Name = "analysisCenterToolStripMenuItem";
-            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.analysisCenterToolStripMenuItem.Text = "Analysis Center";
             this.analysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAnalysisCenter);
             // 
             // speculationCenterToolStripMenuItem
             // 
             this.speculationCenterToolStripMenuItem.Name = "speculationCenterToolStripMenuItem";
-            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.speculationCenterToolStripMenuItem.Text = "Speculation Center";
             this.speculationCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSpeculationCenter);
+            // 
+            // targetCenterToolStripMenuItem
+            // 
+            this.targetCenterToolStripMenuItem.Name = "targetCenterToolStripMenuItem";
+            this.targetCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.targetCenterToolStripMenuItem.Text = "Target Center";
+            this.targetCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchTargetCenter);
             // 
             // fantasyDataToolStripMenuItem
             // 
             this.fantasyDataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.reloadToolStripMenuItem});
+            this.reloadToolStripMenuItem,
+            this.reloadYahooToolStripMenuItem});
             this.fantasyDataToolStripMenuItem.Name = "fantasyDataToolStripMenuItem";
             this.fantasyDataToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
             this.fantasyDataToolStripMenuItem.Text = "Fantasy Data";
@@ -203,9 +212,9 @@
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.reloadToolStripMenuItem.Text = "Reload";
-            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reloadToolStripMenuItem.Text = "Reload ESPN";
+            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.OnReloadESPNData);
             // 
             // lbPlayers
             // 
@@ -262,12 +271,12 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Assumed Fantasy Team:";
             // 
-            // targetCenterToolStripMenuItem
+            // reloadYahooToolStripMenuItem
             // 
-            this.targetCenterToolStripMenuItem.Name = "targetCenterToolStripMenuItem";
-            this.targetCenterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.targetCenterToolStripMenuItem.Text = "Target Center";
-            this.targetCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchTargetCenter);
+            this.reloadYahooToolStripMenuItem.Name = "reloadYahooToolStripMenuItem";
+            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reloadYahooToolStripMenuItem.Text = "Reload Yahoo";
+            this.reloadYahooToolStripMenuItem.Click += new System.EventHandler(this.OnReloadYahooData);
             // 
             // PlayerAssignment
             // 
@@ -325,6 +334,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem speculationCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem targetCenterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadYahooToolStripMenuItem;
     }
 }
 

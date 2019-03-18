@@ -14,7 +14,8 @@ namespace YahooFantasySports.DataModel
         public string FirstName { get; }
         public string LastName { get; }
         public string Name { get { return FirstName + " " + LastName; } }
-        public IReadOnlyList<string> Positions { get; }
+        public string Status { get; }
+        public List<string> Positions { get; }
         public IReadOnlyDictionary<int, string> Stats { get; }
         public IReadOnlyDictionary<int, StatValue> StatValues { get; private set; }
 
@@ -50,6 +51,7 @@ namespace YahooFantasySports.DataModel
             string positionType = nsmgr.GetValue(node, "position_type");
             string playerKey = nsmgr.GetValue(node, "player_key");
             string playerId = nsmgr.GetValue(node, "player_id");
+            string status = nsmgr.GetValue(node, "status");
             string firstName = nsmgr.GetValue(node, "name", "ascii_first");
             string lastName = nsmgr.GetValue(node, "name", "ascii_last");
 
@@ -75,16 +77,17 @@ namespace YahooFantasySports.DataModel
                 }
             }
 
-            return new Player(playerKey, playerId, positionType == "B", firstName, lastName, positions, stats);
+            return new Player(playerKey, playerId, positionType == "B", firstName, lastName, status, positions, stats);
         }
 
-        private Player(string key, string id, bool isBatter, string firstName, string lastName, IReadOnlyList<string> positions, IReadOnlyDictionary<int, string> stats)
+        private Player(string key, string id, bool isBatter, string firstName, string lastName, string status, List<string> positions, IReadOnlyDictionary<int, string> stats)
         {
             this.Key = key;
             this.Id = id;
             this.IsBatter = isBatter;
             this.FirstName = firstName;
             this.LastName = lastName;
+            this.Status = string.IsNullOrEmpty(status) ? "OK" : status;
             this.Positions = positions;
             this.Stats = stats;
         }

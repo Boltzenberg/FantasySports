@@ -22,7 +22,7 @@ namespace FantasyAuctionUI
             {
                 if (!string.IsNullOrEmpty(player.FantasyTeam))
                 {
-                    teamsMap[player.FantasyTeam].Players.Add(string.Format("{0}: {1,12:C2}", player.Name, player.AuctionPrice));
+                    teamsMap[player.FantasyTeam].Players.Add(string.Format("{0} ({1}): {2,12:C2}", player.Name, player.Status, player.AuctionPrice));
                 }
             }
 

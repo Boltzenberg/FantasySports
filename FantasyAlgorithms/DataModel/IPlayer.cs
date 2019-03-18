@@ -12,5 +12,9 @@ namespace FantasyAlgorithms.DataModel
         float AuctionPrice { get; set; }
         string GetHTML();
         IEnumerable<Position> Positions { get; }
+        string Status { get; }
+
+        void Update(ESPNProjections.IPlayer batter);
+        void Update(YahooFantasySports.DataModel.Player player);
     }
 }

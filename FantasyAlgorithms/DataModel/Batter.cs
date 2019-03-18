@@ -34,6 +34,7 @@ namespace FantasyAlgorithms.DataModel
         public int ProjectedWalksPlusHits { get { return (int)(this.ProjectedAB * this.ProjectedOBP); } }
         public float ProjectedOBP { get; set; }
         public string SeasonOutlook { get; set; }
+        public string Status { get; set; }
 
         public override string ToString()
         {
@@ -46,6 +47,7 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendLine("<HTML><BODY><TABLE BORDER='1'>");
             sb.AppendFormat("<TR><TD>Name</TD><TD>{0}</TD></TR>", this.Name);
             sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
+            sb.AppendFormat("<TR><TD>Yahoo ID</TD><TD>{0}</TD></TR>", this.YahooId);
             sb.AppendFormat("<TR><TD>Is C</TD><TD>{0}</TD></TR>", this.IsC ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is 1B</TD><TD>{0}</TD></TR>", this.Is1B ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is 2B</TD><TD>{0}</TD></TR>", this.Is2B ? "Yes" : "No");
@@ -58,6 +60,7 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Projected RBIs</TD><TD>{0}</TD></TR>", this.ProjectedRBI);
             sb.AppendFormat("<TR><TD>Projected Steals</TD><TD>{0}</TD></TR>", this.ProjectedSB);
             sb.AppendFormat("<TR><TD>Projected OBP</TD><TD>{0}</TD></TR>", this.ProjectedOBP);
+            sb.AppendFormat("<TR><TD>Player Status</TD><TD>{0}</TD></TR>", this.Status);
             sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
             sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
             sb.AppendLine("</TABLE></BODY></HTML>");
@@ -94,12 +97,12 @@ namespace FantasyAlgorithms.DataModel
         {
             this.Name = batter.FullName;
             this.ESPNId = batter.Id;
-            this.IsC = batter.Positions.Contains(ESPNProjections.Constants.Positions.C);
-            this.Is1B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B1);
-            this.Is2B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B2);
-            this.IsSS = batter.Positions.Contains(ESPNProjections.Constants.Positions.SS);
-            this.Is3B = batter.Positions.Contains(ESPNProjections.Constants.Positions.B3);
-            this.IsOF = batter.Positions.Contains(ESPNProjections.Constants.Positions.OF);
+            this.IsC |= batter.Positions.Contains(ESPNProjections.Constants.Positions.C);
+            this.Is1B |= batter.Positions.Contains(ESPNProjections.Constants.Positions.B1);
+            this.Is2B |= batter.Positions.Contains(ESPNProjections.Constants.Positions.B2);
+            this.IsSS |= batter.Positions.Contains(ESPNProjections.Constants.Positions.SS);
+            this.Is3B |= batter.Positions.Contains(ESPNProjections.Constants.Positions.B3);
+            this.IsOF |= batter.Positions.Contains(ESPNProjections.Constants.Positions.OF);
             this.ProjectedAB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.AB], 0);
             this.ProjectedR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.R], 0);
             this.ProjectedHR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.HR], 0);
@@ -113,6 +116,13 @@ namespace FantasyAlgorithms.DataModel
         public void Update(YahooFantasySports.DataModel.Player player)
         {
             this.YahooId = player.Id;
+            this.Status = player.Status;
+            this.IsC |= player.Positions.Contains(YahooFantasySports.Constants.Positions.Catcher);
+            this.Is1B |= player.Positions.Contains(YahooFantasySports.Constants.Positions.FirstBase);
+            this.Is2B |= player.Positions.Contains(YahooFantasySports.Constants.Positions.SecondBase);
+            this.IsSS |= player.Positions.Contains(YahooFantasySports.Constants.Positions.Shortstop);
+            this.Is3B |= player.Positions.Contains(YahooFantasySports.Constants.Positions.ThridBase);
+            this.IsOF |= player.Positions.Contains(YahooFantasySports.Constants.Positions.Outfield);
         }
 
         public static Batter[] Load(string serialized)

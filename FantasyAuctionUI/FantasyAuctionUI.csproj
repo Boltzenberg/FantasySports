@@ -52,6 +52,12 @@
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Prompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prompt.Designer.cs">
+      <DependentUpon>Prompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="RosterCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     </Compile>
     <EmbeddedResource Include="AnalysisCenter.resx">
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prompt.resx">
+      <DependentUpon>Prompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RosterCenter.resx">
       <DependentUpon>RosterCenter.cs</DependentUpon>
@@ -129,6 +138,10 @@
     <ProjectReference Include="..\FantasyAlgorithms\FantasyAlgorithms.csproj">
       <Project>{8F7DFF1B-1D1C-4FD1-912E-22A7ECEF5414}</Project>
       <Name>FantasyAlgorithms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YahooFantasySports\YahooFantasySports.csproj">
+      <Project>{ceb059f5-c8f0-4358-b3f0-4d6fba8b76b4}</Project>
+      <Name>YahooFantasySports</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

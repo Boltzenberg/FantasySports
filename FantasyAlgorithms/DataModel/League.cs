@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FantasyAlgorithms.DataModel
 {
@@ -71,7 +72,7 @@ namespace FantasyAlgorithms.DataModel
             return JsonConvert.DeserializeObject<League>(File.ReadAllText(fileName));
         }
 
-        public void UpdateProjections()
+        public void UpdateESPNProjections()
         {
             Dictionary<string, Batter> batterMap = new Dictionary<string, Batter>();
             foreach (var batter in this.Batters)
@@ -123,6 +124,42 @@ namespace FantasyAlgorithms.DataModel
             if (this.Pitchers.Length != pitcherMap.Count)
             {
                 this.Pitchers = new List<Pitcher>(pitcherMap.Values).ToArray();
+            }
+        }
+
+        public async Task UpdateYahooData()
+        {
+            foreach (YahooFantasySports.DataModel.Player yPlayer in await YahooFantasySports.DataModel.Player.GetAllPlayers(YahooFantasySports.Constants.Leagues.Rounders2019))
+            {
+                IPlayer player = this.AllPlayers.FirstOrDefault(p => p.YahooId == yPlayer.Id);
+                if (player != null)
+                {
+                    player.Update(yPlayer);
+                }
+                else
+                {
+                    List<IPlayer> sameName = new List<IPlayer>(this.AllPlayers.Where(p => p.Name == yPlayer.Name));
+                    if (sameName.Count == 0)
+                    {
+                        continue;
+                    }
+                    if (sameName.Count == 1)
+                    {
+                        sameName[0].Update(yPlayer);
+                    }
+                    else
+                    {
+                        List<IPlayer> samePosition = new List<IPlayer>(sameName.Where(p => yPlayer.IsBatter == !p.Positions.Contains(Position.P)));
+                        if (samePosition.Count == 1)
+                        {
+                            samePosition[0].Update(yPlayer);
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine(string.Format("Couldn't match player {0}", yPlayer.Name));
+                        }
+                    }
+                }
             }
         }
 

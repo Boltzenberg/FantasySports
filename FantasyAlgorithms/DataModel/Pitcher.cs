@@ -26,6 +26,7 @@ namespace FantasyAlgorithms.DataModel
         public int ProjectedWalks { get; set; }
         public int ProjectedER { get; set; }
         public string SeasonOutlook { get; set; }
+        public string Status { get; set; }
 
         public float ProjectedIP { get; set; }
         public float ProjectedERA { get; set; }
@@ -42,6 +43,7 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendLine("<HTML><BODY><TABLE BORDER='1'>");
             sb.AppendFormat("<TR><TD>Name</TD><TD>{0}</TD></TR>", this.Name);
             sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
+            sb.AppendFormat("<TR><TD>Yahoo ID</TD><TD>{0}</TD></TR>", this.YahooId);
             sb.AppendFormat("<TR><TD>Is SP</TD><TD>{0}</TD></TR>", this.IsSP ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is RP</TD><TD>{0}</TD></TR>", this.IsRP ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Projected Innings Pitched</TD><TD>{0}</TD></TR>", this.ProjectedIP);
@@ -54,6 +56,7 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Projected Hits</TD><TD>{0}</TD></TR>", this.ProjectedHits);
             sb.AppendFormat("<TR><TD>Projected Walks</TD><TD>{0}</TD></TR>", this.ProjectedWalks);
             sb.AppendFormat("<TR><TD>Projected Earned Runs</TD><TD>{0}</TD></TR>", this.ProjectedER);
+            sb.AppendFormat("<TR><TD>Player Status</TD><TD>{0}</TD></TR>", this.Status);
             sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
             sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
             sb.AppendLine("</TABLE></BODY></HTML>");
@@ -96,6 +99,12 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedWHIP = (this.ProjectedHits + this.ProjectedWalks) / (this.ProjectedOutsRecorded / 3);
             this.SeasonOutlook = pitcher.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;
+        }
+
+        public void Update(YahooFantasySports.DataModel.Player player)
+        {
+            this.YahooId = player.Id;
+            this.Status = player.Status;
         }
 
         public static Pitcher[] Load(string serialized)

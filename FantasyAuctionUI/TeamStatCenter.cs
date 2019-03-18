@@ -13,8 +13,9 @@ namespace FantasyAuctionUI
             this.Text = string.Format("Team Stat Center: {0}", team.Team.Name);
 
             this.lv.BeginUpdate();
-            int columnWidth = lv.Width / (League.ScoringStatExtractors.Count + 1);
+            int columnWidth = lv.Width / (League.ScoringStatExtractors.Count + 2);
             lv.Columns.Add("Player Name", columnWidth);
+            lv.Columns.Add("Player Status", columnWidth);
             foreach (IStatExtractor extractor in League.ScoringStatExtractors)
             {
                 ColumnHeader column = new ColumnHeader();
@@ -23,12 +24,11 @@ namespace FantasyAuctionUI
                 lv.Columns.Add(column);
             }
 
-            //Roster optimalRoster = League.GetEmptyRoster(); // team.GetOptimalRoster(League.ScoringStatExtractors);
             Dictionary<string, int> statToPlayerCount = new Dictionary<string, int>();
             foreach (IPlayer player in team.Players)
             {
                 ListViewItem item = new ListViewItem(player.Name);
-                //item.SubItems.Add(Positions.ToString(optimalRoster.GetPositionForPlayer(player)));
+                item.SubItems.Add(player.Status);
                 foreach (IStatExtractor extractor in League.ScoringStatExtractors)
                 {
                     IStatValue value = extractor.Extract(player);
@@ -54,8 +54,8 @@ namespace FantasyAuctionUI
 
             ListViewItem total = new ListViewItem("Totals");
             ListViewItem average = new ListViewItem("Average");
-            // total.SubItems.Add(string.Empty); // position
-            // average.SubItems.Add(string.Empty); // position
+            total.SubItems.Add(string.Empty); // player status
+            average.SubItems.Add(string.Empty); // player status
             foreach (IStatExtractor extractor in League.ScoringStatExtractors)
             {
                 float value;

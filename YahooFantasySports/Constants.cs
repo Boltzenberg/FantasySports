@@ -27,6 +27,15 @@ namespace YahooFantasySports
             {
                 "C", "1B", "2B", "SS", "3B", "OF", "P", "Util"
             };
+
+            public const string Catcher = "C";
+            public const string FirstBase = "1B";
+            public const string SecondBase = "2B";
+            public const string Shortstop = "SS";
+            public const string ThridBase = "3B";
+            public const string Outfield = "OF";
+            public const string Pitcher = "P";
+            public const string Utility = "Util";
         }
     }
 }
