@@ -24,7 +24,7 @@ namespace FantasyAuctionUI
         {
             if (this.currentPlayer != null)
             {
-                if (Array.Exists(this.league.Teams, x => x.Name == this.tbFantasyTeam.Text))
+                if (string.IsNullOrEmpty(this.tbFantasyTeam.Text) || Array.Exists(this.league.Teams, x => x.Name == this.tbFantasyTeam.Text))
                 {
                     this.currentPlayer.FantasyTeam = this.tbFantasyTeam.Text;
                 }
@@ -39,6 +39,10 @@ namespace FantasyAuctionUI
                 if (float.TryParse(this.tbAuctionPrice.Text, out price))
                 {
                     this.currentPlayer.AuctionPrice = price;
+                }
+                else if (string.IsNullOrEmpty(this.tbAuctionPrice.Text))
+                {
+                    this.currentPlayer.AuctionPrice = 0.0f;
                 }
             }
         }

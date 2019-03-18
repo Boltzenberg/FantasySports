@@ -96,13 +96,14 @@ namespace ESPNProjections
 
         public static class Positions
         {
-            public const int DH = 11;
+            public const int DH = 12;
             public const int C = 0;
             public const int B1 = 1;
             public const int B2 = 2;
             public const int B3 = 3;
             public const int SS = 4;
             public const int OF = 5;
+            public const int P = 13;
             public const int SP = 14;
             public const int RP = 15;
 
@@ -111,12 +112,13 @@ namespace ESPNProjections
                 switch (position)
                 {
                     case DH: return "DH";
-                    case C: return "C";
+                    case C:  return "C";
                     case B1: return "1B";
                     case B2: return "2B";
                     case B3: return "3B";
                     case SS: return "SS";
                     case OF: return "OF";
+                    case P:  return "P";
                     case SP: return "SP";
                     case RP: return "RP";
                 }

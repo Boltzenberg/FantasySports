@@ -36,6 +36,28 @@ namespace FantasyAlgorithms.DataModel
             new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
         };
 
+        public static Roster GetEmptyRoster()
+        {
+            Roster emptyRoster = new Roster(new Dictionary<Position, int>()
+            {
+                { Position.C, 2 },
+                { Position.B1, 1 },
+                { Position.B2, 1 },
+                { Position.B3, 1 },
+                { Position.SS, 1 },
+                { Position.CI, 1 },
+                { Position.MI, 1 },
+                { Position.OF, 4 },
+                { Position.Util, 2 },
+                { Position.P, 9 },
+                { Position.BN, 5 },
+                { Position.DL, 2 },
+                { Position.NA, 1 },
+            });
+
+            return emptyRoster;
+        }
+
         public static League Create()
         {
             League league = new League();

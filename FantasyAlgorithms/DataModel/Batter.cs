@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace FantasyAlgorithms.DataModel
@@ -58,6 +59,23 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
             sb.AppendLine("</TABLE></BODY></HTML>");
             return sb.ToString();
+        }
+
+        public IEnumerable<Position> Positions
+        {
+            get
+            {
+                if (this.IsC) yield return Position.C;
+                if (this.Is1B) yield return Position.B1;
+                if (this.Is2B) yield return Position.B2;
+                if (this.IsSS) yield return Position.SS;
+                if (this.Is3B) yield return Position.B3;
+                if (this.Is3B || this.Is1B) yield return Position.CI;
+                if (this.Is2B || this.IsSS) yield return Position.MI;
+                if (this.IsOF) yield return Position.OF;
+                yield return Position.Util;
+                yield return Position.BN;
+            }
         }
 
         public static Batter Create(ESPNProjections.IPlayer batter)

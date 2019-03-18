@@ -3,13 +3,14 @@ using System.Collections.Generic;
 
 namespace FantasyAlgorithms
 {
-    public class TeamAnalysis
+    public class TeamAnalysis : IRoster
     {
         public Team Team { get; private set; }
         public List<Batter> Batters { get; private set; }
         public List<Pitcher> Pitchers { get; private set; }
-        public Dictionary<string, float> Stats { get; private set; }
-        public Dictionary<string, float> Points { get; private set; }
+        public IDictionary<string, float> Stats { get; private set; }
+        public IDictionary<string, float> Points { get; private set; }
+        public string TeamName { get { return this.Team.Name; } }
 
         public float TotalPoints
         {
@@ -25,7 +26,7 @@ namespace FantasyAlgorithms
             }
         }
 
-        public IEnumerable<IPlayer> AllPlayers
+        public IEnumerable<IPlayer> Players
         {
             get
             {
@@ -39,6 +40,16 @@ namespace FantasyAlgorithms
                     yield return p;
                 }
             }
+        }
+
+        public Roster GetOptimalRoster(List<IStatExtractor> extractors)
+        {
+            Roster empty = League.GetEmptyRoster();
+            Dictionary<string, Roster> allRosters = empty.AddPlayers(this.Players);
+            List<IRoster> teams = new List<IRoster>(allRosters.Values);
+            RosterAnalysis.AssignStatsAndPoints(teams, extractors);
+            teams.Sort((x, y) => RosterAnalysis.ExtractTotalPoints(y).CompareTo(RosterAnalysis.ExtractTotalPoints(x)));
+            return teams[0] as Roster;
         }
 
         internal TeamAnalysis(Team team)

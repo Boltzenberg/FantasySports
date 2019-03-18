@@ -47,8 +47,12 @@
     <Compile Include="DataModel\IPlayer.cs" />
     <Compile Include="DataModel\League.cs" />
     <Compile Include="DataModel\Pitcher.cs" />
+    <Compile Include="DataModel\Position.cs" />
+    <Compile Include="DataModel\Roster.cs" />
     <Compile Include="DataModel\Team.cs" />
+    <Compile Include="DataSourceMerge.cs" />
     <Compile Include="Extractors.cs" />
+    <Compile Include="IRoster.cs" />
     <Compile Include="Ratios.cs" />
     <Compile Include="RatioStatExtractor.cs" />
     <Compile Include="CountingStatExtractor.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="IPlayerAnalyzer.cs" />
     <Compile Include="PlayerAnalysis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RosterAnalysis.cs" />
     <Compile Include="StatAnalyzer.cs" />
     <Compile Include="TeamAnalysis.cs" />
   </ItemGroup>
@@ -69,6 +74,10 @@
     <ProjectReference Include="..\ESPNProjections\ESPNProjections.csproj">
       <Project>{1dd560c2-66ec-45c5-8dbe-10e571344c95}</Project>
       <Name>ESPNProjections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YahooFantasySports\YahooFantasySports.csproj">
+      <Project>{ceb059f5-c8f0-4358-b3f0-4d6fba8b76b4}</Project>
+      <Name>YahooFantasySports</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

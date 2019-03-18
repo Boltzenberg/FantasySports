@@ -36,7 +36,7 @@ namespace FantasyAuctionUI
         private void OnTeamSelected(object sender, EventArgs e)
         {
             LeagueAnalysis baselineLA = LeagueAnalysis.Analyze(this.league, League.ScoringStatExtractors, p => p.FantasyTeam);
-            TeamAnalysis baselineTA = baselineLA.Teams.Find(t => t.Team.Name == this.cbTeams.Items[this.cbTeams.SelectedIndex].ToString());
+            IRoster baselineTA = baselineLA.Teams.Find(t => t.TeamName == this.cbTeams.Items[this.cbTeams.SelectedIndex].ToString());
             if (baselineTA == null)
             {
                 return;
@@ -52,10 +52,10 @@ namespace FantasyAuctionUI
                     continue;
                 }
 
-                p.FantasyTeam = baselineTA.Team.Name;
+                p.FantasyTeam = baselineTA.TeamName;
 
                 LeagueAnalysis la = LeagueAnalysis.Analyze(l, League.ScoringStatExtractors, pb => pb.FantasyTeam);
-                TeamAnalysis ta = la.Teams.Find(t => t.Team.Name == baselineTA.Team.Name);
+                IRoster ta = la.Teams.Find(t => t.TeamName == baselineTA.TeamName);
 
                 ListViewItem item = new ListViewItem(p.Name);
                 item.SubItems.Add(string.Empty); // total delta

@@ -23,10 +23,12 @@ namespace FantasyAuctionUI
                 lv.Columns.Add(column);
             }
 
+            //Roster optimalRoster = League.GetEmptyRoster(); // team.GetOptimalRoster(League.ScoringStatExtractors);
             Dictionary<string, int> statToPlayerCount = new Dictionary<string, int>();
-            foreach (IPlayer player in team.AllPlayers)
+            foreach (IPlayer player in team.Players)
             {
                 ListViewItem item = new ListViewItem(player.Name);
+                //item.SubItems.Add(Positions.ToString(optimalRoster.GetPositionForPlayer(player)));
                 foreach (IStatExtractor extractor in League.ScoringStatExtractors)
                 {
                     IStatValue value = extractor.Extract(player);
@@ -52,6 +54,8 @@ namespace FantasyAuctionUI
 
             ListViewItem total = new ListViewItem("Totals");
             ListViewItem average = new ListViewItem("Average");
+            // total.SubItems.Add(string.Empty); // position
+            // average.SubItems.Add(string.Empty); // position
             foreach (IStatExtractor extractor in League.ScoringStatExtractors)
             {
                 float value;

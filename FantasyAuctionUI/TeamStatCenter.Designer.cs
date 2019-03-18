@@ -38,7 +38,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lv.Location = new System.Drawing.Point(12, 12);
             this.lv.Name = "lv";
-            this.lv.Size = new System.Drawing.Size(1182, 652);
+            this.lv.Size = new System.Drawing.Size(1182, 663);
             this.lv.TabIndex = 1;
             this.lv.UseCompatibleStateImageBehavior = false;
             this.lv.View = System.Windows.Forms.View.Details;
@@ -47,7 +47,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1206, 676);
+            this.ClientSize = new System.Drawing.Size(1206, 687);
             this.Controls.Add(this.lv);
             this.Name = "TeamStatCenter";
             this.Text = "Team Stat Center";

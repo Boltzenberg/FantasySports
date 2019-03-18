@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace FantasyAlgorithms.DataModel
@@ -54,6 +55,15 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
             sb.AppendLine("</TABLE></BODY></HTML>");
             return sb.ToString();
+        }
+
+        public IEnumerable<Position> Positions
+        {
+            get
+            {
+                yield return Position.P;
+                yield return Position.BN;
+            }
         }
 
         public static Pitcher Create(ESPNProjections.IPlayer pitcher)

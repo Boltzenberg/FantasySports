@@ -6,9 +6,19 @@ namespace FantasyAlgorithms
 {
     public class LeagueAnalysis
     {
-        public List<TeamAnalysis> Teams { get; private set; }
+        public List<IRoster> Teams { get; private set; }
 
         public static LeagueAnalysis Analyze(League league, List<IStatExtractor> extractors, Func<IPlayer, string> extractTeam)
+        {
+            List<IRoster> teams = AssignPlayersToTeams(league, extractTeam);
+            RosterAnalysis.AssignStatsAndPoints(teams, extractors);
+
+            LeagueAnalysis leagueAnalysis = new LeagueAnalysis();
+            leagueAnalysis.Teams = teams;
+            return leagueAnalysis;
+        }
+
+        public static List<IRoster> AssignPlayersToTeams(League league, Func<IPlayer, string> extractTeam)
         {
             Dictionary<string, TeamAnalysis> teamsMap = new Dictionary<string, TeamAnalysis>();
             foreach (Team team in league.Teams)
@@ -32,61 +42,7 @@ namespace FantasyAlgorithms
                 }
             }
 
-            foreach (TeamAnalysis team in teamsMap.Values)
-            {
-                foreach (IStatExtractor extractor in extractors)
-                {
-                    List<IStatValue> statValues = new List<IStatValue>();
-                    foreach (IPlayer p in team.AllPlayers)
-                    {
-                        IStatValue value = extractor.Extract(p);
-                        if (value != null)
-                        {
-                            statValues.Add(value);
-                        }
-                    }
-
-                    IStatValue agg = extractor.Aggregate(statValues);
-                    team.Stats[extractor.StatName] = agg.Value;
-                }
-            }
-
-            List<TeamAnalysis> teams = new List<TeamAnalysis>(teamsMap.Values);
-
-            foreach (IStatExtractor extractor in extractors)
-            {
-                if (extractor.MoreIsBetter)
-                {
-                    teams.Sort((x, y) => y.Stats[extractor.StatName].CompareTo(x.Stats[extractor.StatName]));
-                }
-                else
-                {
-                    teams.Sort((x, y) => x.Stats[extractor.StatName].CompareTo(y.Stats[extractor.StatName]));
-                }
-
-                for (int i = 0; i < teams.Count;)
-                {
-                    int countOfEqual = 1;
-                    int totalPoints = teams.Count - i;
-                    while (i + countOfEqual < teams.Count && teams[i + countOfEqual - 1].Stats[extractor.StatName] == teams[i + countOfEqual].Stats[extractor.StatName])
-                    {
-                        totalPoints += teams.Count - (i + countOfEqual);
-                        countOfEqual++;
-                    }
-
-                    float pointsPer = (float)totalPoints / countOfEqual;
-                    for (int k = 0; k < countOfEqual; k++)
-                    {
-                        teams[i + k].Points[extractor.StatName] = pointsPer;
-                    }
-
-                    i += countOfEqual;
-                }
-            }
-
-            LeagueAnalysis leagueAnalysis = new LeagueAnalysis();
-            leagueAnalysis.Teams = teams;
-            return leagueAnalysis;
+            return new List<IRoster>(teamsMap.Values);
         }
     }
 }
