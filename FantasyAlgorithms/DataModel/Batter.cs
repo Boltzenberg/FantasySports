@@ -38,7 +38,16 @@ namespace FantasyAlgorithms.DataModel
 
         public override string ToString()
         {
-            return this.Name;
+            List<string> positions = new List<string>();
+            foreach (Position p in this.Positions)
+            {
+                if (DataModel.Positions.DisplayPositions.Contains(p))
+                {
+                    positions.Add(DataModel.Positions.ToShortString(p));
+                }
+            }
+
+            return string.Format("{0} ({1})", this.Name, string.Join(", ", positions));
         }
 
         public string GetHTML()

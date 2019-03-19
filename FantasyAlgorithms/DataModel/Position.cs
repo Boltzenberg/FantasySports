@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FantasyAlgorithms.DataModel
 {
@@ -24,9 +25,12 @@ namespace FantasyAlgorithms.DataModel
 
     public static class Positions
     {
+        public static readonly HashSet<Position> DisplayPositions = new HashSet<Position>()
+        { Position.C, Position.B1, Position.B2, Position.B3, Position.SS, Position.OF, Position.Util, Position.P };
+
         public static string ToString(Position p)
         {
-            switch(p)
+            switch (p)
             {
                 case Position.C: return "Catcher";
                 case Position.B1: return "First Base";
@@ -44,6 +48,28 @@ namespace FantasyAlgorithms.DataModel
             }
 
             return "Unknown";
+        }
+
+        public static string ToShortString(Position p)
+        {
+            switch (p)
+            {
+                case Position.C: return "C";
+                case Position.B1: return "1B";
+                case Position.B2: return "2B";
+                case Position.B3: return "3B";
+                case Position.SS: return "SS";
+                case Position.MI: return "MI";
+                case Position.CI: return "CI";
+                case Position.OF: return "OF";
+                case Position.Util: return "Util";
+                case Position.P: return "P";
+                case Position.BN: return "BN";
+                case Position.DL: return "DL";
+                case Position.NA: return "NA";
+            }
+
+            return "??";
         }
 
         public static bool IsActive(Position p)

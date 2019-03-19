@@ -138,7 +138,7 @@ namespace FantasyAlgorithms.DataModel
                 }
                 else
                 {
-                    List<IPlayer> sameName = new List<IPlayer>(this.AllPlayers.Where(p => p.Name == yPlayer.Name));
+                    List<IPlayer> sameName = new List<IPlayer>(this.AllPlayers.Where(p => string.IsNullOrEmpty(p.YahooId) && (p.Name == yPlayer.Name)));
                     if (sameName.Count == 0)
                     {
                         continue;
