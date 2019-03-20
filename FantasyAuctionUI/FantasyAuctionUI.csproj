@@ -85,6 +85,12 @@
     <Compile Include="TargetCenter.Designer.cs">
       <DependentUpon>TargetCenter.cs</DependentUpon>
     </Compile>
+    <Compile Include="TeamPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeamPrompt.Designer.cs">
+      <DependentUpon>TeamPrompt.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeamStatCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TargetCenter.resx">
       <DependentUpon>TargetCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeamPrompt.resx">
+      <DependentUpon>TeamPrompt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeamStatCenter.resx">
       <DependentUpon>TeamStatCenter.cs</DependentUpon>

@@ -130,7 +130,11 @@ namespace FantasyAuctionUI
 
         private void OnLaunchAnalysisCenter(object sender, EventArgs e)
         {
-            new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Owner == "Jon Rosenberg")).Show();
+            TeamPrompt prompt = new TeamPrompt(this.league);
+            if (prompt.ShowDialog() == DialogResult.OK)
+            {
+                new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Name == prompt.SelectedTeam)).Show();
+            }
         }
 
         private void OnLaunchSpeculationCenter(object sender, EventArgs e)
@@ -153,8 +157,12 @@ namespace FantasyAuctionUI
 
         private void OnGetTopFreeAgentSwaps(object sender, EventArgs e)
         {
-            string html = FantasyAlgorithms.RosterAnalysis.GetTopNFreeAgentPickups(this.league.Clone(), League.ScoringStatExtractors, "Putz On Second");
-            this.wbOut.DocumentText = html;
+            TeamPrompt prompt = new TeamPrompt(this.league);
+            if (prompt.ShowDialog() == DialogResult.OK)
+            {
+                string html = FantasyAlgorithms.RosterAnalysis.GetTopNFreeAgentPickups(this.league.Clone(), League.ScoringStatExtractors, prompt.SelectedTeam);
+                this.wbOut.DocumentText = html;
+            }
         }
     }
 }
