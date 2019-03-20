@@ -12,7 +12,8 @@ namespace FantasyAuctionUI
         {
             InitializeComponent();
 
-            LeagueAnalysis leagueAnalysis = LeagueAnalysis.Analyze(league, League.ScoringStatExtractors, extractTeam);
+            List<IRoster> teams = RosterAnalysis.AssignPlayersToTeams(league, extractTeam);
+            RosterAnalysis.AssignStatsAndPoints(teams, League.ScoringStatExtractors);
 
             this.lvStats.BeginUpdate();
             this.lvPoints.BeginUpdate();
@@ -22,11 +23,11 @@ namespace FantasyAuctionUI
             this.AddColumns(this.lvPoints, League.ScoringStatExtractors, columnWidth);
             this.lvPoints.Columns.Add("Total Points", columnWidth);
 
-            foreach (TeamAnalysis team in leagueAnalysis.Teams)
+            foreach (IRoster team in teams)
             {
                 float totalPoints = 0;
-                ListViewItem statsItem = new ListViewItem(team.Team.Name);
-                ListViewItem pointsItem = new ListViewItem(team.Team.Name);
+                ListViewItem statsItem = new ListViewItem(team.TeamName);
+                ListViewItem pointsItem = new ListViewItem(team.TeamName);
                 statsItem.Tag = team;
                 pointsItem.Tag = team;
                 foreach (IStatExtractor extractor in League.ScoringStatExtractors)

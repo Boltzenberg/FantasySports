@@ -57,7 +57,6 @@
     <Compile Include="RatioStatExtractor.cs" />
     <Compile Include="CountingStatExtractor.cs" />
     <Compile Include="IStatExtractor.cs" />
-    <Compile Include="LeagueAnalysis.cs" />
     <Compile Include="RatioStatAnalyzer.cs" />
     <Compile Include="CountingStatAnalyzer.cs" />
     <Compile Include="IPlayerAnalyzer.cs" />

@@ -150,5 +150,11 @@ namespace FantasyAuctionUI
             this.lbPlayers.Items.AddRange(this.allPlayers.Where(x => x.Name.StartsWith(this.tbWordWheel.Text, StringComparison.OrdinalIgnoreCase)).ToArray());
             this.lbPlayers.EndUpdate();
         }
+
+        private void OnGetTopFreeAgentSwaps(object sender, EventArgs e)
+        {
+            string html = FantasyAlgorithms.RosterAnalysis.GetTopNFreeAgentPickups(this.league.Clone(), League.ScoringStatExtractors, "Putz On Second");
+            this.wbOut.DocumentText = html;
+        }
     }
 }

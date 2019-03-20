@@ -1,6 +1,7 @@
 ﻿using FantasyAlgorithms;
 using FantasyAlgorithms.DataModel;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
@@ -35,9 +36,10 @@ namespace FantasyAuctionUI
 
         private void OnTeamSelected(object sender, EventArgs e)
         {
-            LeagueAnalysis baselineLA = LeagueAnalysis.Analyze(this.league, League.ScoringStatExtractors, p => p.FantasyTeam);
-            IRoster baselineTA = baselineLA.Teams.Find(t => t.TeamName == this.cbTeams.Items[this.cbTeams.SelectedIndex].ToString());
-            if (baselineTA == null)
+            List<IRoster> baselineTeams = RosterAnalysis.AssignPlayersToTeams(this.league, p => p.FantasyTeam);
+            RosterAnalysis.AssignStatsAndPoints(baselineTeams, League.ScoringStatExtractors);
+            IRoster baselineTeam = baselineTeams.Find(t => t.TeamName == this.cbTeams.Items[this.cbTeams.SelectedIndex].ToString());
+            if (baselineTeam == null)
             {
                 return;
             }
@@ -52,17 +54,18 @@ namespace FantasyAuctionUI
                     continue;
                 }
 
-                p.FantasyTeam = baselineTA.TeamName;
+                p.FantasyTeam = baselineTeam.TeamName;
 
-                LeagueAnalysis la = LeagueAnalysis.Analyze(l, League.ScoringStatExtractors, pb => pb.FantasyTeam);
-                IRoster ta = la.Teams.Find(t => t.TeamName == baselineTA.TeamName);
+                List<IRoster> teams = RosterAnalysis.AssignPlayersToTeams(l, pb => pb.FantasyTeam);
+                RosterAnalysis.AssignStatsAndPoints(teams, League.ScoringStatExtractors);
+                IRoster team = teams.Find(t => t.TeamName == baselineTeam.TeamName);
 
                 ListViewItem item = new ListViewItem(p.Name);
                 item.SubItems.Add(string.Empty); // total delta
                 float totalDelta = 0f;
                 foreach (IStatExtractor extractor in League.ScoringStatExtractors)
                 {
-                    float delta = ta.Points[extractor.StatName] - baselineTA.Points[extractor.StatName];
+                    float delta = team.Points[extractor.StatName] - baselineTeam.Points[extractor.StatName];
                     totalDelta += delta;
                     item.SubItems.Add(delta.ToString());
                 }

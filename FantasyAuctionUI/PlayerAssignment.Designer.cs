@@ -46,13 +46,14 @@
             this.targetCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadYahooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbPlayers = new System.Windows.Forms.ListBox();
             this.tbWordWheel = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.reloadYahooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topFreeAgentSwapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,7 +161,8 @@
             this.rosterCenterToolStripMenuItem,
             this.analysisCenterToolStripMenuItem,
             this.speculationCenterToolStripMenuItem,
-            this.targetCenterToolStripMenuItem});
+            this.targetCenterToolStripMenuItem,
+            this.topFreeAgentSwapsToolStripMenuItem});
             this.draftCenterToolStripMenuItem.Name = "draftCenterToolStripMenuItem";
             this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.draftCenterToolStripMenuItem.Text = "Centers";
@@ -168,35 +170,35 @@
             // draftCenterToolStripMenuItem1
             // 
             this.draftCenterToolStripMenuItem1.Name = "draftCenterToolStripMenuItem1";
-            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
+            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(190, 22);
             this.draftCenterToolStripMenuItem1.Text = "Stat Center";
             this.draftCenterToolStripMenuItem1.Click += new System.EventHandler(this.OnLaunchStatCenter);
             // 
             // rosterCenterToolStripMenuItem
             // 
             this.rosterCenterToolStripMenuItem.Name = "rosterCenterToolStripMenuItem";
-            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.rosterCenterToolStripMenuItem.Text = "Roster Center";
             this.rosterCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchRosterCenter);
             // 
             // analysisCenterToolStripMenuItem
             // 
             this.analysisCenterToolStripMenuItem.Name = "analysisCenterToolStripMenuItem";
-            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.analysisCenterToolStripMenuItem.Text = "Analysis Center";
             this.analysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAnalysisCenter);
             // 
             // speculationCenterToolStripMenuItem
             // 
             this.speculationCenterToolStripMenuItem.Name = "speculationCenterToolStripMenuItem";
-            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.speculationCenterToolStripMenuItem.Text = "Speculation Center";
             this.speculationCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSpeculationCenter);
             // 
             // targetCenterToolStripMenuItem
             // 
             this.targetCenterToolStripMenuItem.Name = "targetCenterToolStripMenuItem";
-            this.targetCenterToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.targetCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.targetCenterToolStripMenuItem.Text = "Target Center";
             this.targetCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchTargetCenter);
             // 
@@ -212,9 +214,16 @@
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.reloadToolStripMenuItem.Text = "Reload ESPN";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.OnReloadESPNData);
+            // 
+            // reloadYahooToolStripMenuItem
+            // 
+            this.reloadYahooToolStripMenuItem.Name = "reloadYahooToolStripMenuItem";
+            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.reloadYahooToolStripMenuItem.Text = "Reload Yahoo";
+            this.reloadYahooToolStripMenuItem.Click += new System.EventHandler(this.OnReloadYahooData);
             // 
             // lbPlayers
             // 
@@ -271,12 +280,12 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Assumed Fantasy Team:";
             // 
-            // reloadYahooToolStripMenuItem
+            // topFreeAgentSwapsToolStripMenuItem
             // 
-            this.reloadYahooToolStripMenuItem.Name = "reloadYahooToolStripMenuItem";
-            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.reloadYahooToolStripMenuItem.Text = "Reload Yahoo";
-            this.reloadYahooToolStripMenuItem.Click += new System.EventHandler(this.OnReloadYahooData);
+            this.topFreeAgentSwapsToolStripMenuItem.Name = "topFreeAgentSwapsToolStripMenuItem";
+            this.topFreeAgentSwapsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.topFreeAgentSwapsToolStripMenuItem.Text = "Top Free Agent Swaps";
+            this.topFreeAgentSwapsToolStripMenuItem.Click += new System.EventHandler(this.OnGetTopFreeAgentSwaps);
             // 
             // PlayerAssignment
             // 
@@ -335,6 +344,7 @@
         private System.Windows.Forms.ToolStripMenuItem speculationCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem targetCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloadYahooToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem topFreeAgentSwapsToolStripMenuItem;
     }
 }
 
