@@ -7,16 +7,17 @@ namespace FantasyAuctionUI
 {
     public partial class TeamStatCenter : Form
     {
-        public TeamStatCenter(TeamAnalysis team)
+        public TeamStatCenter(League league, TeamAnalysis team)
         {
             InitializeComponent();
             this.Text = string.Format("Team Stat Center: {0}", team.Team.Name);
 
+            LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
             this.lv.BeginUpdate();
-            int columnWidth = lv.Width / (League.ScoringStatExtractors.Count + 2);
+            int columnWidth = lv.Width / (lc.ScoringStatExtractors.Count + 2);
             lv.Columns.Add("Player Name", columnWidth);
             lv.Columns.Add("Player Status", columnWidth);
-            foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+            foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
             {
                 ColumnHeader column = new ColumnHeader();
                 column.Text = extractor.StatName;
@@ -29,7 +30,7 @@ namespace FantasyAuctionUI
             {
                 ListViewItem item = new ListViewItem(player.Name);
                 item.SubItems.Add(player.Status);
-                foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+                foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
                 {
                     IStatValue value = extractor.Extract(player);
                     if (value != null)
@@ -56,7 +57,7 @@ namespace FantasyAuctionUI
             ListViewItem average = new ListViewItem("Average");
             total.SubItems.Add(string.Empty); // player status
             average.SubItems.Add(string.Empty); // player status
-            foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+            foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
             {
                 float value;
                 if (team.Stats.TryGetValue(extractor.StatName, out value))

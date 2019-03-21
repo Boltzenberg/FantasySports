@@ -60,22 +60,6 @@ namespace Scratch
             league.Save(file);
         }
 
-        static void ESPNStuff()
-        {
-            Console.WriteLine(ESPNProjections.Batter.CSVHeader());
-            foreach (var b in ESPNProjections.Batter.Load())
-            {
-                Console.WriteLine(b.ToCSV());
-            }
-            Console.WriteLine();
-
-            Console.WriteLine(ESPNProjections.Pitcher.CSVHeader());
-            foreach (var p in ESPNProjections.Pitcher.Load())
-            {
-                Console.WriteLine(p.ToCSV());
-            }
-        }
-
         static void YahooStuff()
         {
             InitializeAuthManager().Wait();

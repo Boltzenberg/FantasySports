@@ -24,17 +24,18 @@ namespace FantasyAuctionUI
             this.team = team;
             this.lblTeam.Text = string.Format("{0}: {1}, {2,12:C2}", team.Name, team.Owner, team.Budget);
 
+            LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
             this.stats = new List<Stat>();
-            this.stats.Add(new Stat("Runs", new CountingStatAnalyzer("Runs", League.RosterableBatterCountPerTeam * League.TeamCount, league.Batters, b => ((Batter)b).ProjectedR, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedR)));
-            this.stats.Add(new Stat("Home Runs", new CountingStatAnalyzer("Home Runs", League.RosterableBatterCountPerTeam * League.TeamCount, league.Batters, b => ((Batter)b).ProjectedHR, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedHR)));
-            this.stats.Add(new Stat("RBIs", new CountingStatAnalyzer("RBIs", League.RosterableBatterCountPerTeam * League.TeamCount, league.Batters, b => ((Batter)b).ProjectedRBI, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedRBI)));
-            this.stats.Add(new Stat("Steals", new CountingStatAnalyzer("Steals", League.RosterableBatterCountPerTeam * League.TeamCount, league.Batters, b => ((Batter)b).ProjectedSB, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedSB)));
-            this.stats.Add(new Stat("OPS", new RatioStatAnalyzer("OPS", League.RosterableBatterCountPerTeam * League.TeamCount, true, league.Batters, b => ((Batter)b).ProjectedWalksPlusHits, b => ((Batter)b).ProjectedAB)));
-            this.stats.Add(new Stat("Wins", new CountingStatAnalyzer("Wins", League.RosterablePitcherCountPerTeam * League.TeamCount, league.Pitchers, p => ((Pitcher)p).ProjectedW, p => string.IsNullOrEmpty(p.FantasyTeam) ? 0 : ((Pitcher)p).ProjectedW)));
-            this.stats.Add(new Stat("Saves", new CountingStatAnalyzer("Saves", League.RosterablePitcherCountPerTeam * League.TeamCount, league.Pitchers, p => ((Pitcher)p).ProjectedSV, p => string.IsNullOrEmpty(p.FantasyTeam) ? 0 : ((Pitcher)p).ProjectedSV)));
-            this.stats.Add(new Stat("Strikeouts", new CountingStatAnalyzer("Strikeouts", League.RosterablePitcherCountPerTeam * League.TeamCount, league.Pitchers, p => ((Pitcher)p).ProjectedK, p => string.IsNullOrEmpty(p.FantasyTeam) ? 0 : ((Pitcher)p).ProjectedK)));
-            this.stats.Add(new Stat("ERA", new RatioStatAnalyzer("ERA", League.RosterablePitcherCountPerTeam * League.TeamCount, false, league.Pitchers, p => ((Pitcher)p).ProjectedER * 27, p => ((Pitcher)p).ProjectedOutsRecorded)));
-            this.stats.Add(new Stat("WHIP", new RatioStatAnalyzer("WHIP", League.RosterablePitcherCountPerTeam * League.TeamCount, false, league.Pitchers, p => (((Pitcher)p).ProjectedWalks + ((Pitcher)p).ProjectedHits) * 3, p => ((Pitcher)p).ProjectedOutsRecorded)));
+            this.stats.Add(new Stat("Runs", new CountingStatAnalyzer("Runs", lc.RosterableBatterCountPerTeam * lc.TeamCount, league.Batters, b => ((Batter)b).ProjectedR, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedR)));
+            this.stats.Add(new Stat("Home Runs", new CountingStatAnalyzer("Home Runs", lc.RosterableBatterCountPerTeam * lc.TeamCount, league.Batters, b => ((Batter)b).ProjectedHR, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedHR)));
+            this.stats.Add(new Stat("RBIs", new CountingStatAnalyzer("RBIs", lc.RosterableBatterCountPerTeam * lc.TeamCount, league.Batters, b => ((Batter)b).ProjectedRBI, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedRBI)));
+            this.stats.Add(new Stat("Steals", new CountingStatAnalyzer("Steals", lc.RosterableBatterCountPerTeam * lc.TeamCount, league.Batters, b => ((Batter)b).ProjectedSB, b => string.IsNullOrEmpty(b.FantasyTeam) ? 0 : ((Batter)b).ProjectedSB)));
+            this.stats.Add(new Stat("OPS", new RatioStatAnalyzer("OPS", lc.RosterableBatterCountPerTeam * lc.TeamCount, true, league.Batters, b => ((Batter)b).ProjectedWalksPlusHits, b => ((Batter)b).ProjectedAB)));
+            this.stats.Add(new Stat("Wins", new CountingStatAnalyzer("Wins", lc.RosterablePitcherCountPerTeam * lc.TeamCount, league.Pitchers, p => ((Pitcher)p).ProjectedW, p => string.IsNullOrEmpty(p.FantasyTeam) ? 0 : ((Pitcher)p).ProjectedW)));
+            this.stats.Add(new Stat("Saves", new CountingStatAnalyzer("Saves", lc.RosterablePitcherCountPerTeam * lc.TeamCount, league.Pitchers, p => ((Pitcher)p).ProjectedSV, p => string.IsNullOrEmpty(p.FantasyTeam) ? 0 : ((Pitcher)p).ProjectedSV)));
+            this.stats.Add(new Stat("Strikeouts", new CountingStatAnalyzer("Strikeouts", lc.RosterablePitcherCountPerTeam * lc.TeamCount, league.Pitchers, p => ((Pitcher)p).ProjectedK, p => string.IsNullOrEmpty(p.FantasyTeam) ? 0 : ((Pitcher)p).ProjectedK)));
+            this.stats.Add(new Stat("ERA", new RatioStatAnalyzer("ERA", lc.RosterablePitcherCountPerTeam * lc.TeamCount, false, league.Pitchers, p => ((Pitcher)p).ProjectedER * 27, p => ((Pitcher)p).ProjectedOutsRecorded)));
+            this.stats.Add(new Stat("WHIP", new RatioStatAnalyzer("WHIP", lc.RosterablePitcherCountPerTeam * lc.TeamCount, false, league.Pitchers, p => (((Pitcher)p).ProjectedWalks + ((Pitcher)p).ProjectedHits) * 3, p => ((Pitcher)p).ProjectedOutsRecorded)));
 
             Dictionary<IPlayer, PlayerAggregate> playerAnalysis = new Dictionary<IPlayer, PlayerAggregate>();
             foreach (Stat stat in this.stats)
@@ -66,9 +67,9 @@ namespace FantasyAuctionUI
             this.UpdateWB();
 
             this.lvAnalysis.BeginUpdate();
-            int columnWidth = this.lvAnalysis.Width / (League.ScoringStatExtractors.Count + League.SupportingStatExtractors.Count + 1);
+            int columnWidth = this.lvAnalysis.Width / (lc.ScoringStatExtractors.Count + lc.SupportingStatExtractors.Count + 1);
             this.lvAnalysis.Columns.Add("Player Name", columnWidth);
-            foreach (IStatExtractor extractor in League.ScoringStatExtractors.Union(League.SupportingStatExtractors))
+            foreach (IStatExtractor extractor in lc.ScoringStatExtractors.Union(lc.SupportingStatExtractors))
             {
                 ColumnHeader column = new ColumnHeader();
                 column.Text = extractor.StatName;
@@ -93,7 +94,7 @@ namespace FantasyAuctionUI
             foreach (IPlayer player in players)
             {
                 ListViewItem item = new ListViewItem(player.Name);
-                foreach (IStatExtractor extractor in League.ScoringStatExtractors.Union(League.SupportingStatExtractors))
+                foreach (IStatExtractor extractor in LeagueConstants.For(this.league.FantasyLeague).ScoringStatExtractors.Union(LeagueConstants.For(this.league.FantasyLeague).SupportingStatExtractors))
                 {
                     IStatValue value = extractor.Extract(player);
                     if (value != null)

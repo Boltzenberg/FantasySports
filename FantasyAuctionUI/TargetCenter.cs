@@ -14,6 +14,7 @@ namespace FantasyAuctionUI
         {
             InitializeComponent();
             this.league = league;
+            LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
 
             foreach (Team team in this.league.Teams)
             {
@@ -21,10 +22,10 @@ namespace FantasyAuctionUI
             }
 
             this.lvPlayers.BeginUpdate();
-            int columnWidth = this.lvPlayers.Width / (League.ScoringStatExtractors.Count + 2);
+            int columnWidth = this.lvPlayers.Width / (lc.ScoringStatExtractors.Count + 2);
             this.lvPlayers.Columns.Add("Player Name", columnWidth);
             this.lvPlayers.Columns.Add("Stat Delta");
-            foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+            foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
             {
                 ColumnHeader column = new ColumnHeader();
                 column.Text = extractor.StatName;
@@ -36,8 +37,10 @@ namespace FantasyAuctionUI
 
         private void OnTeamSelected(object sender, EventArgs e)
         {
+            LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
+
             List<IRoster> baselineTeams = RosterAnalysis.AssignPlayersToTeams(this.league, p => p.FantasyTeam);
-            RosterAnalysis.AssignStatsAndPoints(baselineTeams, League.ScoringStatExtractors);
+            RosterAnalysis.AssignStatsAndPoints(baselineTeams, lc.ScoringStatExtractors);
             IRoster baselineTeam = baselineTeams.Find(t => t.TeamName == this.cbTeams.Items[this.cbTeams.SelectedIndex].ToString());
             if (baselineTeam == null)
             {
@@ -57,13 +60,13 @@ namespace FantasyAuctionUI
                 p.FantasyTeam = baselineTeam.TeamName;
 
                 List<IRoster> teams = RosterAnalysis.AssignPlayersToTeams(l, pb => pb.FantasyTeam);
-                RosterAnalysis.AssignStatsAndPoints(teams, League.ScoringStatExtractors);
+                RosterAnalysis.AssignStatsAndPoints(teams, lc.ScoringStatExtractors);
                 IRoster team = teams.Find(t => t.TeamName == baselineTeam.TeamName);
 
                 ListViewItem item = new ListViewItem(p.Name);
                 item.SubItems.Add(string.Empty); // total delta
                 float totalDelta = 0f;
-                foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+                foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
                 {
                     float delta = team.Points[extractor.StatName] - baselineTeam.Points[extractor.StatName];
                     totalDelta += delta;

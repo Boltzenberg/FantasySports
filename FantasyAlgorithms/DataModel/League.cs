@@ -6,64 +6,80 @@ using System.Threading.Tasks;
 
 namespace FantasyAlgorithms.DataModel
 {
+    public enum Leagues
+    {
+        Rounders2019,
+
+    }
+
+    public class LeagueConstants
+    {
+        public int TeamCount { get; private set; }
+        public int RosterableBatterCountPerTeam { get; private set; }
+        public int RosterablePitcherCountPerTeam { get; private set; }
+        public IReadOnlyList<IStatExtractor> ScoringStatExtractors { get; private set; }
+        public IReadOnlyList<IStatExtractor> SupportingStatExtractors { get; private set; }
+
+        public static LeagueConstants For(Leagues league)
+        {
+            switch (league)
+            {
+                case Leagues.Rounders2019: return Rounders2019;
+                default: return null;
+            }
+        }
+
+        private static LeagueConstants _rounders2019 = null;
+        public static LeagueConstants Rounders2019
+        {
+            get
+            {
+                if (_rounders2019 == null)
+                {
+                    _rounders2019 = new LeagueConstants();
+                    _rounders2019.TeamCount = 10;
+                    _rounders2019.RosterableBatterCountPerTeam = 14;
+                    _rounders2019.RosterablePitcherCountPerTeam = 13;
+                    _rounders2019.ScoringStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
+                        new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
+                        new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
+                        new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
+                        new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
+                        new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
+                        new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
+                        new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.ERA),
+                        new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.WHIP)
+                    };
+                    _rounders2019.SupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
+                        new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
+                    };
+                }
+
+                return _rounders2019;
+            }
+        }
+    }
+
     public class League
     {
         public Batter[] Batters;
         public Pitcher[] Pitchers;
         public Team[] Teams;
+        public Leagues FantasyLeague;
 
-        public const int TeamCount = 10;
-        public const int RosterableBatterCountPerTeam = 14;
-        public const int RosterablePitcherCountPerTeam = 13;
-
-        public static readonly List<IStatExtractor> ScoringStatExtractors = new List<IStatExtractor>()
-        {
-            new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
-            new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
-            new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
-            new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
-            new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
-            new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
-            new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
-            new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
-            new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.ERA),
-            new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.WHIP)
-        };
-
-        public static readonly List<IStatExtractor> SupportingStatExtractors = new List<IStatExtractor>()
-        {
-            new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
-            new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
-            new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
-        };
-
-        public static Roster GetEmptyRoster()
-        {
-            Roster emptyRoster = new Roster(new Dictionary<Position, int>()
-            {
-                { Position.C, 2 },
-                { Position.B1, 1 },
-                { Position.B2, 1 },
-                { Position.B3, 1 },
-                { Position.SS, 1 },
-                { Position.CI, 1 },
-                { Position.MI, 1 },
-                { Position.OF, 4 },
-                { Position.Util, 2 },
-                { Position.P, 9 },
-                { Position.BN, 5 },
-                { Position.DL, 2 },
-                { Position.NA, 1 },
-            });
-
-            return emptyRoster;
-        }
-
-        public static League Create()
+        public static League Create(Leagues fantasyLeague)
         {
             League league = new League();
-            league.Batters = LoadBatters().ToArray();
-            league.Pitchers = LoadPitchers().ToArray();
+            league.Batters = new Batter[0];
+            league.Pitchers = new Pitcher[0];
+            league.UpdateESPNProjections();
+            league.FantasyLeague = fantasyLeague;
             return league;
         }
 
@@ -188,28 +204,6 @@ namespace FantasyAlgorithms.DataModel
                     yield return p;
                 }
             }
-        }
-
-        private static List<Batter> LoadBatters()
-        {
-            List<Batter> batters = new List<Batter>();
-            foreach (ESPNProjections.Batter batter in ESPNProjections.Batter.Load())
-            {
-                batters.Add(Batter.Create(batter));
-            }
-
-            return batters;
-        }
-
-        private static List<DataModel.Pitcher> LoadPitchers()
-        {
-            List<Pitcher> pitchers = new List<Pitcher>();
-            foreach (ESPNProjections.Pitcher pitcher in ESPNProjections.Pitcher.Load())
-            {
-                pitchers.Add(Pitcher.Create(pitcher));
-            }
-
-            return pitchers;
         }
     }
 }

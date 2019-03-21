@@ -4,29 +4,6 @@ namespace ESPNProjections
 {
     public static class Constants
     {
-        internal static class Files
-        {
-            internal static List<string> Batters = new List<string>()
-            {
-                "2019BatterProjections01.json",
-                "2019BatterProjections02.json",
-                "2019BatterProjections03.json",
-                "2019BatterProjections04.json",
-                "2019BatterProjections05.json",
-                "2019BatterProjections06.json",
-            };
-
-            internal static List<string> Pitchers = new List<string>()
-            {
-                "2019PitcherProjections01.json",
-                "2019PitcherProjections02.json",
-                "2019PitcherProjections03.json",
-                "2019PitcherProjections04.json",
-                "2019PitcherProjections05.json",
-                "2019PitcherProjections06.json",
-            };
-        }
-
         public static class Stats
         {
             public static class Batters

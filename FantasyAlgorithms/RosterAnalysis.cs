@@ -35,7 +35,7 @@ namespace FantasyAlgorithms
             return new List<IRoster>(teamsMap.Values);
         }
 
-        public static void AssignStatsAndPoints(List<IRoster> teams, List<IStatExtractor> extractors)
+        public static void AssignStatsAndPoints(List<IRoster> teams, IReadOnlyList<IStatExtractor> extractors)
         {
             foreach (IRoster team in teams)
             {
@@ -99,7 +99,7 @@ namespace FantasyAlgorithms
             return total;
         }
 
-        public static string GetTopNFreeAgentPickups(League league, List<IStatExtractor> extractors, string teamName)
+        public static string GetTopNFreeAgentPickups(League league, IReadOnlyList<IStatExtractor> extractors, string teamName)
         {
             List<IRoster> baselineTeams = RosterAnalysis.AssignPlayersToTeams(league, p => p.FantasyTeam);
             RosterAnalysis.AssignStatsAndPoints(baselineTeams, extractors);

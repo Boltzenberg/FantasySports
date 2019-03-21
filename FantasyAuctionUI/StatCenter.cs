@@ -8,19 +8,23 @@ namespace FantasyAuctionUI
 {
     public partial class StatCenter : Form
     {
+        private League league;
+
         public StatCenter(League league, Func<IPlayer, string> extractTeam)
         {
             InitializeComponent();
 
+            this.league = league;
+            LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
             List<IRoster> teams = RosterAnalysis.AssignPlayersToTeams(league, extractTeam);
-            RosterAnalysis.AssignStatsAndPoints(teams, League.ScoringStatExtractors);
+            RosterAnalysis.AssignStatsAndPoints(teams, lc.ScoringStatExtractors);
 
             this.lvStats.BeginUpdate();
             this.lvPoints.BeginUpdate();
 
-            int columnWidth = this.lvPoints.Width / (League.ScoringStatExtractors.Count + 2);
-            this.AddColumns(this.lvStats, League.ScoringStatExtractors, columnWidth);
-            this.AddColumns(this.lvPoints, League.ScoringStatExtractors, columnWidth);
+            int columnWidth = this.lvPoints.Width / (lc.ScoringStatExtractors.Count + 2);
+            this.AddColumns(this.lvStats, lc.ScoringStatExtractors, columnWidth);
+            this.AddColumns(this.lvPoints, lc.ScoringStatExtractors, columnWidth);
             this.lvPoints.Columns.Add("Total Points", columnWidth);
 
             foreach (IRoster team in teams)
@@ -30,7 +34,7 @@ namespace FantasyAuctionUI
                 ListViewItem pointsItem = new ListViewItem(team.TeamName);
                 statsItem.Tag = team;
                 pointsItem.Tag = team;
-                foreach (IStatExtractor extractor in League.ScoringStatExtractors)
+                foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
                 {
                     statsItem.SubItems.Add(team.Stats[extractor.StatName].ToString());
                     pointsItem.SubItems.Add(team.Points[extractor.StatName].ToString());
@@ -45,7 +49,7 @@ namespace FantasyAuctionUI
             this.lvPoints.EndUpdate();
         }
 
-        private void AddColumns(ListView lv, List<IStatExtractor> extractors, int columnWidth)
+        private void AddColumns(ListView lv, IReadOnlyList<IStatExtractor> extractors, int columnWidth)
         {
             lv.Columns.Add("Team Name", columnWidth);
             foreach (IStatExtractor extractor in extractors)
@@ -76,7 +80,7 @@ namespace FantasyAuctionUI
                 TeamAnalysis team = lv.SelectedItems[0].Tag as TeamAnalysis;
                 if (team != null)
                 {
-                    new TeamStatCenter(team).Show();
+                    new TeamStatCenter(this.league, team).Show();
                 }
             }
         }

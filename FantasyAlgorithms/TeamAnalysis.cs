@@ -42,16 +42,6 @@ namespace FantasyAlgorithms
             }
         }
 
-        public Roster GetOptimalRoster(List<IStatExtractor> extractors)
-        {
-            Roster empty = League.GetEmptyRoster();
-            Dictionary<string, Roster> allRosters = empty.AddPlayers(this.Players);
-            List<IRoster> teams = new List<IRoster>(allRosters.Values);
-            RosterAnalysis.AssignStatsAndPoints(teams, extractors);
-            teams.Sort((x, y) => RosterAnalysis.ExtractTotalPoints(y).CompareTo(RosterAnalysis.ExtractTotalPoints(x)));
-            return teams[0] as Roster;
-        }
-
         internal TeamAnalysis(Team team)
         {
             this.Team = team;

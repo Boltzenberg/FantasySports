@@ -160,7 +160,7 @@ namespace FantasyAuctionUI
             TeamPrompt prompt = new TeamPrompt(this.league);
             if (prompt.ShowDialog() == DialogResult.OK)
             {
-                string html = FantasyAlgorithms.RosterAnalysis.GetTopNFreeAgentPickups(this.league.Clone(), League.ScoringStatExtractors, prompt.SelectedTeam);
+                string html = FantasyAlgorithms.RosterAnalysis.GetTopNFreeAgentPickups(this.league.Clone(), LeagueConstants.For(this.league.FantasyLeague).ScoringStatExtractors, prompt.SelectedTeam);
                 this.wbOut.DocumentText = html;
             }
         }
