@@ -13,12 +13,56 @@ namespace FantasyAuctionUI
         private List<IPlayer> allPlayers;
         private IPlayer currentPlayer;
         private string yahooAuthToken = string.Empty;
+        private string fileName = string.Empty;
 
         public PlayerAssignment()
         {
             InitializeComponent();
-            this.tbDir.Text = "C:\\users\\jonro\\documents";
-            this.LoadPlayers(Path.Combine(this.tbDir.Text, Constants.Files.League));
+            this.LoadPlayers(Path.Combine("C:\\users\\jonro\\documents", Constants.Files.League));
+        }
+
+        private void OnLoadLeague(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.CheckFileExists = true;
+                dlg.CheckPathExists = true;
+                dlg.DefaultExt = "json";
+                dlg.Multiselect = false;
+                dlg.Title = "Select League File";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    this.LoadPlayers(dlg.FileName);
+                }
+            }
+        }
+
+        private void OnCreateNewLeague(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dlg = new SaveFileDialog())
+            {
+                dlg.AddExtension = true;
+                dlg.CheckFileExists = false;
+                dlg.CheckPathExists = true;
+                dlg.CreatePrompt = false;
+                dlg.DefaultExt = "json";
+                dlg.OverwritePrompt = true;
+                dlg.Title = "Select New League Filename";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    PromptFromList prompt = new PromptFromList("Select Fantasy League", Enum.GetNames(typeof(Leagues)));
+                    if (prompt.ShowDialog() == DialogResult.OK)
+                    {
+                        Leagues fantasyLeague;
+                        if (Enum.TryParse(prompt.SelectedItem, out fantasyLeague))
+                        {
+                            League league = League.Create(fantasyLeague);
+                            league.Save(dlg.FileName);
+                            this.LoadPlayers(dlg.FileName);
+                        }
+                    }
+                }
+            }
         }
 
         private void WriteUIToCurrentPlayer()
@@ -66,11 +110,6 @@ namespace FantasyAuctionUI
             UpdateCurrentPlayer(this.lbPlayers.SelectedItem as IPlayer);
         }
 
-        private void OnLoadData(object sender, EventArgs e)
-        {
-            this.LoadPlayers(Path.Combine(this.tbDir.Text, Constants.Files.League));
-        }
-
         private void LoadPlayers(string fileName)
         {
             if (!File.Exists(fileName))
@@ -78,6 +117,7 @@ namespace FantasyAuctionUI
                 return;
             }
 
+            this.fileName = fileName;
             this.league = League.Load(fileName);
             this.allPlayers = new List<IPlayer>();
             this.allPlayers.AddRange(this.league.AllPlayers);
@@ -91,7 +131,7 @@ namespace FantasyAuctionUI
         private void OnSave(object sender, EventArgs e)
         {
             this.WriteUIToCurrentPlayer();
-            this.league.Save(Path.Combine(this.tbDir.Text, Constants.Files.League));
+            this.league.Save(this.fileName);
         }
 
         private void OnReloadESPNData(object sender, EventArgs e)
@@ -130,10 +170,10 @@ namespace FantasyAuctionUI
 
         private void OnLaunchAnalysisCenter(object sender, EventArgs e)
         {
-            TeamPrompt prompt = new TeamPrompt(this.league);
+            PromptFromList prompt = new PromptFromList("Select Team", this.league.Teams.Select(t => t.Name));
             if (prompt.ShowDialog() == DialogResult.OK)
             {
-                new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Name == prompt.SelectedTeam)).Show();
+                new AnalysisCenter(this.league.Clone(), this.league.Teams.First(t => t.Name == prompt.SelectedItem)).Show();
             }
         }
 
@@ -157,10 +197,10 @@ namespace FantasyAuctionUI
 
         private void OnGetTopFreeAgentSwaps(object sender, EventArgs e)
         {
-            TeamPrompt prompt = new TeamPrompt(this.league);
+            PromptFromList prompt = new PromptFromList("Select Team", this.league.Teams.Select(t => t.Name));
             if (prompt.ShowDialog() == DialogResult.OK)
             {
-                string html = FantasyAlgorithms.RosterAnalysis.GetTopNFreeAgentPickups(this.league.Clone(), LeagueConstants.For(this.league.FantasyLeague).ScoringStatExtractors, prompt.SelectedTeam);
+                string html = FantasyAlgorithms.RosterAnalysis.GetTopNFreeAgentPickups(this.league.Clone(), LeagueConstants.For(this.league.FantasyLeague).ScoringStatExtractors, prompt.SelectedItem);
                 this.wbOut.DocumentText = html;
             }
         }

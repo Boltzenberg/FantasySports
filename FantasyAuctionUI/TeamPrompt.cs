@@ -1,29 +1,30 @@
-﻿using FantasyAlgorithms.DataModel;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
 {
-    public partial class TeamPrompt : Form
+    public partial class PromptFromList : Form
     {
-        public string SelectedTeam { get; private set; }
+        public string SelectedItem { get; private set; }
 
-        public TeamPrompt(League league)
+        public PromptFromList(string title, IEnumerable<string> items)
         {
             InitializeComponent();
+            this.Text = title;
 
-            this.cbTeams.BeginUpdate();
-            this.cbTeams.Items.Clear();
-            foreach (Team team in league.Teams)
+            this.cbItems.BeginUpdate();
+            this.cbItems.Items.Clear();
+            foreach (string item in items)
             {
-                this.cbTeams.Items.Add(team.Name);
+                this.cbItems.Items.Add(item);
             }
-            this.cbTeams.EndUpdate();
+            this.cbItems.EndUpdate();
         }
 
         private void OnOK(object sender, EventArgs e)
         {
-            this.SelectedTeam = this.cbTeams.Items[this.cbTeams.SelectedIndex].ToString();
+            this.SelectedItem = this.cbItems.Items[this.cbItems.SelectedIndex].ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

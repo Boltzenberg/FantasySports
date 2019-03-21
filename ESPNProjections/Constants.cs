@@ -48,10 +48,12 @@ namespace ESPNProjections
                 public const string BB = "39";
                 public const string K = "48";
                 public const string W = "53";
+                public const string L = "54";
                 public const string SV = "57";
+                public const string Hld = "60";
                 public static List<string> All = new List<string>()
                 {
-                    OutsRecorded, H, ER, BB, K, W, SV
+                    OutsRecorded, H, ER, BB, K, W, L, SV, Hld
                 };
 
                 public static string ToString(string stat)

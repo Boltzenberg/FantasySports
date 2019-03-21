@@ -48,6 +48,17 @@ namespace FantasyAlgorithms
             return b.ProjectedSB;
         }
 
+        public static int? ExtractBatterHits(IPlayer player)
+        {
+            Batter b = player as Batter;
+            if (b == null)
+            {
+                return null;
+            }
+
+            return b.ProjectedH;
+        }
+
         public static int? ExtractBatterHitsPlusWalks(IPlayer player)
         {
             Batter b = player as Batter;
@@ -70,6 +81,17 @@ namespace FantasyAlgorithms
             return b.ProjectedAB;
         }
 
+        public static int? ExtractPitcherDecisions(IPlayer player)
+        {
+            Pitcher p = player as Pitcher;
+            if (p == null)
+            {
+                return null;
+            }
+
+            return p.ProjectedW + p.ProjectedL;
+        }
+
         public static int? ExtractPitcherWins(IPlayer player)
         {
             Pitcher p = player as Pitcher;
@@ -90,6 +112,17 @@ namespace FantasyAlgorithms
             }
 
             return p.ProjectedSV;
+        }
+
+        public static int? ExtractPitcherHolds(IPlayer player)
+        {
+            Pitcher p = player as Pitcher;
+            if (p == null)
+            {
+                return null;
+            }
+
+            return p.ProjectedHld;
         }
 
         public static int? ExtractPitcherStrikeouts(IPlayer player)

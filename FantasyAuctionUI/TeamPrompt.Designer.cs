@@ -1,6 +1,6 @@
 ﻿namespace FantasyAuctionUI
 {
-    partial class TeamPrompt
+    partial class PromptFromList
     {
         /// <summary>
         /// Required designer variable.
@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cbTeams = new System.Windows.Forms.ComboBox();
+            this.cbItems = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // cbTeams
+            // cbItems
             // 
-            this.cbTeams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cbItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbTeams.FormattingEnabled = true;
-            this.cbTeams.Location = new System.Drawing.Point(12, 12);
-            this.cbTeams.MaxDropDownItems = 20;
-            this.cbTeams.Name = "cbTeams";
-            this.cbTeams.Size = new System.Drawing.Size(355, 21);
-            this.cbTeams.Sorted = true;
-            this.cbTeams.TabIndex = 0;
+            this.cbItems.FormattingEnabled = true;
+            this.cbItems.Location = new System.Drawing.Point(12, 12);
+            this.cbItems.MaxDropDownItems = 20;
+            this.cbItems.Name = "cbItems";
+            this.cbItems.Size = new System.Drawing.Size(355, 21);
+            this.cbItems.Sorted = true;
+            this.cbItems.TabIndex = 0;
             // 
             // button1
             // 
@@ -62,16 +62,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(379, 62);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.cbTeams);
+            this.Controls.Add(this.cbItems);
             this.Name = "TeamPrompt";
-            this.Text = "Team Prompt";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cbTeams;
+        private System.Windows.Forms.ComboBox cbItems;
         private System.Windows.Forms.Button button1;
     }
 }

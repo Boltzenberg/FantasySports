@@ -31,6 +31,7 @@ namespace FantasyAlgorithms.DataModel
         public int ProjectedHR { get; set; }
         public int ProjectedRBI { get; set; }
         public int ProjectedSB { get; set; }
+        public int ProjectedH { get; set; }
         public int ProjectedWalksPlusHits { get { return (int)(this.ProjectedAB * this.ProjectedOBP); } }
         public float ProjectedOBP { get; set; }
         public string SeasonOutlook { get; set; }
@@ -64,6 +65,7 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Is 3B</TD><TD>{0}</TD></TR>", this.Is3B ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is OF</TD><TD>{0}</TD></TR>", this.IsOF ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Projected At Bats</TD><TD>{0}</TD></TR>", this.ProjectedAB);
+            sb.AppendFormat("<TR><TD>Projected Hist</TD><TD>{0}</TD></TR>", this.ProjectedH);
             sb.AppendFormat("<TR><TD>Projected Runs</TD><TD>{0}</TD></TR>", this.ProjectedR);
             sb.AppendFormat("<TR><TD>Projected Home Runs</TD><TD>{0}</TD></TR>", this.ProjectedHR);
             sb.AppendFormat("<TR><TD>Projected RBIs</TD><TD>{0}</TD></TR>", this.ProjectedRBI);
@@ -117,6 +119,7 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedHR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.HR], 0);
             this.ProjectedRBI = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.RBI], 0);
             this.ProjectedSB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.SB], 0);
+            this.ProjectedH = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.H], 0);
             this.ProjectedOBP = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.OBP], 0.0f);
             this.SeasonOutlook = batter.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;

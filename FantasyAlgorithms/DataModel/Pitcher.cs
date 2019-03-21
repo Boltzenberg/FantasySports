@@ -20,6 +20,8 @@ namespace FantasyAlgorithms.DataModel
         public DateTime ProjectionsLastUpdated { get; set; }
         public int ProjectedOutsRecorded { get; set; }
         public int ProjectedW { get; set; }
+        public int ProjectedL { get; set; }
+        public int ProjectedHld { get; set; }
         public int ProjectedSV { get; set; }
         public int ProjectedK { get; set; }
         public int ProjectedHits { get; set; }
@@ -57,7 +59,9 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Is RP</TD><TD>{0}</TD></TR>", this.IsRP ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Projected Innings Pitched</TD><TD>{0}</TD></TR>", this.ProjectedIP);
             sb.AppendFormat("<TR><TD>Projected Wins</TD><TD>{0}</TD></TR>", this.ProjectedW);
+            sb.AppendFormat("<TR><TD>Projected Losses</TD><TD>{0}</TD></TR>", this.ProjectedL);
             sb.AppendFormat("<TR><TD>Projected Saves</TD><TD>{0}</TD></TR>", this.ProjectedSV);
+            sb.AppendFormat("<TR><TD>Projected Holds</TD><TD>{0}</TD></TR>", this.ProjectedHld);
             sb.AppendFormat("<TR><TD>Projected Strikeouts</TD><TD>{0}</TD></TR>", this.ProjectedK);
             sb.AppendFormat("<TR><TD>Projected ERA</TD><TD>{0}</TD></TR>", this.ProjectedERA);
             sb.AppendFormat("<TR><TD>Projected WHIP</TD><TD>{0}</TD></TR>", this.ProjectedWHIP);
@@ -98,7 +102,9 @@ namespace FantasyAlgorithms.DataModel
             this.IsRP = pitcher.Positions.Contains(ESPNProjections.Constants.Positions.RP);
             this.ProjectedOutsRecorded = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.OutsRecorded], 0);
             this.ProjectedW = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.W], 0);
+            this.ProjectedL = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.L], 0);
             this.ProjectedSV = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.SV], 0);
+            this.ProjectedHld = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.Hld], 0);
             this.ProjectedK = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.K], 0);
             this.ProjectedHits = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.H], 0);
             this.ProjectedWalks = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.BB], 0);

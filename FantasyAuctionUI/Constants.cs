@@ -10,9 +10,7 @@ namespace FantasyAuctionUI
     {
         internal static class Files
         {
-            internal const string League = "FantasyLeague2019.json";
-            internal const string Batters = "Batters2019.json";
-            internal const string Pitchers = "Pitchers2019.json";
+            internal const string League = "Rounders2019.json";
         }
     }
 }

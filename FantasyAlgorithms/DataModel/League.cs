@@ -9,7 +9,7 @@ namespace FantasyAlgorithms.DataModel
     public enum Leagues
     {
         Rounders2019,
-
+        CrossCountryRivals2019
     }
 
     public class LeagueConstants
@@ -50,8 +50,8 @@ namespace FantasyAlgorithms.DataModel
                         new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
                         new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
                         new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
-                        new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.ERA),
-                        new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.WHIP)
+                        new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
+                        new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
                     };
                     _rounders2019.SupportingStatExtractors = new List<IStatExtractor>()
                     {
@@ -62,6 +62,44 @@ namespace FantasyAlgorithms.DataModel
                 }
 
                 return _rounders2019;
+            }
+        }
+
+        private static LeagueConstants _crossCountryRivals2019 = null;
+        public static LeagueConstants CrossCountryRivals2019
+        {
+            get
+            {
+                if (_crossCountryRivals2019 == null)
+                {
+                    _crossCountryRivals2019 = new LeagueConstants();
+                    _crossCountryRivals2019.TeamCount = 12;
+                    _crossCountryRivals2019.RosterableBatterCountPerTeam = 9;
+                    _crossCountryRivals2019.RosterablePitcherCountPerTeam = 6;
+                    _crossCountryRivals2019.ScoringStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
+                        new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
+                        new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
+                        new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
+                        new RatioStatExtractor("AVG", true, Extractors.ExtractBatterHits, Extractors.ExtractBatterAtBats, Ratios.Divide),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
+                        new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
+                        new CountingStatExtractor("Holds", true, Extractors.ExtractPitcherHolds),
+                        new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
+                        new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning),
+                        new RatioStatExtractor("K/9", true, Extractors.ExtractPitcherStrikeouts, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
+                        new RatioStatExtractor("Win%", true, Extractors.ExtractPitcherWins, Extractors.ExtractPitcherDecisions, Ratios.Divide),
+                    };
+                    _crossCountryRivals2019.SupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
+                        new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
+                    };
+                }
+
+                return _crossCountryRivals2019;
             }
         }
     }

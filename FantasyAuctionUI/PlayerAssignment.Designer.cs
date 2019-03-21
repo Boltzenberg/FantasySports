@@ -34,9 +34,6 @@
             this.tbAuctionPrice = new System.Windows.Forms.TextBox();
             this.wbOut = new System.Windows.Forms.WebBrowser();
             this.button1 = new System.Windows.Forms.Button();
-            this.tbDir = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.draftCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.draftCenterToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +41,7 @@
             this.analysisCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speculationCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.targetCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topFreeAgentSwapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadYahooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +51,9 @@
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.topFreeAgentSwapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.leaguesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,10 +100,10 @@
             this.wbOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.wbOut.Location = new System.Drawing.Point(170, 77);
+            this.wbOut.Location = new System.Drawing.Point(170, 54);
             this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbOut.Name = "wbOut";
-            this.wbOut.Size = new System.Drawing.Size(618, 556);
+            this.wbOut.Size = new System.Drawing.Size(618, 579);
             this.wbOut.TabIndex = 9;
             // 
             // button1
@@ -117,37 +117,12 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.OnSave);
             // 
-            // tbDir
-            // 
-            this.tbDir.Location = new System.Drawing.Point(253, 51);
-            this.tbDir.Name = "tbDir";
-            this.tbDir.Size = new System.Drawing.Size(415, 20);
-            this.tbDir.TabIndex = 11;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(192, 54);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 13);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Directory:";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(674, 51);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(114, 20);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Load";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.OnLoadData);
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.draftCenterToolStripMenuItem,
-            this.fantasyDataToolStripMenuItem});
+            this.fantasyDataToolStripMenuItem,
+            this.leaguesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -202,6 +177,13 @@
             this.targetCenterToolStripMenuItem.Text = "Target Center";
             this.targetCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchTargetCenter);
             // 
+            // topFreeAgentSwapsToolStripMenuItem
+            // 
+            this.topFreeAgentSwapsToolStripMenuItem.Name = "topFreeAgentSwapsToolStripMenuItem";
+            this.topFreeAgentSwapsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.topFreeAgentSwapsToolStripMenuItem.Text = "Top Free Agent Swaps";
+            this.topFreeAgentSwapsToolStripMenuItem.Click += new System.EventHandler(this.OnGetTopFreeAgentSwaps);
+            // 
             // fantasyDataToolStripMenuItem
             // 
             this.fantasyDataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -214,14 +196,14 @@
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.reloadToolStripMenuItem.Text = "Reload ESPN";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.OnReloadESPNData);
             // 
             // reloadYahooToolStripMenuItem
             // 
             this.reloadYahooToolStripMenuItem.Name = "reloadYahooToolStripMenuItem";
-            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.reloadYahooToolStripMenuItem.Text = "Reload Yahoo";
             this.reloadYahooToolStripMenuItem.Click += new System.EventHandler(this.OnReloadYahooData);
             // 
@@ -280,12 +262,28 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Assumed Fantasy Team:";
             // 
-            // topFreeAgentSwapsToolStripMenuItem
+            // leaguesToolStripMenuItem
             // 
-            this.topFreeAgentSwapsToolStripMenuItem.Name = "topFreeAgentSwapsToolStripMenuItem";
-            this.topFreeAgentSwapsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.topFreeAgentSwapsToolStripMenuItem.Text = "Top Free Agent Swaps";
-            this.topFreeAgentSwapsToolStripMenuItem.Click += new System.EventHandler(this.OnGetTopFreeAgentSwaps);
+            this.leaguesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripMenuItem,
+            this.createToolStripMenuItem});
+            this.leaguesToolStripMenuItem.Name = "leaguesToolStripMenuItem";
+            this.leaguesToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.leaguesToolStripMenuItem.Text = "Leagues";
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Text = "Load...";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.OnLoadLeague);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Text = "Create...";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.OnCreateNewLeague);
             // 
             // PlayerAssignment
             // 
@@ -297,9 +295,6 @@
             this.Controls.Add(this.tbFantasyTeam);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.tbWordWheel);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbDir);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.wbOut);
             this.Controls.Add(this.tbAuctionPrice);
@@ -325,9 +320,6 @@
         private System.Windows.Forms.TextBox tbAuctionPrice;
         private System.Windows.Forms.WebBrowser wbOut;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox tbDir;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem draftCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fantasyDataToolStripMenuItem;
@@ -345,6 +337,9 @@
         private System.Windows.Forms.ToolStripMenuItem targetCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloadYahooToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem topFreeAgentSwapsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem leaguesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
     }
 }
 
