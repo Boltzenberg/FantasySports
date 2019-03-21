@@ -28,5 +28,12 @@ namespace FantasyAuctionUI
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        private void OnCancel(object sender, EventArgs e)
+        {
+            this.SelectedItem = string.Empty;
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
 }

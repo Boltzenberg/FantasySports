@@ -45,15 +45,16 @@
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadYahooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.leaguesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbPlayers = new System.Windows.Forms.ListBox();
             this.tbWordWheel = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.leaguesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.snakeCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -137,7 +138,8 @@
             this.analysisCenterToolStripMenuItem,
             this.speculationCenterToolStripMenuItem,
             this.targetCenterToolStripMenuItem,
-            this.topFreeAgentSwapsToolStripMenuItem});
+            this.topFreeAgentSwapsToolStripMenuItem,
+            this.snakeCenterToolStripMenuItem});
             this.draftCenterToolStripMenuItem.Name = "draftCenterToolStripMenuItem";
             this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.draftCenterToolStripMenuItem.Text = "Centers";
@@ -196,16 +198,39 @@
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.reloadToolStripMenuItem.Text = "Reload ESPN";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.OnReloadESPNData);
             // 
             // reloadYahooToolStripMenuItem
             // 
             this.reloadYahooToolStripMenuItem.Name = "reloadYahooToolStripMenuItem";
-            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.reloadYahooToolStripMenuItem.Text = "Reload Yahoo";
             this.reloadYahooToolStripMenuItem.Click += new System.EventHandler(this.OnReloadYahooData);
+            // 
+            // leaguesToolStripMenuItem
+            // 
+            this.leaguesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripMenuItem,
+            this.createToolStripMenuItem});
+            this.leaguesToolStripMenuItem.Name = "leaguesToolStripMenuItem";
+            this.leaguesToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.leaguesToolStripMenuItem.Text = "Leagues";
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.loadToolStripMenuItem.Text = "Load...";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.OnLoadLeague);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.createToolStripMenuItem.Text = "Create...";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.OnCreateNewLeague);
             // 
             // lbPlayers
             // 
@@ -262,28 +287,12 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Assumed Fantasy Team:";
             // 
-            // leaguesToolStripMenuItem
+            // snakeCenterToolStripMenuItem
             // 
-            this.leaguesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem,
-            this.createToolStripMenuItem});
-            this.leaguesToolStripMenuItem.Name = "leaguesToolStripMenuItem";
-            this.leaguesToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
-            this.leaguesToolStripMenuItem.Text = "Leagues";
-            // 
-            // loadToolStripMenuItem
-            // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.loadToolStripMenuItem.Text = "Load...";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.OnLoadLeague);
-            // 
-            // createToolStripMenuItem
-            // 
-            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.createToolStripMenuItem.Text = "Create...";
-            this.createToolStripMenuItem.Click += new System.EventHandler(this.OnCreateNewLeague);
+            this.snakeCenterToolStripMenuItem.Name = "snakeCenterToolStripMenuItem";
+            this.snakeCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.snakeCenterToolStripMenuItem.Text = "Snake Center";
+            this.snakeCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSnakeCenter);
             // 
             // PlayerAssignment
             // 
@@ -340,6 +349,7 @@
         private System.Windows.Forms.ToolStripMenuItem leaguesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem snakeCenterToolStripMenuItem;
     }
 }
 

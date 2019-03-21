@@ -72,6 +72,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnakeCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SnakeCenter.Designer.cs">
+      <DependentUpon>SnakeCenter.cs</DependentUpon>
+    </Compile>
     <Compile Include="StatCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,11 +91,11 @@
     <Compile Include="TargetCenter.Designer.cs">
       <DependentUpon>TargetCenter.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeamPrompt.cs">
+    <Compile Include="PromptFromList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TeamPrompt.Designer.cs">
-      <DependentUpon>TeamPrompt.cs</DependentUpon>
+    <Compile Include="PromptFromList.Designer.cs">
+      <DependentUpon>PromptFromList.cs</DependentUpon>
     </Compile>
     <Compile Include="TeamStatCenter.cs">
       <SubType>Form</SubType>
@@ -97,6 +103,7 @@
     <Compile Include="TeamStatCenter.Designer.cs">
       <DependentUpon>TeamStatCenter.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIUtilities.cs" />
     <EmbeddedResource Include="AnalysisCenter.resx">
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,14 +125,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SnakeCenter.resx">
+      <DependentUpon>SnakeCenter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StatCenter.resx">
       <DependentUpon>StatCenter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TargetCenter.resx">
       <DependentUpon>TargetCenter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeamPrompt.resx">
-      <DependentUpon>TeamPrompt.cs</DependentUpon>
+    <EmbeddedResource Include="PromptFromList.resx">
+      <DependentUpon>PromptFromList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeamStatCenter.resx">
       <DependentUpon>TeamStatCenter.cs</DependentUpon>

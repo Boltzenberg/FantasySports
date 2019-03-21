@@ -19,12 +19,14 @@ namespace FantasyAlgorithms.DataModel
         public int RosterablePitcherCountPerTeam { get; private set; }
         public IReadOnlyList<IStatExtractor> ScoringStatExtractors { get; private set; }
         public IReadOnlyList<IStatExtractor> SupportingStatExtractors { get; private set; }
+        public string YahooLeagueId { get; private set; }
 
         public static LeagueConstants For(Leagues league)
         {
             switch (league)
             {
                 case Leagues.Rounders2019: return Rounders2019;
+                case Leagues.CrossCountryRivals2019: return CrossCountryRivals2019;
                 default: return null;
             }
         }
@@ -59,6 +61,7 @@ namespace FantasyAlgorithms.DataModel
                         new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
                         new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
                     };
+                    _rounders2019.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2019;
                 }
 
                 return _rounders2019;
@@ -97,6 +100,7 @@ namespace FantasyAlgorithms.DataModel
                         new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
                         new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
                     };
+                    _crossCountryRivals2019.YahooLeagueId = YahooFantasySports.Constants.Leagues.CrossCountryRivals2019;
                 }
 
                 return _crossCountryRivals2019;
@@ -183,7 +187,7 @@ namespace FantasyAlgorithms.DataModel
 
         public async Task UpdateYahooData()
         {
-            foreach (YahooFantasySports.DataModel.Player yPlayer in await YahooFantasySports.DataModel.Player.GetAllPlayers(YahooFantasySports.Constants.Leagues.Rounders2019))
+            foreach (YahooFantasySports.DataModel.Player yPlayer in await YahooFantasySports.DataModel.Player.GetAllPlayers(LeagueConstants.For(this.FantasyLeague).YahooLeagueId))
             {
                 IPlayer player = this.AllPlayers.FirstOrDefault(p => p.YahooId == yPlayer.Id);
                 if (player != null)

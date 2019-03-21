@@ -19,13 +19,14 @@ namespace YahooFantasySports
         {
             public const string Rounders2018 = "378.l.5418";
             public const string Rounders2019 = "388.l.21375";
+            public const string CrossCountryRivals2019 = "388.l.41352";
         }
 
         public static class Positions
         {
             public static readonly HashSet<string> Individual = new HashSet<string>()
             {
-                "C", "1B", "2B", "SS", "3B", "OF", "P", "Util"
+                "C", "1B", "2B", "SS", "3B", "OF", "P", "SP", "RP", "Util"
             };
 
             public const string Catcher = "C";
@@ -35,6 +36,8 @@ namespace YahooFantasySports
             public const string ThridBase = "3B";
             public const string Outfield = "OF";
             public const string Pitcher = "P";
+            public const string StartingPitcher = "SP";
+            public const string ReliefPitcher = "RP";
             public const string Utility = "Util";
         }
     }

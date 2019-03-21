@@ -187,6 +187,15 @@ namespace FantasyAuctionUI
             new TargetCenter(this.league.Clone()).Show();
         }
 
+        private void OnLaunchSnakeCenter(object sender, EventArgs e)
+        {
+            PromptFromList prompt = new PromptFromList("Select Your Team", this.league.Teams.Select(t => t.Name));
+            if (prompt.ShowDialog() == DialogResult.OK)
+            {
+                new SnakeCenter(this.league, this.fileName, prompt.SelectedItem).Show();
+            }
+        }
+
         private void OnWordWheel(object sender, EventArgs e)
         {
             this.lbPlayers.BeginUpdate();

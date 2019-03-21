@@ -63,7 +63,6 @@
             this.lvPlayers.TabIndex = 1;
             this.lvPlayers.UseCompatibleStateImageBehavior = false;
             this.lvPlayers.View = System.Windows.Forms.View.Details;
-            this.lvPlayers.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.OnColumnClick);
             // 
             // cbRP
             // 
@@ -208,7 +207,7 @@
             this.Controls.Add(this.lvPlayers);
             this.Controls.Add(this.cbTeams);
             this.Name = "TargetCenter";
-            this.Text = "TargetCenter";
+            this.Text = "a";
             this.ResumeLayout(false);
             this.PerformLayout();
 
