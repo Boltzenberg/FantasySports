@@ -207,7 +207,7 @@
             this.Controls.Add(this.lvPlayers);
             this.Controls.Add(this.cbTeams);
             this.Name = "TargetCenter";
-            this.Text = "a";
+            this.Text = "Target Center";
             this.ResumeLayout(false);
             this.PerformLayout();
 
