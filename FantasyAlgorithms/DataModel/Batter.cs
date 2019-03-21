@@ -65,7 +65,7 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Is 3B</TD><TD>{0}</TD></TR>", this.Is3B ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is OF</TD><TD>{0}</TD></TR>", this.IsOF ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Projected At Bats</TD><TD>{0}</TD></TR>", this.ProjectedAB);
-            sb.AppendFormat("<TR><TD>Projected Hist</TD><TD>{0}</TD></TR>", this.ProjectedH);
+            sb.AppendFormat("<TR><TD>Projected Hits</TD><TD>{0}</TD></TR>", this.ProjectedH);
             sb.AppendFormat("<TR><TD>Projected Runs</TD><TD>{0}</TD></TR>", this.ProjectedR);
             sb.AppendFormat("<TR><TD>Projected Home Runs</TD><TD>{0}</TD></TR>", this.ProjectedHR);
             sb.AppendFormat("<TR><TD>Projected RBIs</TD><TD>{0}</TD></TR>", this.ProjectedRBI);
