@@ -25,5 +25,10 @@ namespace YahooFantasySports
         {
             return new Uri(string.Format("{0}/league/{1}/teams/roster", BaseUrl, leagueId));
         }
+
+        public static Uri LeagueStandings(string leagueId)
+        {
+            return new Uri(string.Format("{0}/league/{1}/standings", BaseUrl, leagueId));
+        }
     }
 }

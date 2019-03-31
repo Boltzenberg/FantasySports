@@ -35,6 +35,38 @@ namespace FantasyAlgorithms
             return new List<IRoster>(teamsMap.Values);
         }
 
+        private static int Compare(IRoster x, IRoster y, string statName)
+        {
+            float? xStat = null;
+            if (x.Stats.ContainsKey(statName))
+            {
+                xStat = x.Stats[statName];
+            }
+
+            float? yStat = null;
+            if (y.Stats.ContainsKey(statName))
+            {
+                yStat = y.Stats[statName];
+            }
+
+            if (xStat.HasValue && yStat.HasValue)
+            {
+                return yStat.Value.CompareTo(xStat.Value);
+            }
+            else if (xStat.HasValue)
+            {
+                return -1;
+            }
+            else if (yStat.HasValue)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public static void AssignStatsAndPoints(List<IRoster> teams, IReadOnlyList<IStatExtractor> extractors)
         {
             foreach (IRoster team in teams)
@@ -51,8 +83,11 @@ namespace FantasyAlgorithms
                         }
                     }
 
-                    IStatValue agg = extractor.Aggregate(statValues);
-                    team.Stats[extractor.StatName] = agg.Value;
+                    if (statValues.Count > 0)
+                    {
+                        IStatValue agg = extractor.Aggregate(statValues);
+                        team.Stats[extractor.StatName] = agg.Value;
+                    }
                 }
             }
 
@@ -60,30 +95,41 @@ namespace FantasyAlgorithms
             {
                 if (extractor.MoreIsBetter)
                 {
-                    teams.Sort((x, y) => y.Stats[extractor.StatName].CompareTo(x.Stats[extractor.StatName]));
+                    teams.Sort((x, y) => Compare(x, y, extractor.StatName));
                 }
                 else
                 {
-                    teams.Sort((x, y) => x.Stats[extractor.StatName].CompareTo(y.Stats[extractor.StatName]));
+                    teams.Sort((x, y) => Compare(y, x, extractor.StatName));
                 }
 
                 for (int i = 0; i < teams.Count;)
                 {
-                    int countOfEqual = 1;
-                    int totalPoints = teams.Count - i;
-                    while (i + countOfEqual < teams.Count && teams[i + countOfEqual - 1].Stats[extractor.StatName] == teams[i + countOfEqual].Stats[extractor.StatName])
+                    if (teams[i].Stats.ContainsKey(extractor.StatName))
                     {
-                        totalPoints += teams.Count - (i + countOfEqual);
-                        countOfEqual++;
-                    }
+                        int countOfEqual = 1;
+                        int totalPoints = teams.Count - i;
+                        while (i + countOfEqual < teams.Count &&
+                            teams[i + countOfEqual - 1].Stats.ContainsKey(extractor.StatName) &&
+                            teams[i + countOfEqual].Stats.ContainsKey(extractor.StatName) &&
+                            teams[i + countOfEqual - 1].Stats[extractor.StatName] == teams[i + countOfEqual].Stats[extractor.StatName])
+                        {
+                            totalPoints += teams.Count - (i + countOfEqual);
+                            countOfEqual++;
+                        }
 
-                    float pointsPer = (float)totalPoints / countOfEqual;
-                    for (int k = 0; k < countOfEqual; k++)
+                        float pointsPer = (float)totalPoints / countOfEqual;
+                        for (int k = 0; k < countOfEqual; k++)
+                        {
+                            teams[i + k].Points[extractor.StatName] = pointsPer;
+                        }
+
+                        i += countOfEqual;
+                    }
+                    else
                     {
-                        teams[i + k].Points[extractor.StatName] = pointsPer;
+                        teams[i].Points[extractor.StatName] = 0;
+                        i++;
                     }
-
-                    i += countOfEqual;
                 }
             }
         }

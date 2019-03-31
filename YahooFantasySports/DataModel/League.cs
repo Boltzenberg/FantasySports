@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -14,10 +12,11 @@ namespace YahooFantasySports.DataModel
         public IReadOnlyList<RosterPosition> RosterPositions { get; }
         public IReadOnlyList<Team> Teams { get; }
         public IReadOnlyDictionary<string, Player> Players { get; }
+        public IReadOnlyList<Standings> TeamStandings { get; }
 
         public static async Task<League> Create(string leagueId)
         {
-            string leagueXml = await Services.Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2019));
+            string leagueXml = await Services.Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(leagueId));
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(leagueXml);
             NSMgr nsmgr = new NSMgr(doc);
@@ -38,7 +37,7 @@ namespace YahooFantasySports.DataModel
                 rosterPositions.Add(RosterPosition.Create(node, nsmgr));
             }
 
-            string leagueTeams = await Services.Http.GetRawDataAsync(UrlGen.TeamsWithRostersUrl(Constants.Leagues.Rounders2019));
+            string leagueTeams = await Services.Http.GetRawDataAsync(UrlGen.TeamsWithRostersUrl(leagueId));
             doc.LoadXml(leagueTeams);
             nsmgr = new NSMgr(doc);
             league = doc.SelectSingleNode(nsmgr.GetXPath("fantasy_content", "league"), nsmgr);
@@ -50,16 +49,27 @@ namespace YahooFantasySports.DataModel
             }
 
             Dictionary<string, Player> players = new Dictionary<string, Player>();
-            foreach (Player player in await Player.GetAllPlayers(key))
+            foreach (Player player in await Player.GetAllPlayers(leagueId))
             {
                 player.SetStatValues(stats);
                 players[player.Key] = player;
             }
 
-            return new League(key, name, stats, rosterPositions, teams, players);
+            string leagueStandings = await Services.Http.GetRawDataAsync(UrlGen.LeagueStandings(leagueId));
+            doc.LoadXml(leagueStandings);
+            nsmgr = new NSMgr(doc);
+            league = doc.SelectSingleNode(nsmgr.GetXPath("fantasy_content", "league"), nsmgr);
+
+            List<Standings> standings = new List<Standings>();
+            foreach (XmlNode node in league.SelectNodes(nsmgr.GetXPath("standings", "teams", "team"), nsmgr))
+            {
+                standings.Add(Standings.Create(node, nsmgr));
+            }
+
+            return new League(key, name, stats, rosterPositions, teams, players, standings);
         }
 
-        private League(string key, string name, IReadOnlyDictionary<int, StatDefinition> stats, IReadOnlyList<RosterPosition> rosterPositions, IReadOnlyList<Team> teams, IReadOnlyDictionary<string, Player> players)
+        private League(string key, string name, IReadOnlyDictionary<int, StatDefinition> stats, IReadOnlyList<RosterPosition> rosterPositions, IReadOnlyList<Team> teams, IReadOnlyDictionary<string, Player> players, IReadOnlyList<Standings> standings)
         {
             this.Key = key;
             this.Name = name;
@@ -67,6 +77,7 @@ namespace YahooFantasySports.DataModel
             this.RosterPositions = rosterPositions;
             this.Teams = teams;
             this.Players = players;
+            this.TeamStandings = standings;
         }
     }
 }

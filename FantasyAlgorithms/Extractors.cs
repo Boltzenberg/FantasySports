@@ -59,6 +59,17 @@ namespace FantasyAlgorithms
             return b.ProjectedH;
         }
 
+        public static int? ExtractBatterWalks(IPlayer player)
+        {
+            Batter b = player as Batter;
+            if (b == null)
+            {
+                return null;
+            }
+
+            return b.ProjectedBB;
+        }
+
         public static int? ExtractBatterHitsPlusWalks(IPlayer player)
         {
             Batter b = player as Batter;
@@ -67,7 +78,7 @@ namespace FantasyAlgorithms
                 return null;
             }
 
-            return b.ProjectedWalksPlusHits;
+            return b.ProjectedBB + b.ProjectedH;
         }
 
         public static int? ExtractBatterAtBats(IPlayer player)

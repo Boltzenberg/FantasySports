@@ -75,6 +75,58 @@ namespace FantasyAuctionUI
             lv.EndUpdate();
         }
 
+        public static void PrepStatsPlayerList(League league, ListView lv)
+        {
+            LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
+
+            lv.ColumnClick += OnColumnClicked;
+
+            lv.BeginUpdate();
+            int columnWidth = lv.Width / (lc.ScoringStatExtractors.Count + 2);
+            lv.Columns.Add("Player Name", columnWidth);
+            lv.Columns.Add("Player Status", columnWidth);
+            foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
+            {
+                ColumnHeader column = new ColumnHeader();
+                column.Text = extractor.StatName;
+                column.Width = columnWidth;
+                if (!extractor.MoreIsBetter)
+                {
+                    column.Tag = "asc";
+                }
+                lv.Columns.Add(column);
+            }
+            lv.EndUpdate();
+        }
+
+        public static void UpdateStatsPlayerList(League league, ListView lv, Func<IPlayer, bool> playerPassesFilter)
+        {
+            LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
+            lv.BeginUpdate();
+            foreach (IPlayer player in league.AllPlayers)
+            {
+                if (playerPassesFilter(player))
+                {
+                    ListViewItem item = new ListViewItem(player.Name);
+                    item.SubItems.Add(player.Status);
+                    foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
+                    {
+                        IStatValue value = extractor.Extract(player);
+                        if (value != null)
+                        {
+                            item.SubItems.Add(value.Value.ToString());
+                        }
+                        else
+                        {
+                            item.SubItems.Add(string.Empty);
+                        }
+                    }
+                    lv.Items.Add(item);
+                }
+            }
+            lv.EndUpdate();
+        }
+
         public static void PrepPointsPlayerList(League league, ListView lv)
         {
             LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using YahooFantasySports;
 using YahooFantasySports.DataModel;
@@ -113,6 +114,23 @@ namespace Scratch
                     }
                 }
                 Console.WriteLine();
+            }
+
+            Console.WriteLine("Standings:");
+            foreach (Standings standings in league.TeamStandings.OrderBy(s => s.Rank))
+            {
+                Team team = league.Teams.FirstOrDefault(t => t.Key == standings.TeamKey);
+                float total = 0;
+                float current;
+                foreach (string pointValue in standings.Points.Values)
+                {
+                    if (float.TryParse(pointValue, out current))
+                    {
+                        total += current;
+                    }
+                }
+
+                Console.WriteLine("{0}: {1} with {2} points", standings.Rank, team.Name, total);
             }
         }
     }

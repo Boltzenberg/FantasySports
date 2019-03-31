@@ -27,13 +27,12 @@ namespace FantasyAlgorithms.DataModel
 
         public DateTime ProjectionsLastUpdated { get; set; }
         public int ProjectedAB { get; set; }
+        public int ProjectedH { get; set; }
+        public int ProjectedBB { get; set; }
         public int ProjectedR { get; set; }
         public int ProjectedHR { get; set; }
         public int ProjectedRBI { get; set; }
         public int ProjectedSB { get; set; }
-        public int ProjectedH { get; set; }
-        public int ProjectedWalksPlusHits { get { return (int)(this.ProjectedAB * this.ProjectedOBP); } }
-        public float ProjectedOBP { get; set; }
         public string SeasonOutlook { get; set; }
         public string Status { get; set; }
 
@@ -66,11 +65,11 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Is OF</TD><TD>{0}</TD></TR>", this.IsOF ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Projected At Bats</TD><TD>{0}</TD></TR>", this.ProjectedAB);
             sb.AppendFormat("<TR><TD>Projected Hits</TD><TD>{0}</TD></TR>", this.ProjectedH);
+            sb.AppendFormat("<TR><TD>Projected Walks</TD><TD>{0}</TD></TR>", this.ProjectedBB);
             sb.AppendFormat("<TR><TD>Projected Runs</TD><TD>{0}</TD></TR>", this.ProjectedR);
             sb.AppendFormat("<TR><TD>Projected Home Runs</TD><TD>{0}</TD></TR>", this.ProjectedHR);
             sb.AppendFormat("<TR><TD>Projected RBIs</TD><TD>{0}</TD></TR>", this.ProjectedRBI);
             sb.AppendFormat("<TR><TD>Projected Steals</TD><TD>{0}</TD></TR>", this.ProjectedSB);
-            sb.AppendFormat("<TR><TD>Projected OBP</TD><TD>{0}</TD></TR>", this.ProjectedOBP);
             sb.AppendFormat("<TR><TD>Player Status</TD><TD>{0}</TD></TR>", this.Status);
             sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
             sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
@@ -116,11 +115,11 @@ namespace FantasyAlgorithms.DataModel
             this.IsOF |= batter.Positions.Contains(ESPNProjections.Constants.Positions.OF);
             this.ProjectedAB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.AB], 0);
             this.ProjectedR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.R], 0);
+            this.ProjectedH = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.H], 0);
+            this.ProjectedBB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.BB], 0);
             this.ProjectedHR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.HR], 0);
             this.ProjectedRBI = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.RBI], 0);
             this.ProjectedSB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.SB], 0);
-            this.ProjectedH = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.H], 0);
-            this.ProjectedOBP = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.OBP], 0.0f);
             this.SeasonOutlook = batter.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;
         }

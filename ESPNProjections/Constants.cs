@@ -11,33 +11,14 @@ namespace ESPNProjections
                 public const string AB = "0";
                 public const string R = "20";
                 public const string H = "1";
+                public const string BB = "10";
                 public const string HR = "5";
                 public const string RBI = "21";
                 public const string SB = "23";
-                public const string AVG = "2";
-                public const string SLG = "9";
-                public const string OBP = "17";
                 public static List<string> All = new List<string>()
                 {
-                    AB, R, H, HR, RBI, SB, AVG, SLG, OBP
+                    AB, R, H, BB, HR, RBI, SB
                 };
-
-                public static string ToString(string stat)
-                {
-                    switch (stat)
-                    {
-                        case AB: return "AB";
-                        case R: return "R";
-                        case H: return "H";
-                        case HR: return "HR";
-                        case RBI: return "RBI";
-                        case SB: return "SB";
-                        case AVG: return "AVG";
-                        case SLG: return "SLG";
-                        case OBP: return "OBP";
-                    }
-                    return "Unknown";
-                }
             }
 
             public static class Pitchers
@@ -55,21 +36,6 @@ namespace ESPNProjections
                 {
                     OutsRecorded, H, ER, BB, K, W, L, SV, Hld
                 };
-
-                public static string ToString(string stat)
-                {
-                    switch (stat)
-                    {
-                        case OutsRecorded: return "Outs Recorded";
-                        case H: return "H";
-                        case ER: return "ER";
-                        case BB: return "BB";
-                        case K: return "K";
-                        case W: return "W";
-                        case SV: return "SV";
-                    }
-                    return "Unknown";
-                }
             }
         }
 

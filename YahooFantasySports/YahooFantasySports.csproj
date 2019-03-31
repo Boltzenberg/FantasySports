@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\StatValue.cs" />
+    <Compile Include="DataModel\Standings.cs" />
     <Compile Include="DataModel\Team.cs" />
     <Compile Include="Services\AuthManager.cs" />
     <Compile Include="Constants.cs" />

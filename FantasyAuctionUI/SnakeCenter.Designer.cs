@@ -31,6 +31,7 @@
             this.lvTarget = new System.Windows.Forms.ListView();
             this.tbWordWheel = new System.Windows.Forms.TextBox();
             this.lvPlayers = new System.Windows.Forms.ListView();
+            this.lvStats = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // lvTarget
@@ -39,7 +40,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvTarget.Location = new System.Drawing.Point(0, 24);
             this.lvTarget.Name = "lvTarget";
-            this.lvTarget.Size = new System.Drawing.Size(904, 369);
+            this.lvTarget.Size = new System.Drawing.Size(904, 223);
             this.lvTarget.TabIndex = 0;
             this.lvTarget.UseCompatibleStateImageBehavior = false;
             this.lvTarget.View = System.Windows.Forms.View.Details;
@@ -57,21 +58,33 @@
             // 
             // lvPlayers
             // 
-            this.lvPlayers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.lvPlayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvPlayers.Location = new System.Drawing.Point(0, 399);
+            this.lvPlayers.Location = new System.Drawing.Point(0, 508);
             this.lvPlayers.Name = "lvPlayers";
-            this.lvPlayers.Size = new System.Drawing.Size(904, 359);
+            this.lvPlayers.Size = new System.Drawing.Size(904, 250);
             this.lvPlayers.TabIndex = 2;
             this.lvPlayers.UseCompatibleStateImageBehavior = false;
             this.lvPlayers.View = System.Windows.Forms.View.Details;
+            // 
+            // lvStats
+            // 
+            this.lvStats.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvStats.Location = new System.Drawing.Point(0, 252);
+            this.lvStats.Name = "lvStats";
+            this.lvStats.Size = new System.Drawing.Size(904, 252);
+            this.lvStats.TabIndex = 3;
+            this.lvStats.UseCompatibleStateImageBehavior = false;
+            this.lvStats.View = System.Windows.Forms.View.Details;
             // 
             // SnakeCenter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 758);
+            this.Controls.Add(this.lvStats);
             this.Controls.Add(this.lvPlayers);
             this.Controls.Add(this.tbWordWheel);
             this.Controls.Add(this.lvTarget);
@@ -87,5 +100,6 @@
         private System.Windows.Forms.ListView lvTarget;
         private System.Windows.Forms.TextBox tbWordWheel;
         private System.Windows.Forms.ListView lvPlayers;
+        private System.Windows.Forms.ListView lvStats;
     }
 }

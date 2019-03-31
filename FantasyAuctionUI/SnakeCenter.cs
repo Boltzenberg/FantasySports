@@ -24,6 +24,7 @@ namespace FantasyAuctionUI
             this.teamsForAssignment.Sort();
 
             UIUtilities.PrepRosterAnalysisPlayerList(this.league, this.lvTarget);
+            UIUtilities.PrepStatsPlayerList(this.league, this.lvStats);
             UIUtilities.PrepPointsPlayerList(this.league, this.lvPlayers);
             this.UpdatePlayerList();
         }
@@ -46,6 +47,7 @@ namespace FantasyAuctionUI
         private void UpdatePlayerList()
         {
             UIUtilities.UpdateRosterAnalysisPlayerList(this.league, this.myTeam, this.lvTarget, this.PlayerPassesFilter);
+            UIUtilities.UpdateStatsPlayerList(this.league, this.lvStats, this.PlayerPassesFilter);
             UIUtilities.UpdatePointsPlayerList(this.league, this.lvPlayers, this.PlayerPassesFilter);
         }
 
