@@ -110,8 +110,8 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedWalks = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.BB], 0);
             this.ProjectedER = GetStat(pitcher.Stats[ESPNProjections.Constants.Stats.Pitchers.ER], 0);
             this.ProjectedIP = ((int)this.ProjectedOutsRecorded / 3) + (this.ProjectedOutsRecorded % 3) / 10;
-            this.ProjectedERA = this.ProjectedER / (this.ProjectedOutsRecorded / 27);
-            this.ProjectedWHIP = (this.ProjectedHits + this.ProjectedWalks) / (this.ProjectedOutsRecorded / 3);
+            this.ProjectedERA = this.ProjectedER / ((float)this.ProjectedOutsRecorded / 27);
+            this.ProjectedWHIP = (this.ProjectedHits + this.ProjectedWalks) / ((float)this.ProjectedOutsRecorded / 3);
             this.SeasonOutlook = pitcher.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;
         }

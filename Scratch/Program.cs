@@ -30,9 +30,9 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            //LoadESPNProjections();
+            LoadESPNProjections();
             //UpdateTeams();
-            YahooStuff();
+            //YahooStuff();
         }
 
         static void LoadESPNProjections()
@@ -45,19 +45,19 @@ namespace Scratch
 
         static void UpdateTeams()
         {
-            const string file = "C:\\users\\jonro\\documents\\FantasyLeague2019.json";
+            const string file = "C:\\Onedrive\\documents\\Rounders2020.json";
             FantasyAlgorithms.DataModel.League league = FantasyAlgorithms.DataModel.League.Load(file);
             league.Teams = new FantasyAlgorithms.DataModel.Team[10];
-            league.Teams[0] = new FantasyAlgorithms.DataModel.Team() { Name = "Mitch's Bitches", Owner = "Nir Modiano", Budget = 208.29f };
-            league.Teams[1] = new FantasyAlgorithms.DataModel.Team() { Name = "Peanut Tossers", Owner = "Josh Kornblit", Budget = 216.83f };
-            league.Teams[2] = new FantasyAlgorithms.DataModel.Team() { Name = "Kirby SMASH", Owner = "Bobby Ronaghy", Budget = 192.37f };
-            league.Teams[3] = new FantasyAlgorithms.DataModel.Team() { Name = "See You In McCourt", Owner = "Eric Rudin", Budget = 205.72f };
-            league.Teams[4] = new FantasyAlgorithms.DataModel.Team() { Name = "LeClerking for LeJudge", Owner = "Macus", Budget = 206.26f };
-            league.Teams[5] = new FantasyAlgorithms.DataModel.Team() { Name = "Machado Chop House", Owner = "Michael Sneag", Budget = 189.77f };
-            league.Teams[6] = new FantasyAlgorithms.DataModel.Team() { Name = "Jews on First", Owner = "Steve Lesser", Budget = 215.71f };
-            league.Teams[7] = new FantasyAlgorithms.DataModel.Team() { Name = "Putz on Second", Owner = "Jon Rosenberg", Budget = 216.09f };
-            league.Teams[8] = new FantasyAlgorithms.DataModel.Team() { Name = "Cool WHIP", Owner = "Jeff Selman", Budget = 242.71f };
-            league.Teams[9] = new FantasyAlgorithms.DataModel.Team() { Name = "The S stand for OPS", Owner = "Jared Hersh", Budget = 206.25f };
+            league.Teams[0] = new FantasyAlgorithms.DataModel.Team() { Name = "Price is wrong Mitch", Owner = "Nir Modiano", Budget = 209.68f };
+            league.Teams[1] = new FantasyAlgorithms.DataModel.Team() { Name = "Peanut Tossers", Owner = "Josh Kornblit", Budget = 225.08f };
+            league.Teams[2] = new FantasyAlgorithms.DataModel.Team() { Name = "Kirby SMASH", Owner = "Bobby Ronaghy", Budget = 190.62f };
+            league.Teams[3] = new FantasyAlgorithms.DataModel.Team() { Name = "See You In McCourt", Owner = "Eric Rudin", Budget = 204.94f };
+            league.Teams[4] = new FantasyAlgorithms.DataModel.Team() { Name = "20% off at Cole’s", Owner = "Macus", Budget = 202.57f };
+            league.Teams[5] = new FantasyAlgorithms.DataModel.Team() { Name = "Cain and Able", Owner = "Michael Sneag", Budget = 186.33f };
+            league.Teams[6] = new FantasyAlgorithms.DataModel.Team() { Name = "Jews on First", Owner = "Steve Lesser", Budget = 210.89f };
+            league.Teams[7] = new FantasyAlgorithms.DataModel.Team() { Name = "Putz on Second", Owner = "Jon Rosenberg", Budget = 217.90f };
+            league.Teams[8] = new FantasyAlgorithms.DataModel.Team() { Name = "Cool WHIP", Owner = "Jeff Selman", Budget = 248.23f };
+            league.Teams[9] = new FantasyAlgorithms.DataModel.Team() { Name = "The S stand for OPS", Owner = "Jared Hersh", Budget = 203.67f };
             league.Save(file);
         }
 

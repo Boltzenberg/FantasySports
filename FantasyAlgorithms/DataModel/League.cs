@@ -9,7 +9,8 @@ namespace FantasyAlgorithms.DataModel
     public enum Leagues
     {
         Rounders2019,
-        CrossCountryRivals2019
+        CrossCountryRivals2019,
+        Rounders2020
     }
 
     public class LeagueConstants
@@ -27,6 +28,7 @@ namespace FantasyAlgorithms.DataModel
             {
                 case Leagues.Rounders2019: return Rounders2019;
                 case Leagues.CrossCountryRivals2019: return CrossCountryRivals2019;
+                case Leagues.Rounders2020: return Rounders2020;
                 default: return null;
             }
         }
@@ -104,6 +106,43 @@ namespace FantasyAlgorithms.DataModel
                 }
 
                 return _crossCountryRivals2019;
+            }
+        }
+
+        private static LeagueConstants _rounders2020 = null;
+        public static LeagueConstants Rounders2020
+        {
+            get
+            {
+                if (_rounders2020 == null)
+                {
+                    _rounders2020 = new LeagueConstants();
+                    _rounders2020.TeamCount = 10;
+                    _rounders2020.RosterableBatterCountPerTeam = 15;
+                    _rounders2020.RosterablePitcherCountPerTeam = 13;
+                    _rounders2020.ScoringStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
+                        new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
+                        new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
+                        new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
+                        new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
+                        new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
+                        new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
+                        new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
+                        new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
+                    };
+                    _rounders2020.SupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
+                        new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
+                    };
+                    _rounders2020.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2020;
+                }
+
+                return _rounders2020;
             }
         }
     }

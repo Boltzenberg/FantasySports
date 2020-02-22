@@ -31,7 +31,7 @@ namespace ESPNProjections
                         Player p = new Player();
                         p.FullName = (string)player["player"]["fullName"];
                         p.Id = int.Parse((string)player["player"]["id"]);
-                        p.Rank = (string)player["player"]["draftRanksByRankType"]["STANDARD"]["rank"];
+                        p.Rank = TryGetValue(player, "player", "draftRanksByRankType", "STANDARD", "rank");
                         p.SeasonOutlook = (string)player["player"]["seasonOutlook"];
                         p.Positions = new List<int>(((JArray)player["player"]["eligibleSlots"]).Select(s => (int)s).ToArray());
                         p.Stats = new Dictionary<string, string>();
@@ -60,6 +60,21 @@ namespace ESPNProjections
                     }
                 }
             }
+        }
+
+        private static string TryGetValue(JToken root, params string[] path)
+        {
+            JToken node = root;
+            foreach (string child in path)
+            {                
+                node = node[child];
+                if (node == null)
+                {
+                    return string.Empty;
+                }
+            }
+
+            return (string)node;
         }
 
         public string FullName { get; private set; }
