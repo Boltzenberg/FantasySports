@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using YahooFantasySports;
 using YahooFantasySports.DataModel;
@@ -30,9 +33,70 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            LoadESPNProjections();
+            //LoadESPNProjections();
             //UpdateTeams();
             //YahooStuff();
+            Percentiles();
+        }
+
+        static void Percentiles()
+        {
+            const string file = "C:\\Users\\Jon\\OneDrive\\Documents\\Rounders2020.json";
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<HTML><BODY><H1>Analysis of 2020 Projections, Aaron Judge Selected</H1><TABLE BORDER=1><TR><TD>Stat Name</TD><TD>Player Count</TD><TD>Max Value</TD><TD>Min Value</TD><TD>Graph</TD><TD>Player Percentile</TD></TR>");
+            FantasyAlgorithms.DataModel.League league = FantasyAlgorithms.DataModel.League.Load(file);
+            FantasyAlgorithms.PercentilePlayerGroupAnalyzer analyzer = new FantasyAlgorithms.PercentilePlayerGroupAnalyzer();
+            FantasyAlgorithms.DataModel.LeagueConstants constants = FantasyAlgorithms.DataModel.LeagueConstants.For(league.FantasyLeague);
+            foreach (FantasyAlgorithms.IStatExtractor extractor in  constants.ScoringStatExtractors)
+            {
+                FantasyAlgorithms.PlayerGroupAnalysis analysis = analyzer.Analyze("Entire League, selecting Aaron Judge", extractor, league.AllPlayers, league.AllPlayers.FirstOrDefault(p => p.Name.Contains("Judge")));
+                byte[] img;
+                using (MemoryStream stm = new MemoryStream())
+                {
+                    analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    img = stm.ToArray();
+                }
+                sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.DataPoints}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
+            }
+            sb.AppendLine("</TABLE></BODY></HTML>");
+            System.IO.File.WriteAllText("C:\\users\\jon\\desktop\\analysis.html", sb.ToString());
+        }
+
+        static void PercentileAnalysis(IEnumerable<FantasyAlgorithms.DataModel.IPlayer> playerSet, Func<FantasyAlgorithms.DataModel.IPlayer, float> statExtractor, FantasyAlgorithms.DataModel.IPlayer selectedPlayer)
+        {
+            List<Tuple<float, FantasyAlgorithms.DataModel.IPlayer>> playersWithStats = new List<Tuple<float, FantasyAlgorithms.DataModel.IPlayer>>();
+            int barCount = 0;
+            float barMin = float.MaxValue;
+            float barMax = float.MinValue;
+
+            foreach (FantasyAlgorithms.DataModel.IPlayer player in playerSet)
+            {
+                float stat = statExtractor(player);
+                playersWithStats.Add(new Tuple<float, FantasyAlgorithms.DataModel.IPlayer>(stat, player));
+                barCount++;
+                barMin = Math.Min(barMin, stat);
+                barMax = Math.Max(barMax, stat);
+            }
+
+            playersWithStats.Sort((Tuple<float, FantasyAlgorithms.DataModel.IPlayer> x, Tuple<float, FantasyAlgorithms.DataModel.IPlayer> y) => y.Item1.CompareTo(x.Item1));
+            
+            const int imgWidth = 800;
+            const int imgHeight = 480;
+
+            int barWidth = (int)(imgWidth / barCount);
+            Bitmap graph = new Bitmap(imgWidth, imgHeight);
+            using (Graphics g = Graphics.FromImage(graph))
+            {
+                for (int i = 0; i < playersWithStats.Count; i++)
+                {
+                    float barHeightPercent = playersWithStats[i].Item1 / barMax;
+                    int barHeight = (int)(barHeightPercent * imgHeight);
+                    Rectangle rect = new Rectangle(i * barWidth, imgHeight - barHeight, barWidth, barHeight);
+                    g.FillRectangle(playersWithStats[i].Item2 == selectedPlayer ? Brushes.Green : Brushes.Red, rect);
+                }
+            }
+
+            graph.Save("C:\\users\\jon\\desktop\\test.bmp");
         }
 
         static void LoadESPNProjections()
@@ -45,7 +109,7 @@ namespace Scratch
 
         static void UpdateTeams()
         {
-            const string file = "C:\\Onedrive\\documents\\Rounders2020.json";
+            const string file = "C:\\Users\\Jon\\OneDrive\\Documents\\Rounders2020.json";
             FantasyAlgorithms.DataModel.League league = FantasyAlgorithms.DataModel.League.Load(file);
             league.Teams = new FantasyAlgorithms.DataModel.Team[10];
             league.Teams[0] = new FantasyAlgorithms.DataModel.Team() { Name = "Price is wrong Mitch", Owner = "Nir Modiano", Budget = 209.68f };

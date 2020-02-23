@@ -18,6 +18,8 @@ namespace FantasyAlgorithms.DataModel
         public int TeamCount { get; private set; }
         public int RosterableBatterCountPerTeam { get; private set; }
         public int RosterablePitcherCountPerTeam { get; private set; }
+        public IReadOnlyList<IStatExtractor> BattingScoringStatExtractors { get; private set; }
+        public IReadOnlyList<IStatExtractor> PitchingScoringStatExtractors { get; private set; }
         public IReadOnlyList<IStatExtractor> ScoringStatExtractors { get; private set; }
         public IReadOnlyList<IStatExtractor> SupportingStatExtractors { get; private set; }
         public string YahooLeagueId { get; private set; }
@@ -44,19 +46,23 @@ namespace FantasyAlgorithms.DataModel
                     _rounders2019.TeamCount = 10;
                     _rounders2019.RosterableBatterCountPerTeam = 14;
                     _rounders2019.RosterablePitcherCountPerTeam = 13;
-                    _rounders2019.ScoringStatExtractors = new List<IStatExtractor>()
+                    _rounders2019.BattingScoringStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
                         new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
                         new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
                         new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
-                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide)
+                    };
+                    _rounders2019.PitchingScoringStatExtractors = new List<IStatExtractor>()
+                    { 
                         new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
                         new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
                         new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
                         new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
                         new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
                     };
+                    _rounders2019.ScoringStatExtractors = _rounders2019.BattingScoringStatExtractors.Union(_rounders2019.PitchingScoringStatExtractors).ToList();
                     _rounders2019.SupportingStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
@@ -81,14 +87,17 @@ namespace FantasyAlgorithms.DataModel
                     _crossCountryRivals2019.TeamCount = 12;
                     _crossCountryRivals2019.RosterableBatterCountPerTeam = 9;
                     _crossCountryRivals2019.RosterablePitcherCountPerTeam = 6;
-                    _crossCountryRivals2019.ScoringStatExtractors = new List<IStatExtractor>()
+                    _crossCountryRivals2019.BattingScoringStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
                         new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
                         new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
                         new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
                         new RatioStatExtractor("AVG", true, Extractors.ExtractBatterHits, Extractors.ExtractBatterAtBats, Ratios.Divide),
-                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide)
+                    };
+                    _crossCountryRivals2019.PitchingScoringStatExtractors = new List<IStatExtractor>()
+                    { 
                         new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
                         new CountingStatExtractor("Holds", true, Extractors.ExtractPitcherHolds),
                         new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
@@ -96,6 +105,7 @@ namespace FantasyAlgorithms.DataModel
                         new RatioStatExtractor("K/9", true, Extractors.ExtractPitcherStrikeouts, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
                         new RatioStatExtractor("Win%", true, Extractors.ExtractPitcherWins, Extractors.ExtractPitcherDecisions, Ratios.Divide),
                     };
+                    _crossCountryRivals2019.ScoringStatExtractors = _crossCountryRivals2019.BattingScoringStatExtractors.Union(_crossCountryRivals2019.PitchingScoringStatExtractors).ToList();
                     _crossCountryRivals2019.SupportingStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
@@ -120,19 +130,23 @@ namespace FantasyAlgorithms.DataModel
                     _rounders2020.TeamCount = 10;
                     _rounders2020.RosterableBatterCountPerTeam = 15;
                     _rounders2020.RosterablePitcherCountPerTeam = 13;
-                    _rounders2020.ScoringStatExtractors = new List<IStatExtractor>()
+                    _rounders2020.BattingScoringStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
                         new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
                         new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
                         new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
-                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide)
+                    };
+                    _rounders2020.PitchingScoringStatExtractors = new List<IStatExtractor>()
+                    {
                         new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
                         new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
                         new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
                         new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
                         new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
                     };
+                    _rounders2020.ScoringStatExtractors = _rounders2020.BattingScoringStatExtractors.Union(_rounders2020.PitchingScoringStatExtractors).ToList();
                     _rounders2020.SupportingStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),

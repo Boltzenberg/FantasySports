@@ -18,7 +18,7 @@ namespace FantasyAuctionUI
         public PlayerAssignment()
         {
             InitializeComponent();
-            this.LoadPlayers(Path.Combine("C:\\onedrive\\documents", Constants.Files.League));
+            this.LoadPlayers(Path.Combine("C:\\users\\jon\\onedrive\\documents", Constants.Files.League));
         }
 
         private void OnLoadLeague(object sender, EventArgs e)
@@ -194,6 +194,11 @@ namespace FantasyAuctionUI
             {
                 new SnakeCenter(this.league, this.fileName, prompt.SelectedItem).Show();
             }
+        }
+
+        private void OnLaunchPlayerGroupAnalysisCenter(object sender, EventArgs e)
+        {
+            new PlayerGroupCenter("All players", LeagueConstants.For(this.league.FantasyLeague), this.league.AllPlayers).Show();
         }
 
         private void OnWordWheel(object sender, EventArgs e)

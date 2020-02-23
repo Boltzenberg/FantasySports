@@ -42,6 +42,7 @@
             this.speculationCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.targetCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topFreeAgentSwapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.snakeCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadYahooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,16 +55,17 @@
             this.tbFantasyTeam = new System.Windows.Forms.TextBox();
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.snakeCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playerGroupAnalysisCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 35);
+            this.label1.Location = new System.Drawing.Point(16, 54);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.Size = new System.Drawing.Size(64, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Players:";
             // 
@@ -71,9 +73,10 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(213, 645);
+            this.label3.Location = new System.Drawing.Point(320, 992);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.Size = new System.Drawing.Size(114, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "Fantasy Team:";
             // 
@@ -81,9 +84,10 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(217, 671);
+            this.label4.Location = new System.Drawing.Point(326, 1032);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 13);
+            this.label4.Size = new System.Drawing.Size(106, 20);
             this.label4.TabIndex = 7;
             this.label4.Text = "Auction Price:";
             // 
@@ -91,9 +95,10 @@
             // 
             this.tbAuctionPrice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAuctionPrice.Location = new System.Drawing.Point(296, 668);
+            this.tbAuctionPrice.Location = new System.Drawing.Point(444, 1028);
+            this.tbAuctionPrice.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbAuctionPrice.Name = "tbAuctionPrice";
-            this.tbAuctionPrice.Size = new System.Drawing.Size(372, 20);
+            this.tbAuctionPrice.Size = new System.Drawing.Size(556, 26);
             this.tbAuctionPrice.TabIndex = 2;
             // 
             // wbOut
@@ -101,18 +106,20 @@
             this.wbOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.wbOut.Location = new System.Drawing.Point(170, 54);
-            this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbOut.Location = new System.Drawing.Point(255, 83);
+            this.wbOut.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.wbOut.MinimumSize = new System.Drawing.Size(30, 31);
             this.wbOut.Name = "wbOut";
-            this.wbOut.Size = new System.Drawing.Size(618, 579);
+            this.wbOut.Size = new System.Drawing.Size(927, 891);
             this.wbOut.TabIndex = 9;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(674, 642);
+            this.button1.Location = new System.Drawing.Point(1011, 988);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 73);
+            this.button1.Size = new System.Drawing.Size(171, 112);
             this.button1.TabIndex = 10;
             this.button1.Text = "Save";
             this.button1.UseVisualStyleBackColor = true;
@@ -120,13 +127,15 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.draftCenterToolStripMenuItem,
             this.fantasyDataToolStripMenuItem,
             this.leaguesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1200, 35);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -139,52 +148,60 @@
             this.speculationCenterToolStripMenuItem,
             this.targetCenterToolStripMenuItem,
             this.topFreeAgentSwapsToolStripMenuItem,
-            this.snakeCenterToolStripMenuItem});
+            this.snakeCenterToolStripMenuItem,
+            this.playerGroupAnalysisCenterToolStripMenuItem});
             this.draftCenterToolStripMenuItem.Name = "draftCenterToolStripMenuItem";
-            this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.draftCenterToolStripMenuItem.Size = new System.Drawing.Size(87, 29);
             this.draftCenterToolStripMenuItem.Text = "Centers";
             // 
             // draftCenterToolStripMenuItem1
             // 
             this.draftCenterToolStripMenuItem1.Name = "draftCenterToolStripMenuItem1";
-            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(190, 22);
+            this.draftCenterToolStripMenuItem1.Size = new System.Drawing.Size(341, 34);
             this.draftCenterToolStripMenuItem1.Text = "Stat Center";
             this.draftCenterToolStripMenuItem1.Click += new System.EventHandler(this.OnLaunchStatCenter);
             // 
             // rosterCenterToolStripMenuItem
             // 
             this.rosterCenterToolStripMenuItem.Name = "rosterCenterToolStripMenuItem";
-            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.rosterCenterToolStripMenuItem.Size = new System.Drawing.Size(341, 34);
             this.rosterCenterToolStripMenuItem.Text = "Roster Center";
             this.rosterCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchRosterCenter);
             // 
             // analysisCenterToolStripMenuItem
             // 
             this.analysisCenterToolStripMenuItem.Name = "analysisCenterToolStripMenuItem";
-            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.analysisCenterToolStripMenuItem.Size = new System.Drawing.Size(341, 34);
             this.analysisCenterToolStripMenuItem.Text = "Analysis Center";
             this.analysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAnalysisCenter);
             // 
             // speculationCenterToolStripMenuItem
             // 
             this.speculationCenterToolStripMenuItem.Name = "speculationCenterToolStripMenuItem";
-            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.speculationCenterToolStripMenuItem.Size = new System.Drawing.Size(341, 34);
             this.speculationCenterToolStripMenuItem.Text = "Speculation Center";
             this.speculationCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSpeculationCenter);
             // 
             // targetCenterToolStripMenuItem
             // 
             this.targetCenterToolStripMenuItem.Name = "targetCenterToolStripMenuItem";
-            this.targetCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.targetCenterToolStripMenuItem.Size = new System.Drawing.Size(341, 34);
             this.targetCenterToolStripMenuItem.Text = "Target Center";
             this.targetCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchTargetCenter);
             // 
             // topFreeAgentSwapsToolStripMenuItem
             // 
             this.topFreeAgentSwapsToolStripMenuItem.Name = "topFreeAgentSwapsToolStripMenuItem";
-            this.topFreeAgentSwapsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.topFreeAgentSwapsToolStripMenuItem.Size = new System.Drawing.Size(341, 34);
             this.topFreeAgentSwapsToolStripMenuItem.Text = "Top Free Agent Swaps";
             this.topFreeAgentSwapsToolStripMenuItem.Click += new System.EventHandler(this.OnGetTopFreeAgentSwaps);
+            // 
+            // snakeCenterToolStripMenuItem
+            // 
+            this.snakeCenterToolStripMenuItem.Name = "snakeCenterToolStripMenuItem";
+            this.snakeCenterToolStripMenuItem.Size = new System.Drawing.Size(341, 34);
+            this.snakeCenterToolStripMenuItem.Text = "Snake Center";
+            this.snakeCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSnakeCenter);
             // 
             // fantasyDataToolStripMenuItem
             // 
@@ -192,20 +209,20 @@
             this.reloadToolStripMenuItem,
             this.reloadYahooToolStripMenuItem});
             this.fantasyDataToolStripMenuItem.Name = "fantasyDataToolStripMenuItem";
-            this.fantasyDataToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
+            this.fantasyDataToolStripMenuItem.Size = new System.Drawing.Size(129, 29);
             this.fantasyDataToolStripMenuItem.Text = "Fantasy Data";
             // 
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
             this.reloadToolStripMenuItem.Text = "Reload ESPN";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.OnReloadESPNData);
             // 
             // reloadYahooToolStripMenuItem
             // 
             this.reloadYahooToolStripMenuItem.Name = "reloadYahooToolStripMenuItem";
-            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.reloadYahooToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
             this.reloadYahooToolStripMenuItem.Text = "Reload Yahoo";
             this.reloadYahooToolStripMenuItem.Click += new System.EventHandler(this.OnReloadYahooData);
             // 
@@ -215,20 +232,20 @@
             this.loadToolStripMenuItem,
             this.createToolStripMenuItem});
             this.leaguesToolStripMenuItem.Name = "leaguesToolStripMenuItem";
-            this.leaguesToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.leaguesToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.leaguesToolStripMenuItem.Text = "Leagues";
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(176, 34);
             this.loadToolStripMenuItem.Text = "Load...";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.OnLoadLeague);
             // 
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(176, 34);
             this.createToolStripMenuItem.Text = "Create...";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.OnCreateNewLeague);
             // 
@@ -237,68 +254,75 @@
             this.lbPlayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lbPlayers.FormattingEnabled = true;
-            this.lbPlayers.Location = new System.Drawing.Point(13, 77);
+            this.lbPlayers.ItemHeight = 20;
+            this.lbPlayers.Location = new System.Drawing.Point(20, 118);
+            this.lbPlayers.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lbPlayers.Name = "lbPlayers";
-            this.lbPlayers.Size = new System.Drawing.Size(151, 641);
+            this.lbPlayers.Size = new System.Drawing.Size(224, 984);
             this.lbPlayers.TabIndex = 0;
             this.lbPlayers.SelectedIndexChanged += new System.EventHandler(this.OnSelectPlayer);
             // 
             // tbWordWheel
             // 
-            this.tbWordWheel.Location = new System.Drawing.Point(13, 54);
+            this.tbWordWheel.Location = new System.Drawing.Point(20, 83);
+            this.tbWordWheel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbWordWheel.Name = "tbWordWheel";
-            this.tbWordWheel.Size = new System.Drawing.Size(151, 20);
+            this.tbWordWheel.Size = new System.Drawing.Size(224, 26);
             this.tbWordWheel.TabIndex = 15;
             this.tbWordWheel.TextChanged += new System.EventHandler(this.OnWordWheel);
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(592, 1246);
+            this.comboBox1.Location = new System.Drawing.Point(888, 1917);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(180, 28);
             this.comboBox1.TabIndex = 16;
             // 
             // tbFantasyTeam
             // 
             this.tbFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbFantasyTeam.Location = new System.Drawing.Point(296, 642);
+            this.tbFantasyTeam.Location = new System.Drawing.Point(444, 988);
+            this.tbFantasyTeam.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbFantasyTeam.Name = "tbFantasyTeam";
-            this.tbFantasyTeam.Size = new System.Drawing.Size(372, 20);
+            this.tbFantasyTeam.Size = new System.Drawing.Size(556, 26);
             this.tbFantasyTeam.TabIndex = 1;
             // 
             // tbAssumedFantasyTeam
             // 
             this.tbAssumedFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAssumedFantasyTeam.Location = new System.Drawing.Point(296, 695);
+            this.tbAssumedFantasyTeam.Location = new System.Drawing.Point(444, 1069);
+            this.tbAssumedFantasyTeam.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbAssumedFantasyTeam.Name = "tbAssumedFantasyTeam";
-            this.tbAssumedFantasyTeam.Size = new System.Drawing.Size(372, 20);
+            this.tbAssumedFantasyTeam.Size = new System.Drawing.Size(556, 26);
             this.tbAssumedFantasyTeam.TabIndex = 18;
             // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(170, 698);
+            this.label2.Location = new System.Drawing.Point(255, 1074);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 13);
+            this.label2.Size = new System.Drawing.Size(185, 20);
             this.label2.TabIndex = 19;
             this.label2.Text = "Assumed Fantasy Team:";
             // 
-            // snakeCenterToolStripMenuItem
+            // playerGroupAnalysisCenterToolStripMenuItem
             // 
-            this.snakeCenterToolStripMenuItem.Name = "snakeCenterToolStripMenuItem";
-            this.snakeCenterToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.snakeCenterToolStripMenuItem.Text = "Snake Center";
-            this.snakeCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchSnakeCenter);
+            this.playerGroupAnalysisCenterToolStripMenuItem.Name = "playerGroupAnalysisCenterToolStripMenuItem";
+            this.playerGroupAnalysisCenterToolStripMenuItem.Size = new System.Drawing.Size(341, 34);
+            this.playerGroupAnalysisCenterToolStripMenuItem.Text = "Player Group Analysis Center";
+            this.playerGroupAnalysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchPlayerGroupAnalysisCenter);
             // 
             // PlayerAssignment
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 730);
+            this.ClientSize = new System.Drawing.Size(1200, 1123);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbAssumedFantasyTeam);
             this.Controls.Add(this.tbFantasyTeam);
@@ -313,6 +337,7 @@
             this.Controls.Add(this.lbPlayers);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "PlayerAssignment";
             this.Text = "Fantasy Auction UI";
             this.menuStrip1.ResumeLayout(false);
@@ -350,6 +375,7 @@
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem snakeCenterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playerGroupAnalysisCenterToolStripMenuItem;
     }
 }
 

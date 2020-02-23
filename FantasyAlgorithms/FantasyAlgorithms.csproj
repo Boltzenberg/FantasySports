@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +53,10 @@
     <Compile Include="DataModel\Team.cs" />
     <Compile Include="DataSourceMerge.cs" />
     <Compile Include="Extractors.cs" />
+    <Compile Include="IPlayerGroupAnalyzer.cs" />
     <Compile Include="IRoster.cs" />
+    <Compile Include="PercentilePlayerGroupAnalyzer.cs" />
+    <Compile Include="PlayerGroupAnalysis.cs" />
     <Compile Include="Ratios.cs" />
     <Compile Include="RatioStatExtractor.cs" />
     <Compile Include="CountingStatExtractor.cs" />

@@ -52,6 +52,12 @@
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="PlayerGroupCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayerGroupCenter.Designer.cs">
+      <DependentUpon>PlayerGroupCenter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Prompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     <Compile Include="UIUtilities.cs" />
     <EmbeddedResource Include="AnalysisCenter.resx">
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayerGroupCenter.resx">
+      <DependentUpon>PlayerGroupCenter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Prompt.resx">
       <DependentUpon>Prompt.cs</DependentUpon>
