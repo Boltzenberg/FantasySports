@@ -21,6 +21,8 @@ namespace FantasyAlgorithms.DataModel
         public IReadOnlyList<IStatExtractor> BattingScoringStatExtractors { get; private set; }
         public IReadOnlyList<IStatExtractor> PitchingScoringStatExtractors { get; private set; }
         public IReadOnlyList<IStatExtractor> ScoringStatExtractors { get; private set; }
+        public IReadOnlyList<IStatExtractor> BattingSupportingStatExtractors { get; private set; }
+        public IReadOnlyList<IStatExtractor> PitchingSupportingStatExtractors { get; private set; }
         public IReadOnlyList<IStatExtractor> SupportingStatExtractors { get; private set; }
         public string YahooLeagueId { get; private set; }
 
@@ -63,12 +65,16 @@ namespace FantasyAlgorithms.DataModel
                         new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
                     };
                     _rounders2019.ScoringStatExtractors = _rounders2019.BattingScoringStatExtractors.Union(_rounders2019.PitchingScoringStatExtractors).ToList();
-                    _rounders2019.SupportingStatExtractors = new List<IStatExtractor>()
+                    _rounders2019.BattingSupportingStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
                         new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
-                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
                     };
+                    _rounders2019.PitchingSupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide),
+                    };
+                    _rounders2019.SupportingStatExtractors = _rounders2019.BattingSupportingStatExtractors.Union(_rounders2019.PitchingSupportingStatExtractors).ToList();
                     _rounders2019.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2019;
                 }
 
@@ -106,12 +112,16 @@ namespace FantasyAlgorithms.DataModel
                         new RatioStatExtractor("Win%", true, Extractors.ExtractPitcherWins, Extractors.ExtractPitcherDecisions, Ratios.Divide),
                     };
                     _crossCountryRivals2019.ScoringStatExtractors = _crossCountryRivals2019.BattingScoringStatExtractors.Union(_crossCountryRivals2019.PitchingScoringStatExtractors).ToList();
-                    _crossCountryRivals2019.SupportingStatExtractors = new List<IStatExtractor>()
+                    _crossCountryRivals2019.BattingSupportingStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
                         new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
-                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
                     };
+                    _crossCountryRivals2019.PitchingSupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide),
+                    };
+                    _crossCountryRivals2019.SupportingStatExtractors = _crossCountryRivals2019.BattingSupportingStatExtractors.Union(_crossCountryRivals2019.PitchingSupportingStatExtractors).ToList();
                     _crossCountryRivals2019.YahooLeagueId = YahooFantasySports.Constants.Leagues.CrossCountryRivals2019;
                 }
 
@@ -147,12 +157,16 @@ namespace FantasyAlgorithms.DataModel
                         new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
                     };
                     _rounders2020.ScoringStatExtractors = _rounders2020.BattingScoringStatExtractors.Union(_rounders2020.PitchingScoringStatExtractors).ToList();
-                    _rounders2020.SupportingStatExtractors = new List<IStatExtractor>()
+                    _rounders2020.BattingSupportingStatExtractors = new List<IStatExtractor>()
                     {
                         new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
                         new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
-                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide)
                     };
+                    _rounders2020.PitchingSupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide),
+                    };
+                    _rounders2020.SupportingStatExtractors = _rounders2020.BattingSupportingStatExtractors.Union(_rounders2020.PitchingSupportingStatExtractors).ToList();
                     _rounders2020.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2020;
                 }
 

@@ -53,7 +53,7 @@ namespace FantasyAlgorithms.DataModel
         public string GetHTML()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("<HTML><BODY><TABLE BORDER='1'>");
+            sb.AppendLine("<TABLE BORDER='1'>");
             sb.AppendFormat("<TR><TD>Name</TD><TD>{0}</TD></TR>", this.Name);
             sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
             sb.AppendFormat("<TR><TD>Yahoo ID</TD><TD>{0}</TD></TR>", this.YahooId);
@@ -73,7 +73,7 @@ namespace FantasyAlgorithms.DataModel
             sb.AppendFormat("<TR><TD>Player Status</TD><TD>{0}</TD></TR>", this.Status);
             sb.AppendFormat("<TR><TD>Season Outlook</TD><TD>{0}</TD></TR>", this.SeasonOutlook);
             sb.AppendFormat("<TR><TD>Projections Updated</TD><TD>{0}</TD></TR>", this.ProjectionsLastUpdated);
-            sb.AppendLine("</TABLE></BODY></HTML>");
+            sb.AppendLine("</TABLE>");
             return sb.ToString();
         }
 

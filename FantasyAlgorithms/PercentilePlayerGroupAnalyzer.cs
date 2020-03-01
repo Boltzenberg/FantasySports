@@ -13,7 +13,7 @@ namespace FantasyAlgorithms
         public PercentilePlayerGroupAnalyzer()
         {}
 
-        public PlayerGroupAnalysis Analyze(string groupDescription, IStatExtractor statExtractor, IEnumerable<IPlayer> playerSet, IPlayer selectedPlayer)
+        public PlayerGroupAnalysis Analyze(string groupDescription, IStatExtractor statExtractor, IEnumerable<IPlayer> playerSet, IPlayer selectedPlayer, Func<IPlayer, Brush> playerToBrush)
         {
             List<Tuple<IStatValue, IPlayer>> playersWithStats = new List<Tuple<IStatValue, IPlayer>>();
             float barMin = float.MaxValue;
@@ -53,18 +53,22 @@ namespace FantasyAlgorithms
                     float barHeightPercent = playersWithStats[i].Item1.Value / barMax;
                     int barHeight = (int)(barHeightPercent * imgHeight);
                     Rectangle rect = new Rectangle(i * barWidth, imgHeight - barHeight, barWidth, barHeight);
-                    Brush brush = Brushes.Red;
+                    Brush brush = playerToBrush(playersWithStats[i].Item2);
                     if (playersWithStats[i].Item2 == selectedPlayer)
                     {
                         playerPercentile = 100 - ((i * 100) / playersWithStats.Count);
                         playerStatValue = playersWithStats[i].Item1.Value;
-                        brush = Brushes.Green;
                     }
                     g.FillRectangle(brush, rect);
                 }
             }
 
             return new PlayerGroupAnalysis(groupDescription, statExtractor.StatName, graph, playersWithStats.Count, barMin, barMax, selectedPlayer, playerStatValue, playerPercentile);
+        }
+
+        public PlayerGroupAnalysis Analyze(string groupDescription, IStatExtractor statExtractor, IEnumerable<IPlayer> playerSet, IPlayer selectedPlayer)
+        {
+            return this.Analyze(groupDescription, statExtractor, playerSet, selectedPlayer, p => p == selectedPlayer ? Brushes.Green : Brushes.Red);
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using FantasyAlgorithms.DataModel;
+﻿using FantasyAlgorithms;
+using FantasyAlgorithms.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace FantasyAuctionUI
@@ -18,7 +21,7 @@ namespace FantasyAuctionUI
         public PlayerAssignment()
         {
             InitializeComponent();
-            this.LoadPlayers(Path.Combine("C:\\users\\jon\\onedrive\\documents", Constants.Files.League));
+            this.LoadPlayers(Path.Combine("C:\\users\\jon_r\\onedrive\\documents", Constants.Files.League));
         }
 
         private void OnLoadLeague(object sender, EventArgs e)
@@ -69,7 +72,11 @@ namespace FantasyAuctionUI
         {
             if (this.currentPlayer != null)
             {
-                if (string.IsNullOrEmpty(this.tbFantasyTeam.Text) || Array.Exists(this.league.Teams, x => x.Name == this.tbFantasyTeam.Text))
+                if (this.cbFantasyTeam.SelectedItem != null && !string.IsNullOrEmpty(this.cbFantasyTeam.SelectedItem.ToString()))
+                {
+                    this.currentPlayer.FantasyTeam = this.cbFantasyTeam.SelectedItem.ToString();
+                }
+                else if (string.IsNullOrEmpty(this.tbFantasyTeam.Text) || Array.Exists(this.league.Teams, x => x.Name == this.tbFantasyTeam.Text))
                 {
                     this.currentPlayer.FantasyTeam = this.tbFantasyTeam.Text;
                 }
@@ -92,6 +99,29 @@ namespace FantasyAuctionUI
             }
         }
 
+        private string GetPlayerAnalysisTable(IPlayer player)
+        {
+            PercentilePlayerGroupAnalyzer analyzer = new PercentilePlayerGroupAnalyzer();
+            LeagueConstants lc = LeagueConstants.For(this.league.FantasyLeague);
+            IEnumerable<IStatExtractor> extractors = player is Batter ? lc.BattingSupportingStatExtractors.Union(lc.BattingScoringStatExtractors) : lc.PitchingSupportingStatExtractors.Union(lc.PitchingScoringStatExtractors);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<TABLE BORDER=1><TR><TD>Stat Name</TD><TD>Player's Stat Value</TD><TD>Max Value</TD><TD>Min Value</TD><TD>Graph</TD><TD>Player Percentile</TD></TR>");
+            foreach (IStatExtractor extractor in extractors)
+            {
+                PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, this.allPlayers, player, p => p == player ? Brushes.Yellow : !string.IsNullOrEmpty(p.FantasyTeam) ? Brushes.Blue : Brushes.Violet);
+                byte[] img;
+                using (MemoryStream stm = new MemoryStream())
+                {
+                    analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    img = stm.ToArray();
+                }
+                sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.PlayerStatValue}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
+            }
+            sb.AppendLine("</TABLE>");
+            return sb.ToString();
+        }
+
         private void UpdateCurrentPlayer(IPlayer newCurrentPlayer)
         {
             this.WriteUIToCurrentPlayer();
@@ -99,8 +129,9 @@ namespace FantasyAuctionUI
             {
                 this.tbAuctionPrice.Text = newCurrentPlayer.AuctionPrice.ToString();
                 this.tbFantasyTeam.Text = newCurrentPlayer.FantasyTeam;
+                this.cbFantasyTeam.SelectedItem = newCurrentPlayer.FantasyTeam;
                 this.tbAssumedFantasyTeam.Text = newCurrentPlayer.AssumedFantasyTeam;
-                this.wbOut.DocumentText = newCurrentPlayer.GetHTML();
+                this.wbOut.DocumentText = "<HTML><BODY><H1>Player Info</H1>" + newCurrentPlayer.GetHTML() + "<H1>Player Analysis</H1>" + this.GetPlayerAnalysisTable(newCurrentPlayer) + "</BODY></HTML>";
             }
             this.currentPlayer = newCurrentPlayer;
         }
@@ -126,6 +157,11 @@ namespace FantasyAuctionUI
             this.lbPlayers.Items.Clear();
             this.lbPlayers.Items.AddRange(this.allPlayers.ToArray());
             this.currentPlayer = null;
+            List<string> teams = new List<string>(this.league.Teams.Select(t => t.Name));
+            teams.Sort();
+            teams.Insert(0, string.Empty);
+            this.cbFantasyTeam.Items.Clear();
+            this.cbFantasyTeam.Items.AddRange(teams.ToArray());
         }
 
         private void OnSave(object sender, EventArgs e)
