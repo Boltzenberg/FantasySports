@@ -99,7 +99,7 @@ namespace FantasyAuctionUI
             }
         }
 
-        private string GetPlayerAnalysisTable(IPlayer player)
+        private string GetPlayerAnalysisTable(IPlayer player, IEnumerable<IPlayer> players)
         {
             PercentilePlayerGroupAnalyzer analyzer = new PercentilePlayerGroupAnalyzer();
             LeagueConstants lc = LeagueConstants.For(this.league.FantasyLeague);
@@ -109,7 +109,7 @@ namespace FantasyAuctionUI
             sb.Append("<TABLE BORDER=1><TR><TD>Stat Name</TD><TD>Player's Stat Value</TD><TD>Max Value</TD><TD>Min Value</TD><TD>Graph</TD><TD>Player Percentile</TD></TR>");
             foreach (IStatExtractor extractor in extractors)
             {
-                PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, this.allPlayers, player, p => p == player ? Brushes.Yellow : !string.IsNullOrEmpty(p.FantasyTeam) ? Brushes.Blue : Brushes.Violet);
+                PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, players, player, p => p == player ? Brushes.Yellow : !string.IsNullOrEmpty(p.FantasyTeam) ? Brushes.Blue : Brushes.Violet);
                 byte[] img;
                 using (MemoryStream stm = new MemoryStream())
                 {
@@ -131,7 +131,19 @@ namespace FantasyAuctionUI
                 this.tbFantasyTeam.Text = newCurrentPlayer.FantasyTeam;
                 this.cbFantasyTeam.SelectedItem = newCurrentPlayer.FantasyTeam;
                 this.tbAssumedFantasyTeam.Text = newCurrentPlayer.AssumedFantasyTeam;
-                this.wbOut.DocumentText = "<HTML><BODY><H1>Player Info</H1>" + newCurrentPlayer.GetHTML() + "<H1>Player Analysis</H1>" + this.GetPlayerAnalysisTable(newCurrentPlayer) + "</BODY></HTML>";
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<HTML><BODY><H1>Player Info</H1>");
+                sb.Append(newCurrentPlayer.GetHTML());
+                sb.Append("<H1>Player analysis vs all players</H1>");
+                sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers));
+                foreach (Position position in newCurrentPlayer.Positions)
+                {
+                    sb.AppendFormat("<H1>Player analysis vs all {0}</H1>", position);
+                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers.Where(p => p.Positions.Contains(position))));
+                }
+                sb.Append("</BODY></HTML>");
+                this.wbOut.DocumentText = sb.ToString();
             }
             this.currentPlayer = newCurrentPlayer;
         }
