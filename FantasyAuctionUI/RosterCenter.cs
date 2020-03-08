@@ -22,7 +22,7 @@ namespace FantasyAuctionUI
             {
                 if (!string.IsNullOrEmpty(player.FantasyTeam))
                 {
-                    teamsMap[player.FantasyTeam].Players.Add(string.Format("{0} ({1}): {2,12:C2}", player.Name, player.Status, player.AuctionPrice));
+                    teamsMap[player.FantasyTeam].Players.Add(player);
                 }
             }
 
@@ -32,7 +32,7 @@ namespace FantasyAuctionUI
             int maxPlayers = 0;
             foreach (var team in teams)
             {
-                team.Players.Sort();
+                team.Players.Sort((x, y) => y.AuctionPrice.CompareTo(x.AuctionPrice));
                 maxPlayers = Math.Max(maxPlayers, team.Players.Count);
             }
 
@@ -50,7 +50,8 @@ namespace FantasyAuctionUI
                 {
                     if (row < teams[col].Players.Count)
                     {
-                        sb.AppendFormat("<TD>{0}</TD>", teams[col].Players[row]);
+                        IPlayer player = teams[col].Players[row];
+                        sb.AppendFormat("<TD>{0} ({1}): {2,12:C2}</TD>", player.Name, player.Status, player.AuctionPrice);
                     }
                     else
                     {
@@ -66,12 +67,12 @@ namespace FantasyAuctionUI
         private class Roster
         {
             public Team Team { get; private set; }
-            public List<string> Players { get; set; }
+            public List<IPlayer> Players { get; set; }
 
             public Roster(Team team)
             {
                 this.Team = team;
-                this.Players = new List<string>();
+                this.Players = new List<IPlayer>();
             }
         }
     }

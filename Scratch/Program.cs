@@ -33,10 +33,10 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            //LoadESPNProjections();
+            LoadESPNProjections();
             //UpdateTeams();
             //YahooStuff();
-            Percentiles();
+            //Percentiles();
         }
 
         static void Percentiles()

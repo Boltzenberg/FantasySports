@@ -13,8 +13,8 @@ namespace ESPNProjections
         private static string Batters = "0,1,2,3,4,5,6,7,8,9,10,11,12,19";
         private static int PlayerCount = 300;
         private static string FantasyFilterFormatString = "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2020]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[1]}},\"sortAppliedStatTotal\":{{\"sortPriority\":2,\"sortAsc\":false,\"value\":\"102020\"}},\"sortDraftRanks\":{{\"sortPriority\":3,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"offset\":0,\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterRanksForRankTypes\":{{\"value\":[\"STANDARD\"]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002020\",\"102020\",\"002019\",\"012020\",\"022020\",\"032020\",\"042020\",\"010002020\"]}}}}}}";
-        private const string Batter2020CacheFile = @"C:\OneDrive\Documents\2020ESPNBatters.json";
-        private const string Pitcher2020CacheFile = @"C:\OneDrive\Documents\2020ESPNPitchers.json";
+        private const string Batter2020CacheFile = @"C:\Users\jon_r\OneDrive\Documents\2020ESPNBatters.json";
+        private const string Pitcher2020CacheFile = @"C:\Users\jon_r\OneDrive\Documents\2020ESPNPitchers.json";
 
         public static string LoadBatterProjections()
         {

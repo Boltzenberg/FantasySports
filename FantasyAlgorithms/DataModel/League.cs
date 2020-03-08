@@ -199,16 +199,16 @@ namespace FantasyAlgorithms.DataModel
 
         public void UpdateESPNProjections()
         {
-            Dictionary<string, Batter> batterMap = new Dictionary<string, Batter>();
+            Dictionary<int, Batter> batterMap = new Dictionary<int, Batter>();
             foreach (var batter in this.Batters)
             {
-                batterMap[batter.Name] = batter;
+                batterMap[batter.ESPNId] = batter;
             }
 
-            Dictionary<string, Pitcher> pitcherMap = new Dictionary<string, Pitcher>();
+            Dictionary<int, Pitcher> pitcherMap = new Dictionary<int, Pitcher>();
             foreach (var pitcher in this.Pitchers)
             {
-                pitcherMap[pitcher.Name] = pitcher;
+                pitcherMap[pitcher.ESPNId] = pitcher;
             }
 
             foreach (ESPNProjections.Player player in ESPNProjections.Player.LoadProjections())
@@ -216,27 +216,27 @@ namespace FantasyAlgorithms.DataModel
                 if (player.IsBatter)
                 {
                     Batter b;
-                    if (batterMap.TryGetValue(player.FullName, out b))
+                    if (batterMap.TryGetValue(player.Id, out b))
                     {
                         b.Update(player);
                     }
                     else
                     {
                         b = Batter.Create(player);
-                        batterMap[b.Name] = b;
+                        batterMap[b.ESPNId] = b;
                     }
                 }
                 else
                 {
                     Pitcher p;
-                    if (pitcherMap.TryGetValue(player.FullName, out p))
+                    if (pitcherMap.TryGetValue(player.Id, out p))
                     {
                         p.Update(player);
                     }
                     else
                     {
                         p = Pitcher.Create(player);
-                        pitcherMap[p.Name] = p;
+                        pitcherMap[p.ESPNId] = p;
                     }
                 }
             }
@@ -266,6 +266,7 @@ namespace FantasyAlgorithms.DataModel
                     List<IPlayer> sameName = new List<IPlayer>(this.AllPlayers.Where(p => string.IsNullOrEmpty(p.YahooId) && (p.Name == yPlayer.Name)));
                     if (sameName.Count == 0)
                     {
+                        System.Diagnostics.Debug.WriteLine(string.Format("Couldn't find player with name '{0}'", yPlayer.Name));
                         continue;
                     }
                     if (sameName.Count == 1)
