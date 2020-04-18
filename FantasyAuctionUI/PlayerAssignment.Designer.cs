@@ -73,7 +73,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(213, 619);
+            this.label3.Location = new System.Drawing.Point(213, 582);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 13);
             this.label3.TabIndex = 6;
@@ -83,7 +83,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(217, 645);
+            this.label4.Location = new System.Drawing.Point(217, 608);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 7;
@@ -93,7 +93,7 @@
             // 
             this.tbAuctionPrice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAuctionPrice.Location = new System.Drawing.Point(296, 642);
+            this.tbAuctionPrice.Location = new System.Drawing.Point(296, 605);
             this.tbAuctionPrice.Name = "tbAuctionPrice";
             this.tbAuctionPrice.Size = new System.Drawing.Size(372, 20);
             this.tbAuctionPrice.TabIndex = 2;
@@ -106,13 +106,13 @@
             this.wbOut.Location = new System.Drawing.Point(170, 54);
             this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbOut.Name = "wbOut";
-            this.wbOut.Size = new System.Drawing.Size(618, 555);
+            this.wbOut.Size = new System.Drawing.Size(618, 514);
             this.wbOut.TabIndex = 9;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(674, 616);
+            this.button1.Location = new System.Drawing.Point(674, 579);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 73);
             this.button1.TabIndex = 10;
@@ -258,7 +258,7 @@
             this.lbPlayers.FormattingEnabled = true;
             this.lbPlayers.Location = new System.Drawing.Point(13, 77);
             this.lbPlayers.Name = "lbPlayers";
-            this.lbPlayers.Size = new System.Drawing.Size(151, 615);
+            this.lbPlayers.Size = new System.Drawing.Size(151, 576);
             this.lbPlayers.TabIndex = 0;
             this.lbPlayers.SelectedIndexChanged += new System.EventHandler(this.OnSelectPlayer);
             // 
@@ -282,7 +282,7 @@
             // 
             this.tbFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbFantasyTeam.Location = new System.Drawing.Point(296, 616);
+            this.tbFantasyTeam.Location = new System.Drawing.Point(296, 579);
             this.tbFantasyTeam.Name = "tbFantasyTeam";
             this.tbFantasyTeam.Size = new System.Drawing.Size(117, 20);
             this.tbFantasyTeam.TabIndex = 1;
@@ -291,7 +291,7 @@
             // 
             this.tbAssumedFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbAssumedFantasyTeam.Location = new System.Drawing.Point(296, 669);
+            this.tbAssumedFantasyTeam.Location = new System.Drawing.Point(296, 632);
             this.tbAssumedFantasyTeam.Name = "tbAssumedFantasyTeam";
             this.tbAssumedFantasyTeam.Size = new System.Drawing.Size(372, 20);
             this.tbAssumedFantasyTeam.TabIndex = 18;
@@ -300,7 +300,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(170, 672);
+            this.label2.Location = new System.Drawing.Point(170, 635);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(123, 13);
             this.label2.TabIndex = 19;
@@ -310,7 +310,7 @@
             // 
             this.cbFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbFantasyTeam.FormattingEnabled = true;
-            this.cbFantasyTeam.Location = new System.Drawing.Point(416, 616);
+            this.cbFantasyTeam.Location = new System.Drawing.Point(416, 579);
             this.cbFantasyTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbFantasyTeam.Name = "cbFantasyTeam";
             this.cbFantasyTeam.Size = new System.Drawing.Size(253, 21);
@@ -320,7 +320,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 693);
+            this.ClientSize = new System.Drawing.Size(800, 658);
             this.Controls.Add(this.cbFantasyTeam);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbAssumedFantasyTeam);
@@ -338,6 +338,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "PlayerAssignment";
             this.Text = "Fantasy Auction UI";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

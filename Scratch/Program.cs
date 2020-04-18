@@ -15,13 +15,16 @@ namespace Scratch
     {
         static async Task InitializeAuthManager()
         {
-            Console.WriteLine("Browse to: {0}", AuthManager.GetAuthUrl());
-            System.Diagnostics.Process.Start(AuthManager.GetAuthUrl().AbsoluteUri);
-            Console.Write("Enter Authorization Code: ");
-            string authorizationCode = Console.ReadLine();
-            if (!string.IsNullOrEmpty(authorizationCode))
+            if (!AuthManager.Instance.InitializeAuthorizationFromCache())
             {
-                await AuthManager.Instance.InitializeAuthorizationAsync(authorizationCode);
+                Console.WriteLine("Browse to: {0}", AuthManager.GetAuthUrl());
+                System.Diagnostics.Process.Start(AuthManager.GetAuthUrl().AbsoluteUri);
+                Console.Write("Enter Authorization Code: ");
+                string authorizationCode = Console.ReadLine();
+                if (!string.IsNullOrEmpty(authorizationCode))
+                {
+                    await AuthManager.Instance.InitializeAuthorizationAsync(authorizationCode);
+                }
             }
         }
 
@@ -33,10 +36,29 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            LoadESPNProjections();
+            //SetESPN2020ProjectionsInRoot();
+            //LoadESPNProjections();
             //UpdateTeams();
-            //YahooStuff();
+            YahooStuff();
             //Percentiles();
+        }
+
+        static void SetESPN2020ProjectionsInRoot()
+        {
+            const string file = "C:\\Users\\jon_r\\OneDrive\\Documents\\FantasyData.json";
+
+            FantasySports.DataModels.Root root = null;
+            if (File.Exists(file))
+            {
+                root = FantasySports.DataModels.Root.Load(file);
+            }
+            else
+            {
+                root = FantasySports.DataModels.Root.Create();
+            }
+
+            ESPNProjections.ESPNPlayerData.LoadProjectionsIntoRoot(root);
+            root.Save(file);
         }
 
         static void Percentiles()

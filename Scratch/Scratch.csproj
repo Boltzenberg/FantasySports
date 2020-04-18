@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataModels\DataModels.csproj">
+      <Project>{c1337d3a-e467-467c-93dc-55e71a0544a0}</Project>
+      <Name>DataModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESPNProjections\ESPNProjections.csproj">
       <Project>{1dd560c2-66ec-45c5-8dbe-10e571344c95}</Project>
       <Name>ESPNProjections</Name>

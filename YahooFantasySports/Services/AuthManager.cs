@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
@@ -22,6 +23,12 @@ namespace YahooFantasySports.Services
             return uriBuilder.Uri;
         }
 
+        public bool InitializeAuthorizationFromCache()
+        {
+            this.getTokenResponse = GetTokenResponse.CreateFromCache();
+            return this.getTokenResponse != null;
+        }
+
         public async Task<bool> InitializeAuthorizationAsync(string authorizationCode)
         {
             if (this.getTokenResponse != null)
@@ -29,7 +36,7 @@ namespace YahooFantasySports.Services
                 return true;
             }
 
-            this.getTokenResponse = new GetTokenResponse(await GetNewAuthTokenAsync(authorizationCode));
+            this.getTokenResponse = GetTokenResponse.CreateFromResponse(await GetNewAuthTokenAsync(authorizationCode));
             return this.getTokenResponse != null;
         }
 
@@ -37,7 +44,7 @@ namespace YahooFantasySports.Services
         {
             if (this.getTokenResponse.IsExpired)
             {
-                this.getTokenResponse = new GetTokenResponse(await RefreshAuthTokenAsync(this.getTokenResponse));
+                this.getTokenResponse = GetTokenResponse.CreateFromResponse(await RefreshAuthTokenAsync(this.getTokenResponse));
             }
 
             req.Headers[HttpRequestHeader.Authorization] = "Bearer " + this.getTokenResponse.AccessToken;
@@ -99,9 +106,40 @@ namespace YahooFantasySports.Services
 
         private class GetTokenResponse
         {
+            private static string CacheFile = "YahooAuthToken.json";
             private DateTime expires;
 
-            public GetTokenResponse(string response)
+            public static GetTokenResponse CreateFromCache()
+            {
+                if (File.Exists(CacheFile))
+                {
+                    string response = File.ReadAllText(CacheFile);
+                    try
+                    {
+                        GetTokenResponse token = new GetTokenResponse(response);
+                        if (!token.IsExpired)
+                        {
+                            return token;
+                        }
+                    }
+                    catch
+                    {
+                    }
+
+                    File.Delete(CacheFile);
+                }
+
+                return null;
+            }
+
+            public static GetTokenResponse CreateFromResponse(string response)
+            {
+                GetTokenResponse token = new GetTokenResponse(response);
+                File.WriteAllText(CacheFile, response);
+                return token;
+            }
+
+            private GetTokenResponse(string response)
             {
                 JObject item = JObject.Parse(response);
                 this.AccessToken = item.Value<string>("access_token");

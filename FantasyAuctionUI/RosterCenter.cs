@@ -32,7 +32,7 @@ namespace FantasyAuctionUI
             int maxPlayers = 0;
             foreach (var team in teams)
             {
-                team.Players.Sort((x, y) => y.AuctionPrice.CompareTo(x.AuctionPrice));
+                team.Players.Sort((x, y) => y.AuctionPrice == x.AuctionPrice ? x.Name.CompareTo(y.Name) : y.AuctionPrice.CompareTo(x.AuctionPrice));
                 maxPlayers = Math.Max(maxPlayers, team.Players.Count);
             }
 

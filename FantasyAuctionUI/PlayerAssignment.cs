@@ -266,5 +266,15 @@ namespace FantasyAuctionUI
                 this.wbOut.DocumentText = html;
             }
         }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.P)
+            {
+                // Focus on the Player textbox and select all
+                this.tbWordWheel.Focus();
+                this.tbWordWheel.SelectAll();
+            }
+        }
     }
 }

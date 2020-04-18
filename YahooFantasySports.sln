@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YahooFantasySports", "YahooFantasySports\YahooFantasySports.csproj", "{CEB059F5-C8F0-4358-B3F0-4D6FBA8B76B4}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESPNProjections", "ESPNProjections\ESPNProjections.csproj", "{1DD560C2-66EC-45C5-8DBE-10E571344C95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FantasyAuctionUI", "FantasyAuctionUI\FantasyAuctionUI.csproj", "{BF39EC53-E30B-4031-BA20-D21AAC716FC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModels", "DataModels\DataModels.csproj", "{C1337D3A-E467-467C-93DC-55E71A0544A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{BF39EC53-E30B-4031-BA20-D21AAC716FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF39EC53-E30B-4031-BA20-D21AAC716FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF39EC53-E30B-4031-BA20-D21AAC716FC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1337D3A-E467-467C-93DC-55E71A0544A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1337D3A-E467-467C-93DC-55E71A0544A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1337D3A-E467-467C-93DC-55E71A0544A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1337D3A-E467-467C-93DC-55E71A0544A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
