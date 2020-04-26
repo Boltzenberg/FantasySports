@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,16 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\PlayerGroupStatAnalysis.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DataProcessing\CountingStatExtractor.cs" />
     <Compile Include="ILeague.cs" />
+    <Compile Include="DataProcessing\IStatExtractor.cs" />
+    <Compile Include="DataProcessing\IStatValue.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="IPlayerData.cs" />
     <Compile Include="Positions.cs" />
     <Compile Include="Root.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Team.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

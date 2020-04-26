@@ -22,8 +22,10 @@ namespace ESPNProjections
 
         public ESPNPlayerData()
         {
-            this.Stats = new Dictionary<FantasySports.DataModels.Constants.StatID, float>();
+            this.DisplayName = string.Empty;
             this.SourceID = string.Empty;
+            this.Positions = new List<Position>();
+            this.Stats = new Dictionary<FantasySports.DataModels.Constants.StatID, float>();
             this.Outlook = string.Empty;
         }
 

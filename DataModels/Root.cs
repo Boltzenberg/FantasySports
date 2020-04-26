@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using FantasySports.DataModels.DataProcessing;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;

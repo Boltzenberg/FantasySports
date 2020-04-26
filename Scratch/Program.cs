@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DM = FantasySports.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -39,8 +40,9 @@ namespace Scratch
             //SetESPN2020ProjectionsInRoot();
             //LoadESPNProjections();
             //UpdateTeams();
-            YahooStuff();
+            //YahooStuff();
             //Percentiles();
+            RootPercentiles();
         }
 
         static void SetESPN2020ProjectionsInRoot()
@@ -59,6 +61,58 @@ namespace Scratch
 
             ESPNProjections.ESPNPlayerData.LoadProjectionsIntoRoot(root);
             root.Save(file);
+        }
+
+        static IEnumerable<int> GetPlayersAtPosition(DM.Root root, DM.Constants.StatSource source, DM.Position position)
+        {
+            foreach (int playerId in root.Players.Keys)
+            {
+                DM.IPlayerData data;
+                if (root.Players[playerId].PlayerData.TryGetValue(source, out data))
+                {
+                    if (data.Positions.Contains(position))
+                    {
+                        yield return playerId;
+                    }
+                }
+            }
+        }
+
+        static int FindPlayer(DM.Root root, string name)
+        {
+            foreach (int playerId in root.Players.Keys)
+            {
+                if (root.Players[playerId].Name.ToLowerInvariant() == name.ToLowerInvariant())
+                {
+                    return playerId;
+                }
+            }
+
+            return -1;
+        }
+
+        static void RootPercentiles()
+        {
+            const string file = "C:\\Users\\jon_r\\OneDrive\\Documents\\FantasyData.json";
+            DM.Root root = DM.Root.Load(file);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<HTML><BODY><H1>Analysis of 2020 Projections, Gary Sanchez Selected Among Catchers</H1><TABLE BORDER=1><TR><TD>Stat Name</TD><TD>Player Count</TD><TD>Max Value</TD><TD>Min Value</TD><TD>Graph</TD><TD>Player Percentile</TD></TR>");
+            DM.DataProcessing.CountingStatExtractor extractor = new DM.DataProcessing.CountingStatExtractor(true, DM.Constants.StatID.B_HomeRuns);
+            DM.Algorithms.PlayerGroupStatAnalysis analysis = new DM.Algorithms.PlayerGroupStatAnalysis(root.Players.Keys, GetPlayersAtPosition(root, DM.Constants.StatSource.ESPNProjections, DM.Position.C), FindPlayer(root, "gary sanchez"), extractor, root, DM.Constants.StatSource.ESPNProjections);
+
+            byte[] img;
+            using (MemoryStream stm = new MemoryStream())
+            {
+                analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
+                img = stm.ToArray();
+            }
+
+            sb.AppendLine($"<TR><TD>{FantasySports.DataModels.Constants.StatIDToString(extractor.StatID)}</TD><TD>{analysis.DataPoints}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>TBD</TD></TR>");
+
+            sb.AppendLine("</TABLE></BODY></HTML>");
+            System.IO.File.WriteAllText("analysis.html", sb.ToString());
+            System.Diagnostics.Process.Start("analysis.html");
         }
 
         static void Percentiles()
