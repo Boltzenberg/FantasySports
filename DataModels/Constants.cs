@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace FantasySports.DataModels
 {
@@ -24,9 +25,10 @@ namespace FantasySports.DataModels
 
             // Pitcher Stats
             P_OutsRecorded,
-            P_Hits,
+            P_WalksAndHits,
+            P_EarnedRunAverage,
+            P_WHIP,
             P_EarnedRuns,
-            P_Walks,
             P_Strikeouts,
             P_Wins,
             P_Losses,
@@ -48,9 +50,10 @@ namespace FantasySports.DataModels
                 case StatID.B_OnBasePercentage: return "OBP";
 
                 case StatID.P_OutsRecorded: return "Outs Recorded";
-                case StatID.P_Hits: return "Hits";
+                case StatID.P_EarnedRunAverage: return "Earned Run Average";
+                case StatID.P_WHIP: return "WHIP";
                 case StatID.P_EarnedRuns: return "Earned Runs";
-                case StatID.P_Walks: return "Walks";
+                case StatID.P_WalksAndHits: return "Walks and Hits";
                 case StatID.P_Strikeouts: return "Strikeouts";
                 case StatID.P_Wins: return "Wins";
                 case StatID.P_Losses: return "Losses";
@@ -58,6 +61,45 @@ namespace FantasySports.DataModels
                 case StatID.P_Holds: return "Holds";
 
                 default: return "Unknown";
+            }
+        }
+
+        public static void SetCalculatedStats(Dictionary<Constants.StatID, float> stats)
+        {
+            // Pitcher calculated stats
+            // Expects:
+            // Outs Recorded
+            if (stats.ContainsKey(StatID.P_OutsRecorded))
+            {
+                if (stats.ContainsKey(StatID.P_EarnedRunAverage) && !stats.ContainsKey(StatID.P_EarnedRuns))
+                {
+                    stats[StatID.P_EarnedRuns] = stats[StatID.P_EarnedRunAverage] * stats[StatID.P_OutsRecorded] / 27;
+                }
+
+                if (stats.ContainsKey(StatID.P_WHIP) && !stats.ContainsKey(StatID.P_WalksAndHits))
+                {
+                    stats[StatID.P_WalksAndHits] = stats[StatID.P_WHIP] * stats[StatID.P_OutsRecorded] / 3;
+                }
+            }
+
+            if (stats.ContainsKey(StatID.B_AtBats) && stats.ContainsKey(StatID.B_Hits) && stats.ContainsKey(StatID.B_Walks) && !stats.ContainsKey(StatID.B_OnBasePercentage))
+            {
+                stats[StatID.B_OnBasePercentage] = (stats[StatID.B_Hits] + stats[StatID.B_Walks]) / (stats[StatID.B_AtBats] + stats[StatID.B_Walks]);
+            }
+
+            if (stats.ContainsKey(StatID.B_AtBats) && stats.ContainsKey(StatID.B_Hits) && stats.ContainsKey(StatID.B_OnBasePercentage) && !stats.ContainsKey(StatID.B_Walks))
+            {
+                // OBP == (hits + walks) / (at bats + walks)
+                // OBP * (at bats + walks) == (hits + walks)
+                // (OBP * at bats) + (OBP * walks) == hits + walks
+                // (OBP * at bats) + (OBP * walks) - hits == walks
+                // (OBP * at bats) - hits == walks - (OBP * walks)
+                // (OBP * at bats) - hits == (1 - OBP) * walks
+                // ((OBP * at bats) - hits) / (1 - OBP) == walks
+                float OBP = stats[StatID.B_OnBasePercentage];
+                float hits = stats[StatID.B_Hits];
+                float atBats = stats[StatID.B_AtBats];
+                stats[StatID.B_Walks] = ((OBP * atBats) - hits) / (1 - OBP);
             }
         }
     }

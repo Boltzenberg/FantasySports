@@ -6,9 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YahooFantasySports;
-using YahooFantasySports.DataModel;
-using YahooFantasySports.Services;
+//using YahooFantasySports;
+//using YahooFantasySports.DataModel;
+//using YahooFantasySports.Services;
+using Yahoo.DataModel;
+using Yahoo.Services;
+using Yahoo;
 
 namespace Scratch
 {
@@ -31,7 +34,7 @@ namespace Scratch
 
         static async Task GetLeagueStats()
         {
-            string stats = await Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(Constants.Leagues.Rounders2019));
+            string stats = await Http.GetRawDataAsync(UrlGen.LeagueSettingsUrl(YConstants.Leagues.Rounders2019));
             Console.WriteLine(stats);
         }
 
@@ -40,9 +43,9 @@ namespace Scratch
             //SetESPN2020ProjectionsInRoot();
             //LoadESPNProjections();
             //UpdateTeams();
-            //YahooStuff();
+            YahooStuff();
             //Percentiles();
-            RootPercentiles();
+            //RootPercentiles();
         }
 
         static void SetESPN2020ProjectionsInRoot()
@@ -205,15 +208,23 @@ namespace Scratch
         {
             InitializeAuthManager().Wait();
 
-            League league = League.Create(Constants.Leagues.Rounders2019).Result;
-            Console.WriteLine("{0} ({1})", league.Name, league.Key);
+            YahooLeague league = YahooLeague.Create(YConstants.Leagues.Rounders2019).Result;
+            Console.WriteLine("{0}", league.Name);
 
             Console.WriteLine("Stats:");
-            foreach (StatDefinition stat in league.Stats.Values)
+            foreach (DM.Constants.StatID stat in league.ScoringStats)
             {
-                Console.WriteLine(" {0} ({1})", stat.Name, stat.Id);
+                Console.WriteLine(" {0} ({1})", DM.Constants.StatIDToString(stat), stat);
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Positions:");
+            foreach (DM.Position position in league.PositionCounts.Keys)
+            {
+                Console.WriteLine("{0} {1}", league.PositionCounts[position], DM.Positions.ToShortString(position));
             }
 
+            /*
             Console.WriteLine("Teams:");
             foreach (Team team in league.Teams)
             {
@@ -272,6 +283,7 @@ namespace Scratch
 
                 Console.WriteLine("{0}: {1} with {2} points", standings.Rank, team.Name, total);
             }
+            */
         }
     }
 }

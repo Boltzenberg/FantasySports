@@ -66,6 +66,10 @@
       <Project>{ceb059f5-c8f0-4358-b3f0-4d6fba8b76b4}</Project>
       <Name>YahooFantasySports</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yahoo\Yahoo.csproj">
+      <Project>{d49edbcb-b97a-4901-9990-f02d8be0d9dd}</Project>
+      <Name>Yahoo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

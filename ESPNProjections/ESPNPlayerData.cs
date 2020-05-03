@@ -138,13 +138,13 @@ namespace ESPNProjections
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_StolenBases, "23"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_Walks, "10"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_EarnedRuns, "45"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Hits, "37"),
+            //new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Hits, "37"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Holds, "60"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Losses, "54"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_OutsRecorded, "34"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Saves, "57"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Strikeouts, "48"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Walks, "39"),
+            //new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Walks, "39"),
             new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Wins, "53")
         };
 

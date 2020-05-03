@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FantasyAuctionUI", "Fantasy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModels", "DataModels\DataModels.csproj", "{C1337D3A-E467-467C-93DC-55E71A0544A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yahoo", "Yahoo\Yahoo.csproj", "{D49EDBCB-B97A-4901-9990-F02D8BE0D9DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C1337D3A-E467-467C-93DC-55E71A0544A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1337D3A-E467-467C-93DC-55E71A0544A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1337D3A-E467-467C-93DC-55E71A0544A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D49EDBCB-B97A-4901-9990-F02D8BE0D9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D49EDBCB-B97A-4901-9990-F02D8BE0D9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D49EDBCB-B97A-4901-9990-F02D8BE0D9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D49EDBCB-B97A-4901-9990-F02D8BE0D9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
