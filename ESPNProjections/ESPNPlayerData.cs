@@ -98,23 +98,20 @@ namespace ESPNProjections
             }
             stats.Positions = allPositions.ToList();
 
+            Dictionary<string, string> espnStats = new Dictionary<string, string>();
             JToken statsRoot = player["player"]["stats"];
             if (statsRoot != null && statsRoot.Count() > 0)
             {
                 bool foundStats = false;
                 foreach (JToken statSet in player["player"]["stats"].Children())
                 {
-                    foreach (Tuple<FantasySports.DataModels.Constants.StatID, string> stat in RawStatMapping)
+                    foreach (string espnStat in ESPNConstants.Stats.Batters.All.Union(ESPNConstants.Stats.Pitchers.All))
                     {
-                        string statValueStr = (string)statSet["stats"][stat.Item2];
+                        string statValueStr = (string)statSet["stats"][espnStat];
                         if (!string.IsNullOrEmpty(statValueStr))
                         {
-                            float statValue;
-                            if (float.TryParse(statValueStr, out statValue))
-                            {
-                                stats.Stats[stat.Item1] = statValue;
-                                foundStats = true;
-                            }
+                            espnStats[espnStat] = statValueStr;
+                            foundStats = true;
                         }
                     }
 
@@ -124,30 +121,10 @@ namespace ESPNProjections
                     }
                 }
             }
+            ESPNConstants.Stats.MapESPNStatDictionaryToDataModelStatDictionary(espnStats, stats.Stats);
 
             return stats;
         }
-
-        private static List<Tuple<FantasySports.DataModels.Constants.StatID, string>> RawStatMapping = new List<Tuple<FantasySports.DataModels.Constants.StatID, string>>()
-        {
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_AtBats, "0"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_Hits, "1"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_HomeRuns, "5"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_Runs, "20"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_RunsBattedIn, "21"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_StolenBases, "23"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.B_Walks, "10"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_EarnedRuns, "45"),
-            //new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Hits, "37"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Holds, "60"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Losses, "54"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_OutsRecorded, "34"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Saves, "57"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Strikeouts, "48"),
-            //new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Walks, "39"),
-            new Tuple<FantasySports.DataModels.Constants.StatID, string>(FantasySports.DataModels.Constants.StatID.P_Wins, "53")
-        };
-
 
         private static Dictionary<int, List<Position>> PositionMapping = new Dictionary<int, List<Position>>()
         {

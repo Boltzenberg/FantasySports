@@ -52,7 +52,7 @@ namespace Yahoo.DataModel
                 positionCounts[YConstants.Positions.PositionFromYahooPosition(position)] = count;
             }
 
-            List<YahooPlayerData> allPlayers = await YahooPlayerData.GetAllPlayers(leagueId);
+            //List<YahooPlayerData> allPlayers = await YahooPlayerData.GetAllPlayers(leagueId);
 
             string leagueTeams = await Services.Http.GetRawDataAsync(UrlGen.TeamsWithRostersUrl(leagueId));
             doc.LoadXml(leagueTeams);

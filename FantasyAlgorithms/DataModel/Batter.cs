@@ -107,19 +107,19 @@ namespace FantasyAlgorithms.DataModel
         {
             this.Name = batter.FullName;
             this.ESPNId = batter.Id;
-            this.IsC |= batter.Positions.Contains(ESPNProjections.Constants.Positions.C);
-            this.Is1B |= batter.Positions.Contains(ESPNProjections.Constants.Positions.B1);
-            this.Is2B |= batter.Positions.Contains(ESPNProjections.Constants.Positions.B2);
-            this.IsSS |= batter.Positions.Contains(ESPNProjections.Constants.Positions.SS);
-            this.Is3B |= batter.Positions.Contains(ESPNProjections.Constants.Positions.B3);
-            this.IsOF |= batter.Positions.Contains(ESPNProjections.Constants.Positions.OF);
-            this.ProjectedAB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.AB], 0);
-            this.ProjectedR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.R], 0);
-            this.ProjectedH = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.H], 0);
-            this.ProjectedBB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.BB], 0);
-            this.ProjectedHR = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.HR], 0);
-            this.ProjectedRBI = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.RBI], 0);
-            this.ProjectedSB = GetStat(batter.Stats[ESPNProjections.Constants.Stats.Batters.SB], 0);
+            this.IsC |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.C);
+            this.Is1B |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.B1);
+            this.Is2B |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.B2);
+            this.IsSS |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.SS);
+            this.Is3B |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.B3);
+            this.IsOF |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.OF);
+            this.ProjectedAB = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.AB], 0);
+            this.ProjectedR = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.R], 0);
+            this.ProjectedH = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.H], 0);
+            this.ProjectedBB = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.BB], 0);
+            this.ProjectedHR = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.HR], 0);
+            this.ProjectedRBI = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.RBI], 0);
+            this.ProjectedSB = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.SB], 0);
             this.SeasonOutlook = batter.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;
         }

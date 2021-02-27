@@ -109,6 +109,18 @@ namespace Yahoo.Services
             private static string CacheFile = "YahooAuthToken.json";
             private DateTime expires;
 
+            private class CachedToken
+            {
+                public string Response { get; private set; }
+                public DateTime Expires { get; private set; }
+
+                public CachedToken(string response, DateTime expires)
+                {
+                    this.Response = response;
+                    this.Expires = expires;
+                }
+            }
+
             public static GetTokenResponse CreateFromCache()
             {
                 if (File.Exists(CacheFile))
@@ -116,9 +128,11 @@ namespace Yahoo.Services
                     string response = File.ReadAllText(CacheFile);
                     try
                     {
-                        GetTokenResponse token = new GetTokenResponse(response);
-                        if (!token.IsExpired)
+                        CachedToken cachedToken = JsonConvert.DeserializeObject<CachedToken>(response);
+                        if (cachedToken != null && cachedToken.Expires >= DateTime.Now)
                         {
+                            GetTokenResponse token = new GetTokenResponse(cachedToken.Response);
+                            token.expires = cachedToken.Expires;
                             return token;
                         }
                     }
@@ -135,7 +149,8 @@ namespace Yahoo.Services
             public static GetTokenResponse CreateFromResponse(string response)
             {
                 GetTokenResponse token = new GetTokenResponse(response);
-                File.WriteAllText(CacheFile, response);
+                CachedToken cachedToken = new CachedToken(response, token.expires);
+                File.WriteAllText(CacheFile, JsonConvert.SerializeObject(cachedToken));
                 return token;
             }
 

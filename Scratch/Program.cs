@@ -40,10 +40,10 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            //SetESPN2020ProjectionsInRoot();
+            SetESPN2020ProjectionsInRoot();
             //LoadESPNProjections();
             //UpdateTeams();
-            YahooStuff();
+            //YahooStuff();
             //Percentiles();
             //RootPercentiles();
         }
@@ -52,14 +52,14 @@ namespace Scratch
         {
             const string file = "C:\\Users\\jon_r\\OneDrive\\Documents\\FantasyData.json";
 
-            FantasySports.DataModels.Root root = null;
+            DM.Root root = null;
             if (File.Exists(file))
             {
-                root = FantasySports.DataModels.Root.Load(file);
+                root = DM.Root.Load(file);
             }
             else
             {
-                root = FantasySports.DataModels.Root.Create();
+                root = DM.Root.Create();
             }
 
             ESPNProjections.ESPNPlayerData.LoadProjectionsIntoRoot(root);
@@ -207,6 +207,9 @@ namespace Scratch
         static void YahooStuff()
         {
             InitializeAuthManager().Wait();
+
+            const string file = "C:\\Users\\jon_r\\OneDrive\\Documents\\FantasyData.json";
+            DM.Root root = DM.Root.Load(file);
 
             YahooLeague league = YahooLeague.Create(YConstants.Leagues.Rounders2019).Result;
             Console.WriteLine("{0}", league.Name);
