@@ -276,5 +276,107 @@ namespace FantasyAuctionUI
                 this.tbWordWheel.SelectAll();
             }
         }
+
+        private string SanitizeTeamName(string n)
+        {
+            StringBuilder s = new StringBuilder();
+            foreach (char c in n)
+            {
+                if (Char.IsLetterOrDigit(c))
+                {
+                    s.Append(Char.ToLowerInvariant(c));
+                }
+            }
+
+            return s.ToString();
+        }
+
+        private string SanitizePlayerName(string p)
+        {
+            return p.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ñ', 'n').Replace('ó', 'o').Replace('ú', 'u');
+        }
+
+        private void OnImportFromNirSite(object sender, EventArgs e)
+        {
+            MessageBox.Show("Save the league table from Nir's site as a CSV file in excel.  First row is the team names, and then players after that.");
+
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.CheckFileExists = true;
+                dlg.CheckPathExists = true;
+                dlg.DefaultExt = "csv";
+                dlg.Multiselect = false;
+                dlg.Title = "Select CSV file from Nir's site";
+                if (dlg.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                using (StreamReader reader = new StreamReader(File.OpenRead(dlg.FileName)))
+                {
+                    string[] csvTeams = reader.ReadLine().Split(',');
+                    Dictionary<int, string> teams = new Dictionary<int, string>();
+                    for (int i = 0; i < csvTeams.Length; i++)
+                    {
+                        Team team = this.league.Teams.Where(t => SanitizeTeamName(t.Name) == SanitizeTeamName(csvTeams[i])).FirstOrDefault();
+                        if (team != null)
+                        {
+                            teams[i] = team.Name;
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("Failed to find team " + csvTeams[i]);
+                            return;
+                        }
+                    }
+
+                    string line;
+                    while (!string.IsNullOrEmpty(line = reader.ReadLine()))
+                    {
+                        string[] players = line.Split(',');
+                        for (int i = 0; i < players.Length; i++)
+                        {
+                            if (!string.IsNullOrEmpty(players[i]))
+                            {
+                                string name = players[i].Substring(0, players[i].IndexOf('(') - 1);
+                                string cost = players[i].Substring(players[i].IndexOf('$') + 1);
+                                string team = teams[i];
+                                List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(name)));
+                                if (allPlayers.Count == 0)
+                                {
+                                    System.Diagnostics.Debug.WriteLine("No player named " + name + " when assigning to team " + team + " with cost " + cost);
+                                    continue;
+                                }
+
+                                if (allPlayers.Count > 1)
+                                {
+                                    System.Diagnostics.Debug.WriteLine("Too many players named " + name + " when assigning to team " + team + " with cost " + cost);
+                                    continue;
+                                }
+
+                                IPlayer player = allPlayers[0];
+                                if (player != null)
+                                {
+                                    if (string.IsNullOrEmpty(player.FantasyTeam))
+                                    {
+                                        player.FantasyTeam = team;
+                                        player.AuctionPrice = float.Parse(cost);
+                                    }
+                                    else if (player.FantasyTeam.ToLowerInvariant() != team.ToLowerInvariant() || player.AuctionPrice != float.Parse(cost))
+                                    {
+                                        System.Diagnostics.Debug.WriteLine("Player " + name + " data isn't right!");
+                                    }
+                                }
+                                else
+                                {
+                                    System.Diagnostics.Debug.WriteLine("Failed to find player with name " + name + " who should be on team " + team);
+                                }
+                            }
+                        }
+                    }
+                    //this.league.Save(this.fileName);
+                }
+            }
+        }
     }
 }
