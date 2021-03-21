@@ -330,6 +330,12 @@ namespace FantasyAuctionUI
                         }
                     }
 
+                    foreach (IPlayer player in this.league.AllPlayers)
+                    {
+                        player.AuctionPrice = 0;
+                        player.FantasyTeam = string.Empty;
+                    }
+
                     string line;
                     while (!string.IsNullOrEmpty(line = reader.ReadLine()))
                     {

@@ -40,9 +40,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(118, 9);
+            this.button1.Location = new System.Drawing.Point(216, 17);
+            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 23);
+            this.button1.Size = new System.Drawing.Size(183, 42);
             this.button1.TabIndex = 0;
             this.button1.Text = "Set Auth Code";
             this.button1.UseVisualStyleBackColor = true;
@@ -50,25 +51,28 @@
             // 
             // tbAuthCode
             // 
-            this.tbAuthCode.Location = new System.Drawing.Point(12, 12);
+            this.tbAuthCode.Location = new System.Drawing.Point(22, 22);
+            this.tbAuthCode.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tbAuthCode.Name = "tbAuthCode";
-            this.tbAuthCode.Size = new System.Drawing.Size(100, 20);
+            this.tbAuthCode.Size = new System.Drawing.Size(180, 29);
             this.tbAuthCode.TabIndex = 1;
             // 
             // tbUrl
             // 
-            this.tbUrl.Location = new System.Drawing.Point(12, 38);
+            this.tbUrl.Location = new System.Drawing.Point(22, 70);
+            this.tbUrl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tbUrl.Name = "tbUrl";
-            this.tbUrl.Size = new System.Drawing.Size(688, 20);
+            this.tbUrl.Size = new System.Drawing.Size(1258, 29);
             this.tbUrl.TabIndex = 2;
-            this.tbUrl.Text = "https://fantasysports.yahooapis.com/fantasy/v2/league/388.l.21375/players;start=0" +
+            this.tbUrl.Text = "https://fantasysports.yahooapis.com/fantasy/v2/league/404.l.18043/players;start=0" +
     ";count=10;sort=OR";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(706, 35);
+            this.button2.Location = new System.Drawing.Point(1294, 65);
+            this.button2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(82, 23);
+            this.button2.Size = new System.Drawing.Size(150, 42);
             this.button2.TabIndex = 3;
             this.button2.Text = "Get Resource";
             this.button2.UseVisualStyleBackColor = true;
@@ -79,17 +83,19 @@
             this.wbOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.wbOut.Location = new System.Drawing.Point(12, 64);
-            this.wbOut.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbOut.Location = new System.Drawing.Point(22, 118);
+            this.wbOut.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.wbOut.MinimumSize = new System.Drawing.Size(37, 37);
             this.wbOut.Name = "wbOut";
-            this.wbOut.Size = new System.Drawing.Size(776, 374);
+            this.wbOut.Size = new System.Drawing.Size(1423, 690);
             this.wbOut.TabIndex = 4;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(224, 10);
+            this.button3.Location = new System.Drawing.Point(411, 18);
+            this.button3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(138, 42);
             this.button3.TabIndex = 5;
             this.button3.Text = "League";
             this.button3.UseVisualStyleBackColor = true;
@@ -97,9 +103,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(305, 10);
+            this.button4.Location = new System.Drawing.Point(559, 18);
+            this.button4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(138, 42);
             this.button4.TabIndex = 6;
             this.button4.Text = "Players";
             this.button4.UseVisualStyleBackColor = true;
@@ -107,9 +114,10 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(386, 10);
+            this.button5.Location = new System.Drawing.Point(708, 18);
+            this.button5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(115, 23);
+            this.button5.Size = new System.Drawing.Size(211, 42);
             this.button5.TabIndex = 7;
             this.button5.Text = "Merge With ESPN";
             this.button5.UseVisualStyleBackColor = true;
@@ -117,9 +125,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1467, 831);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -128,6 +136,7 @@
             this.Controls.Add(this.tbUrl);
             this.Controls.Add(this.tbAuthCode);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.OnLoad);
