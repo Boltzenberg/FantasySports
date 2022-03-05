@@ -43,7 +43,19 @@ namespace ESPNProjections
             public string PitcherCacheFile { get { return @"C:\Users\jon_r\OneDrive\Documents\2021ESPNPitchers.json"; } }
         }
 
-        private static readonly IConstants Constants = new Constants2021();
+        private class Constants2022 : IConstants
+        {
+            public string Url { get { return "http://fantasy.espn.com/apis/v3/games/flb/seasons/2022/segments/0/leaguedefaults/1?view=kona_player_info"; } }
+            public string Host { get { return "fantasy.espn.com"; } }
+            public string Pitchers { get { return "13,14,15"; } }
+            public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
+            public int PlayerCount { get { return 300; } }
+            public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2021]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[1]}},\"sortAppliedStatTotal\":{{\"sortPriority\":2,\"sortAsc\":false,\"value\":\"102021\"}},\"sortDraftRanks\":{{\"sortPriority\":3,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"offset\":0,\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterRanksForRankTypes\":{{\"value\":[\"STANDARD\"]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002021\",\"102021\",\"002020\",\"012021\",\"022021\",\"032021\",\"042021\",\"010002021\"]}}}}}}"; } }
+            public string BatterCacheFile { get { return @"C:\OneDrive\Documents\2022ESPNBatters.json"; } }
+            public string PitcherCacheFile { get { return @"C:\OneDrive\Documents\2022ESPNPitchers.json"; } }
+        }
+
+        private static readonly IConstants Constants = new Constants2022();
 
         public static string LoadBatterProjections()
         {

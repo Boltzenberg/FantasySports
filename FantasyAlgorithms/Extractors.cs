@@ -125,6 +125,17 @@ namespace FantasyAlgorithms
             return p.ProjectedSV;
         }
 
+        public static int? ExtractPitcherSavesPlusHolds(IPlayer player)
+        {
+            Pitcher p = player as Pitcher;
+            if (p == null)
+            {
+                return null;
+            }
+
+            return p.ProjectedSV + p.ProjectedHld;
+        }
+
         public static int? ExtractPitcherHolds(IPlayer player)
         {
             Pitcher p = player as Pitcher;

@@ -21,7 +21,7 @@ namespace FantasyAuctionUI
         public PlayerAssignment()
         {
             InitializeComponent();
-            this.LoadPlayers(Path.Combine("C:\\users\\jon_r\\onedrive\\documents", Constants.Files.League));
+            this.LoadPlayers(Path.Combine("C:\\onedrive\\documents", Constants.Files.League));
         }
 
         private void OnLoadLeague(object sender, EventArgs e)

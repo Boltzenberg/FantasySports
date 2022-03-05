@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,14 +9,17 @@ namespace ESPNProjections
     {
         public static IEnumerable<Player> LoadProjections()
         {
-            List<string> jsons = new List<string>()
+            // Map from JSON file to set of relevant stats for the players in that file
+            List<Tuple<string, bool>> playerSets = new List<Tuple<string, bool>>()
             {
-                ESPNAPI.LoadBatterProjections(),
-                ESPNAPI.LoadPitcherProjections()
+                new Tuple<string, bool>(ESPNAPI.LoadBatterProjections(), true),
+                new Tuple<string, bool>(ESPNAPI.LoadPitcherProjections(), false),
             };
 
-            foreach (string json in jsons)
-            { 
+            foreach (Tuple<string, bool> playerSet in playerSets)
+            {
+                string json = playerSet.Item1;
+                IEnumerable<string> stats = playerSet.Item2 ? ESPNConstants.Stats.Batters.All : ESPNConstants.Stats.Pitchers.All;
                 if (!string.IsNullOrEmpty(json))
                 {
                     JObject file = JObject.Parse(json);
@@ -35,7 +39,7 @@ namespace ESPNProjections
                         p.SeasonOutlook = (string)player["player"]["seasonOutlook"];
                         p.Positions = new List<int>(((JArray)player["player"]["eligibleSlots"]).Select(s => (int)s).ToArray());
                         p.Stats = new Dictionary<string, string>();
-                        IEnumerable<string> stats = p.IsBatter ? ESPNConstants.Stats.Batters.All : ESPNConstants.Stats.Pitchers.All;
+                        p.IsBatter = playerSet.Item2;
                         bool foundStats = false;
                         foreach (JToken statSet in player["player"]["stats"].Children())
                         {
@@ -83,14 +87,7 @@ namespace ESPNProjections
         public List<int> Positions { get; private set; }
         public Dictionary<string, string> Stats { get; private set; }
         public string SeasonOutlook { get; private set; }
-
-        public bool IsBatter
-        {
-            get
-            {
-                return this.Positions.Contains(ESPNConstants.Positions.DH);
-            }
-        }
+        public bool IsBatter { get; private set; }
 
         private Player()
         { }
