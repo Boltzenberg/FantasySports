@@ -10,5 +10,7 @@ namespace FantasyAlgorithms
         PlayerGroupAnalysis Analyze(string groupDescription, IStatExtractor statExtractor, IEnumerable<IPlayer> playerSet, IPlayer selectedPlayer, Func<IPlayer, Brush> playerToBrush);
 
         PlayerGroupAnalysis Analyze(string groupDescription, IStatExtractor statExtractor, IEnumerable<IPlayer> playerSet, IPlayer selectedPlayer);
+
+        int GetPercentile(IStatExtractor statExtractor, IEnumerable<IPlayer> playerSet, IPlayer selectedPlayer);
     }
 }

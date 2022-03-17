@@ -70,5 +70,38 @@ namespace FantasyAlgorithms
         {
             return this.Analyze(groupDescription, statExtractor, playerSet, selectedPlayer, p => p == selectedPlayer ? Brushes.Green : Brushes.Red);
         }
+
+        public int GetPercentile(IStatExtractor statExtractor, IEnumerable<IPlayer> playerSet, IPlayer selectedPlayer)
+        {
+            List<Tuple<IStatValue, IPlayer>> playersWithStats = new List<Tuple<IStatValue, IPlayer>>();
+
+            foreach (IPlayer player in playerSet)
+            {
+                IStatValue statValue = statExtractor.Extract(player);
+                if (statValue != null && !float.IsInfinity(statValue.Value))
+                {
+                    playersWithStats.Add(new Tuple<IStatValue, IPlayer>(statValue, player));
+                }
+            }
+
+            if (statExtractor.MoreIsBetter)
+            {
+                playersWithStats.Sort((Tuple<IStatValue, IPlayer> x, Tuple<IStatValue, IPlayer> y) => y.Item1.Value.CompareTo(x.Item1.Value));
+            }
+            else
+            {
+                playersWithStats.Sort((Tuple<IStatValue, IPlayer> x, Tuple<IStatValue, IPlayer> y) => x.Item1.Value.CompareTo(y.Item1.Value));
+            }
+
+            for (int i = 0; i < playersWithStats.Count; i++)
+            {
+                if (playersWithStats[i].Item2 == selectedPlayer)
+                {
+                    return 100 - ((i * 100) / playersWithStats.Count);
+                }
+            }
+
+            return -1;
+        }
     }
 }

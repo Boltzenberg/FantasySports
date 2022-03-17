@@ -99,7 +99,7 @@ namespace FantasyAuctionUI
             }
         }
 
-        private string GetPlayerAnalysisTable(IPlayer player, IEnumerable<IPlayer> players)
+        private string GetPlayerAnalysisTable(IPlayer player, IEnumerable<IPlayer> players, string tableTitle)
         {
             PercentilePlayerGroupAnalyzer analyzer = new PercentilePlayerGroupAnalyzer();
             LeagueConstants lc = LeagueConstants.For(this.league.FantasyLeague);
@@ -107,6 +107,8 @@ namespace FantasyAuctionUI
 
             StringBuilder sb = new StringBuilder();
             sb.Append("<TABLE BORDER=1><TR><TD>Stat Name</TD><TD>Player's Stat Value</TD><TD>Max Value</TD><TD>Min Value</TD><TD>Graph</TD><TD>Player Percentile</TD></TR>");
+            int percentileSum = 0;
+            int count = 0;
             foreach (IStatExtractor extractor in extractors)
             {
                 PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, players, player, p => p == player ? Brushes.Yellow : !string.IsNullOrEmpty(p.FantasyTeam) ? Brushes.Blue : Brushes.Violet);
@@ -117,9 +119,12 @@ namespace FantasyAuctionUI
                     img = stm.ToArray();
                 }
                 sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.PlayerStatValue}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
+                percentileSum += analysis.PlayerPercentile;
+                count++;
             }
             sb.AppendLine("</TABLE>");
-            return sb.ToString();
+
+            return string.Format("<H1>{0} (Average Percentile: {1})</H1>{2}", tableTitle, percentileSum / count, sb.ToString());
         }
 
         private void UpdateCurrentPlayer(IPlayer newCurrentPlayer)
@@ -135,12 +140,10 @@ namespace FantasyAuctionUI
                 StringBuilder sb = new StringBuilder();
                 sb.Append("<HTML><BODY><H1>Player Info</H1>");
                 sb.Append(newCurrentPlayer.GetHTML());
-                sb.Append("<H1>Player analysis vs all players</H1>");
-                sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers));
+                sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers, "Player analysis vs all players"));
                 foreach (Position position in newCurrentPlayer.Positions)
                 {
-                    sb.AppendFormat("<H1>Player analysis vs all {0}</H1>", position);
-                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers.Where(p => p.Positions.Contains(position))));
+                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers.Where(p => p.Positions.Contains(position)), string.Format("Player analysis vs all {0}", position)));
                 }
                 sb.Append("</BODY></HTML>");
                 this.wbOut.DocumentText = sb.ToString();
@@ -233,6 +236,11 @@ namespace FantasyAuctionUI
         private void OnLaunchTargetCenter(object sender, EventArgs e)
         {
             new TargetCenter(this.league.Clone()).Show();
+        }
+
+        private void OnLaunchAllPlayersStatCenter(object sender, EventArgs e)
+        {
+            new AllPlayersStatCenter(this.league.Clone()).Show();
         }
 
         private void OnLaunchSnakeCenter(object sender, EventArgs e)

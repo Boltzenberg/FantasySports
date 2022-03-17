@@ -103,6 +103,12 @@
     <Compile Include="PromptFromList.Designer.cs">
       <DependentUpon>PromptFromList.cs</DependentUpon>
     </Compile>
+    <Compile Include="AllPlayersStatCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllPlayersStatCenter.Designer.cs">
+      <DependentUpon>AllPlayersStatCenter.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeamStatCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PromptFromList.resx">
       <DependentUpon>PromptFromList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllPlayersStatCenter.resx">
+      <DependentUpon>AllPlayersStatCenter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeamStatCenter.resx">
       <DependentUpon>TeamStatCenter.cs</DependentUpon>
