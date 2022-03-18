@@ -29,6 +29,7 @@ namespace FantasyAlgorithms.DataModel
         public int ProjectedER { get; set; }
         public string SeasonOutlook { get; set; }
         public string Status { get; set; }
+        public bool IsBatter { get { return false; } }
 
         public float ProjectedIP { get; set; }
         public float ProjectedERA { get; set; }

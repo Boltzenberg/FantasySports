@@ -16,7 +16,6 @@ namespace FantasyAuctionUI
             this.lv.BeginUpdate();
             int columnWidth = lv.Width / (lc.ScoringStatExtractors.Count + 3);
             lv.Columns.Add("Player Name", columnWidth);
-            lv.Columns.Add("Player Status", columnWidth);
             foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
             {
                 ColumnHeader column = new ColumnHeader();
@@ -28,14 +27,14 @@ namespace FantasyAuctionUI
                 }
                 lv.Columns.Add(column);
             }
-            lv.Columns.Add("Average Percentile", columnWidth);
+            lv.Columns.Add("Average Percentile (Batter)", columnWidth);
+            lv.Columns.Add("Average Percentile (Pitcher)", columnWidth);
 
             Dictionary<string, int> statToPlayerCount = new Dictionary<string, int>();
             PercentilePlayerGroupAnalyzer analyzer = new PercentilePlayerGroupAnalyzer();
             foreach (IPlayer player in league.AllPlayers)
             {
                 ListViewItem item = new ListViewItem(player.Name);
-                item.SubItems.Add(player.Status);
                 int percentile = 0;
                 int statcount = 0;
                 foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
@@ -43,7 +42,12 @@ namespace FantasyAuctionUI
                     IStatValue value = extractor.Extract(player);
                     if (value != null)
                     {
-                        percentile += analyzer.GetPercentile(extractor, league.AllPlayers, player);
+                        IEnumerable<IPlayer> players = league.Batters;
+                        if (!player.IsBatter)
+                        {
+                            players = league.Pitchers;
+                        }
+                        percentile += analyzer.GetPercentile(extractor, players, player);
                         statcount++;
                         item.SubItems.Add(value.Value.ToString());
                         if (!statToPlayerCount.ContainsKey(extractor.StatName))
@@ -60,7 +64,17 @@ namespace FantasyAuctionUI
                         item.SubItems.Add(string.Empty);
                     }
                 }
-                item.SubItems.Add((percentile / statcount).ToString());
+
+                if (player.IsBatter)
+                {
+                    item.SubItems.Add((percentile / statcount).ToString());
+                    item.SubItems.Add(string.Empty);
+                }
+                else
+                {
+                    item.SubItems.Add(string.Empty);
+                    item.SubItems.Add((percentile / statcount).ToString());
+                }
                 this.lv.Items.Add(item);
             }
 
