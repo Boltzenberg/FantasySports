@@ -143,7 +143,12 @@ namespace FantasyAuctionUI
                 sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers, "Player analysis vs all players"));
                 foreach (Position position in newCurrentPlayer.Positions)
                 {
-                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers.Where(p => p.Positions.Contains(position)), string.Format("Player analysis vs all {0}", position)));
+                    IEnumerable<IPlayer> positionPlayers = this.league.AllPlayers.Where(p => p.Positions.Contains(position));
+                    if (position == Position.P)
+                    {
+                        positionPlayers = this.league.Pitchers.Where(p => p.IsSP == ((Pitcher)newCurrentPlayer).IsSP);
+                    }
+                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, positionPlayers, string.Format("Player analysis vs all {0}", position)));
                 }
                 sb.Append("</BODY></HTML>");
                 this.wbOut.DocumentText = sb.ToString();

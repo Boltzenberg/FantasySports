@@ -39,7 +39,7 @@
             this.lv.HideSelection = false;
             this.lv.Location = new System.Drawing.Point(12, 12);
             this.lv.Name = "lv";
-            this.lv.Size = new System.Drawing.Size(1182, 663);
+            this.lv.Size = new System.Drawing.Size(1799, 884);
             this.lv.TabIndex = 1;
             this.lv.UseCompatibleStateImageBehavior = false;
             this.lv.View = System.Windows.Forms.View.Details;
@@ -49,7 +49,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1206, 687);
+            this.ClientSize = new System.Drawing.Size(1823, 908);
             this.Controls.Add(this.lv);
             this.Name = "AllPlayersStatCenter";
             this.Text = "All Player Stat Center";

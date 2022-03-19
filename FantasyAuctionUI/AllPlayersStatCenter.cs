@@ -14,9 +14,10 @@ namespace FantasyAuctionUI
 
             LeagueConstants lc = LeagueConstants.For(league.FantasyLeague);
             this.lv.BeginUpdate();
-            int columnWidth = lv.Width / (lc.ScoringStatExtractors.Count + 3);
+            int columnWidth = lv.Width / (lc.ScoringStatExtractors.Count + lc.SupportingStatExtractors.Count + 4);
             lv.Columns.Add("Player Name", columnWidth);
-            foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
+            lv.Columns.Add("Fantasy Team", columnWidth);
+            foreach (IStatExtractor extractor in lc.ScoringStatExtractors.Union(lc.SupportingStatExtractors))
             {
                 ColumnHeader column = new ColumnHeader();
                 column.Text = extractor.StatName;
@@ -35,9 +36,10 @@ namespace FantasyAuctionUI
             foreach (IPlayer player in league.AllPlayers)
             {
                 ListViewItem item = new ListViewItem(player.Name);
+                item.SubItems.Add(player.FantasyTeam);
                 int percentile = 0;
                 int statcount = 0;
-                foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
+                foreach (IStatExtractor extractor in lc.ScoringStatExtractors.Union(lc.SupportingStatExtractors))
                 {
                     IStatValue value = extractor.Extract(player);
                     if (value != null)
