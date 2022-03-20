@@ -261,6 +261,7 @@ namespace FantasyAlgorithms.DataModel
                         new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide),
                         new CountingStatExtractor("Saves", true, Extractors.ExtractPitcherSaves),
                         new CountingStatExtractor("Holds", true, Extractors.ExtractPitcherHolds),
+                        new RatioStatExtractor("K/9", true, Extractors.ExtractPitcherStrikeouts, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
                     };
                     _rounders2022.SupportingStatExtractors = _rounders2022.BattingSupportingStatExtractors.Union(_rounders2022.PitchingSupportingStatExtractors).ToList();
                     _rounders2022.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2022;
