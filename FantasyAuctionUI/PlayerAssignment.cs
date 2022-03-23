@@ -357,6 +357,11 @@ namespace FantasyAuctionUI
                         {
                             if (!string.IsNullOrEmpty(players[i]))
                             {
+                                if (players[i].StartsWith("\""))
+                                {
+                                    MessageBox.Show("Before you save the csv file, remove all of the commas from the values in the cells!");
+                                    return;
+                                }
                                 string name = players[i].Substring(0, players[i].IndexOf('(') - 1);
                                 string cost = players[i].Substring(players[i].IndexOf('$') + 1);
                                 string team = teams[i];
