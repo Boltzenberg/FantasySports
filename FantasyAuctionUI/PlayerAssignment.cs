@@ -262,6 +262,11 @@ namespace FantasyAuctionUI
             new PlayerGroupCenter("All players", LeagueConstants.For(this.league.FantasyLeague), this.league.AllPlayers).Show();
         }
 
+        private void OnLaunchLeagueSettings(object sender, EventArgs e)
+        {
+            new LeagueSettings(this.league).Show();
+        }
+
         private void OnWordWheel(object sender, EventArgs e)
         {
             this.lbPlayers.BeginUpdate();

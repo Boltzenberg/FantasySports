@@ -44,6 +44,7 @@
             this.topFreeAgentSwapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.snakeCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playerGroupAnalysisCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allPlayersStatCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fantasyDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadYahooToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +60,7 @@
             this.tbAssumedFantasyTeam = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbFantasyTeam = new System.Windows.Forms.ComboBox();
-            this.allPlayersStatCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.leagueSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -210,6 +211,13 @@
             this.playerGroupAnalysisCenterToolStripMenuItem.Text = "Player Group Analysis Center";
             this.playerGroupAnalysisCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchPlayerGroupAnalysisCenter);
             // 
+            // allPlayersStatCenterToolStripMenuItem
+            // 
+            this.allPlayersStatCenterToolStripMenuItem.Name = "allPlayersStatCenterToolStripMenuItem";
+            this.allPlayersStatCenterToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.allPlayersStatCenterToolStripMenuItem.Text = "All Players Stat Center";
+            this.allPlayersStatCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAllPlayersStatCenter);
+            // 
             // fantasyDataToolStripMenuItem
             // 
             this.fantasyDataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -237,7 +245,8 @@
             // 
             this.leaguesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
-            this.createToolStripMenuItem});
+            this.createToolStripMenuItem,
+            this.leagueSettingsToolStripMenuItem});
             this.leaguesToolStripMenuItem.Name = "leaguesToolStripMenuItem";
             this.leaguesToolStripMenuItem.Size = new System.Drawing.Size(62, 22);
             this.leaguesToolStripMenuItem.Text = "Leagues";
@@ -245,14 +254,14 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadToolStripMenuItem.Text = "Load...";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.OnLoadLeague);
             // 
             // createToolStripMenuItem
             // 
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.createToolStripMenuItem.Text = "Create...";
             this.createToolStripMenuItem.Click += new System.EventHandler(this.OnCreateNewLeague);
             // 
@@ -331,17 +340,17 @@
             this.cbFantasyTeam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbFantasyTeam.FormattingEnabled = true;
             this.cbFantasyTeam.Location = new System.Drawing.Point(416, 579);
-            this.cbFantasyTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbFantasyTeam.Margin = new System.Windows.Forms.Padding(2);
             this.cbFantasyTeam.Name = "cbFantasyTeam";
             this.cbFantasyTeam.Size = new System.Drawing.Size(253, 21);
             this.cbFantasyTeam.TabIndex = 20;
             // 
-            // allPlayersStatCenterToolStripMenuItem
+            // leagueSettingsToolStripMenuItem
             // 
-            this.allPlayersStatCenterToolStripMenuItem.Name = "allPlayersStatCenterToolStripMenuItem";
-            this.allPlayersStatCenterToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.allPlayersStatCenterToolStripMenuItem.Text = "All Players Stat Center";
-            this.allPlayersStatCenterToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchAllPlayersStatCenter);
+            this.leagueSettingsToolStripMenuItem.Name = "leagueSettingsToolStripMenuItem";
+            this.leagueSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.leagueSettingsToolStripMenuItem.Text = "League Settings...";
+            this.leagueSettingsToolStripMenuItem.Click += new System.EventHandler(this.OnLaunchLeagueSettings);
             // 
             // PlayerAssignment
             // 
@@ -406,6 +415,7 @@
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nirsSiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem allPlayersStatCenterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem leagueSettingsToolStripMenuItem;
     }
 }
 
