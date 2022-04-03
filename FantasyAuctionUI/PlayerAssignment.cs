@@ -343,7 +343,7 @@ namespace FantasyAuctionUI
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("Failed to find team " + csvTeams[i]);
+                            MessageBox.Show("Failed to find team " + csvTeams[i]);
                             return;
                         }
                     }
@@ -354,6 +354,7 @@ namespace FantasyAuctionUI
                         player.FantasyTeam = string.Empty;
                     }
 
+                    List<ImportResult> errors = new List<ImportResult>();
                     string line;
                     while (!string.IsNullOrEmpty(line = reader.ReadLine()))
                     {
@@ -373,12 +374,14 @@ namespace FantasyAuctionUI
                                 List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(name)));
                                 if (allPlayers.Count == 0)
                                 {
+                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "No player with that name in the league data!" });
                                     System.Diagnostics.Debug.WriteLine("No player named " + name + " when assigning to team " + team + " with cost " + cost);
                                     continue;
                                 }
 
                                 if (allPlayers.Count > 1)
                                 {
+                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "Too many players with that name in the league data!" });
                                     System.Diagnostics.Debug.WriteLine("Too many players named " + name + " when assigning to team " + team + " with cost " + cost);
                                     continue;
                                 }
@@ -393,15 +396,21 @@ namespace FantasyAuctionUI
                                     }
                                     else if (player.FantasyTeam.ToLowerInvariant() != team.ToLowerInvariant() || player.AuctionPrice != float.Parse(cost))
                                     {
+                                        errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "Player data isn't right!" });
                                         System.Diagnostics.Debug.WriteLine("Player " + name + " data isn't right!");
                                     }
                                 }
                                 else
                                 {
+                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "No player with that name in the league data!" });
                                     System.Diagnostics.Debug.WriteLine("Failed to find player with name " + name + " who should be on team " + team);
                                 }
                             }
                         }
+                    }
+                    if (errors.Count > 0)
+                    {
+                        new ImportResults(errors).Show();
                     }
                     //this.league.Save(this.fileName);
                 }

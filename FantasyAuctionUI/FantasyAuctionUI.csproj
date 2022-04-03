@@ -52,6 +52,12 @@
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="ImportResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportResults.Designer.cs">
+      <DependentUpon>ImportResults.cs</DependentUpon>
+    </Compile>
     <Compile Include="LeagueSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     <Compile Include="UIUtilities.cs" />
     <EmbeddedResource Include="AnalysisCenter.resx">
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportResults.resx">
+      <DependentUpon>ImportResults.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LeagueSettings.resx">
       <DependentUpon>LeagueSettings.cs</DependentUpon>
