@@ -27,7 +27,14 @@ namespace ScratchUI
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(new Uri(this.tbUrl.Text.Trim()));
+            try
+            {
+                this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(new Uri(this.tbUrl.Text.Trim()));
+            }
+            catch (Exception ex)
+            {
+                this.wbOut.DocumentText = ex.ToString();
+            }
         }
 
         private async void button3_Click(object sender, EventArgs e)
