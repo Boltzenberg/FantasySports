@@ -13,6 +13,7 @@ namespace FantasyAlgorithms.DataModel
         string GetHTML();
         IEnumerable<Position> Positions { get; }
         string Status { get; }
+        string ProfilePicture { get; }
 
         void Update(ESPNProjections.IPlayer batter);
         void Update(YahooFantasySports.DataModel.Player player);

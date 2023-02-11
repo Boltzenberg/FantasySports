@@ -29,6 +29,8 @@ namespace FantasyAlgorithms.DataModel
         public int ProjectedER { get; set; }
         public string SeasonOutlook { get; set; }
         public string Status { get; set; }
+        public string ProfilePicture { get; set; }
+
 
         public float ProjectedIP { get; set; }
         public float ProjectedERA { get; set; }
@@ -53,6 +55,10 @@ namespace FantasyAlgorithms.DataModel
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<HTML><BODY><TABLE BORDER='1'>");
             sb.AppendFormat("<TR><TD>Name</TD><TD>{0}</TD></TR>", this.Name);
+            if (!string.IsNullOrEmpty(this.ProfilePicture))
+            {
+                sb.AppendFormat("<TR><TD>Picture</TD><TD><img src=\"data:image/png;base64,{0}\"/></TD></TR>", this.ProfilePicture);
+            }
             sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
             sb.AppendFormat("<TR><TD>Yahoo ID</TD><TD>{0}</TD></TR>", this.YahooId);
             sb.AppendFormat("<TR><TD>Is SP</TD><TD>{0}</TD></TR>", this.IsSP ? "Yes" : "No");
@@ -114,6 +120,10 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedWHIP = (this.ProjectedHits + this.ProjectedWalks) / ((float)this.ProjectedOutsRecorded / 3);
             this.SeasonOutlook = pitcher.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;
+            if (string.IsNullOrEmpty(this.ProfilePicture))
+            {
+                this.ProfilePicture = ESPNProjections.ESPNAPI.GetPlayerImage(this.ESPNId);
+            }
         }
 
         public void Update(YahooFantasySports.DataModel.Player player)

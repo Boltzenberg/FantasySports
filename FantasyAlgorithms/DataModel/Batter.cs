@@ -35,6 +35,7 @@ namespace FantasyAlgorithms.DataModel
         public int ProjectedSB { get; set; }
         public string SeasonOutlook { get; set; }
         public string Status { get; set; }
+        public string ProfilePicture { get; set; }
 
         public override string ToString()
         {
@@ -55,6 +56,10 @@ namespace FantasyAlgorithms.DataModel
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("<TABLE BORDER='1'>");
             sb.AppendFormat("<TR><TD>Name</TD><TD>{0}</TD></TR>", this.Name);
+            if (!string.IsNullOrEmpty(this.ProfilePicture))
+            {
+                sb.AppendFormat("<TR><TD>Picture</TD><TD><img src=\"data:image/png;base64,{0}\"/></TD></TR>", this.ProfilePicture);
+            }
             sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
             sb.AppendFormat("<TR><TD>Yahoo ID</TD><TD>{0}</TD></TR>", this.YahooId);
             sb.AppendFormat("<TR><TD>Is C</TD><TD>{0}</TD></TR>", this.IsC ? "Yes" : "No");
@@ -122,6 +127,10 @@ namespace FantasyAlgorithms.DataModel
             this.ProjectedSB = GetStat(batter.Stats[ESPNProjections.ESPNConstants.Stats.Batters.SB], 0);
             this.SeasonOutlook = batter.SeasonOutlook;
             this.ProjectionsLastUpdated = DateTime.Now;
+            if (string.IsNullOrEmpty(this.ProfilePicture))
+            {
+                this.ProfilePicture = ESPNProjections.ESPNAPI.GetPlayerImage(this.ESPNId);
+            }
         }
 
         public void Update(YahooFantasySports.DataModel.Player player)
