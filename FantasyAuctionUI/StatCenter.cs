@@ -36,8 +36,8 @@ namespace FantasyAuctionUI
                 pointsItem.Tag = team;
                 foreach (IStatExtractor extractor in lc.ScoringStatExtractors)
                 {
-                    statsItem.SubItems.Add(team.Stats[extractor.StatName].ToString());
-                    pointsItem.SubItems.Add(team.Points[extractor.StatName].ToString());
+                    statsItem.SubItems.Add(team.Stats.ContainsKey(extractor.StatName) ? team.Stats[extractor.StatName].ToString() : "N/A");
+                    pointsItem.SubItems.Add(team.Points.ContainsKey(extractor.StatName) ? team.Points[extractor.StatName].ToString() : "N/A");
                     totalPoints += team.Points[extractor.StatName];
                 }
                 pointsItem.SubItems.Add(totalPoints.ToString());

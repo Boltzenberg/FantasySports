@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace FantasyAlgorithms.DataModel
 {
@@ -70,6 +71,17 @@ namespace FantasyAlgorithms.DataModel
             }
 
             return "??";
+        }
+
+        public static IEnumerable<string> FieldPositionsToShortStrings(IEnumerable<Position> ps)
+        {
+            foreach (Position p in ps)
+            {
+                if (DisplayPositions.Contains(p))
+                {
+                    yield return ToShortString(p);
+                }
+            }
         }
 
         public static bool IsActive(Position p)

@@ -51,7 +51,7 @@ namespace FantasyAuctionUI
                     if (row < teams[col].Players.Count)
                     {
                         IPlayer player = teams[col].Players[row];
-                        sb.AppendFormat("<TD>{0} ({1}): {2,12:C2}</TD>", player.Name, player.Status, player.AuctionPrice);
+                        sb.AppendFormat("<TD>{0} ({1}){2}: {3,12:C2}</TD>", player.Name, string.Join(", ", Positions.FieldPositionsToShortStrings(player.Positions)), string.IsNullOrEmpty(player.Status) ? string.Empty : string.Format(" {0}", player.Status), player.AuctionPrice);
                     }
                     else
                     {

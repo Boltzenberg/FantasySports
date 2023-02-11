@@ -52,6 +52,18 @@
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="ImportResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportResults.Designer.cs">
+      <DependentUpon>ImportResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LeagueSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LeagueSettings.Designer.cs">
+      <DependentUpon>LeagueSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayerGroupCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +115,12 @@
     <Compile Include="PromptFromList.Designer.cs">
       <DependentUpon>PromptFromList.cs</DependentUpon>
     </Compile>
+    <Compile Include="AllPlayersStatCenter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllPlayersStatCenter.Designer.cs">
+      <DependentUpon>AllPlayersStatCenter.cs</DependentUpon>
+    </Compile>
     <Compile Include="TeamStatCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +130,12 @@
     <Compile Include="UIUtilities.cs" />
     <EmbeddedResource Include="AnalysisCenter.resx">
       <DependentUpon>AnalysisCenter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportResults.resx">
+      <DependentUpon>ImportResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LeagueSettings.resx">
+      <DependentUpon>LeagueSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayerGroupCenter.resx">
       <DependentUpon>PlayerGroupCenter.cs</DependentUpon>
@@ -145,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PromptFromList.resx">
       <DependentUpon>PromptFromList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllPlayersStatCenter.resx">
+      <DependentUpon>AllPlayersStatCenter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeamStatCenter.resx">
       <DependentUpon>TeamStatCenter.cs</DependentUpon>

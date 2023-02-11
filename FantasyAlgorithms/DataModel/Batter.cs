@@ -35,6 +35,7 @@ namespace FantasyAlgorithms.DataModel
         public int ProjectedSB { get; set; }
         public string SeasonOutlook { get; set; }
         public string Status { get; set; }
+        public bool IsBatter { get { return true; } }
         public string ProfilePicture { get; set; }
 
         public override string ToString()

@@ -99,7 +99,7 @@ namespace FantasyAuctionUI
             }
         }
 
-        private string GetPlayerAnalysisTable(IPlayer player, IEnumerable<IPlayer> players)
+        private string GetPlayerAnalysisTable(IPlayer player, IEnumerable<IPlayer> players, string tableTitle)
         {
             PercentilePlayerGroupAnalyzer analyzer = new PercentilePlayerGroupAnalyzer();
             LeagueConstants lc = LeagueConstants.For(this.league.FantasyLeague);
@@ -107,6 +107,8 @@ namespace FantasyAuctionUI
 
             StringBuilder sb = new StringBuilder();
             sb.Append("<TABLE BORDER=1><TR><TD>Stat Name</TD><TD>Player's Stat Value</TD><TD>Max Value</TD><TD>Min Value</TD><TD>Graph</TD><TD>Player Percentile</TD></TR>");
+            int percentileSum = 0;
+            int count = 0;
             foreach (IStatExtractor extractor in extractors)
             {
                 PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, players, player, p => p == player ? Brushes.Yellow : !string.IsNullOrEmpty(p.FantasyTeam) ? Brushes.Blue : Brushes.Violet);
@@ -117,9 +119,12 @@ namespace FantasyAuctionUI
                     img = stm.ToArray();
                 }
                 sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.PlayerStatValue}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
+                percentileSum += analysis.PlayerPercentile;
+                count++;
             }
             sb.AppendLine("</TABLE>");
-            return sb.ToString();
+
+            return string.Format("<H1>{0} (Average Percentile: {1})</H1>{2}", tableTitle, percentileSum / count, sb.ToString());
         }
 
         private void UpdateCurrentPlayer(IPlayer newCurrentPlayer)
@@ -135,12 +140,15 @@ namespace FantasyAuctionUI
                 StringBuilder sb = new StringBuilder();
                 sb.Append("<HTML><BODY><H1>Player Info</H1>");
                 sb.Append(newCurrentPlayer.GetHTML());
-                sb.Append("<H1>Player analysis vs all players</H1>");
-                sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers));
+                sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers, "Player analysis vs all players"));
                 foreach (Position position in newCurrentPlayer.Positions)
                 {
-                    sb.AppendFormat("<H1>Player analysis vs all {0}</H1>", position);
-                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers.Where(p => p.Positions.Contains(position))));
+                    IEnumerable<IPlayer> positionPlayers = this.league.AllPlayers.Where(p => p.Positions.Contains(position));
+                    if (position == Position.P)
+                    {
+                        positionPlayers = this.league.Pitchers.Where(p => p.IsSP == ((Pitcher)newCurrentPlayer).IsSP);
+                    }
+                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, positionPlayers, string.Format("Player analysis vs all {0}", position)));
                 }
                 sb.Append("</BODY></HTML>");
                 this.wbOut.DocumentText = sb.ToString();
@@ -235,6 +243,11 @@ namespace FantasyAuctionUI
             new TargetCenter(this.league.Clone()).Show();
         }
 
+        private void OnLaunchAllPlayersStatCenter(object sender, EventArgs e)
+        {
+            new AllPlayersStatCenter(this.league.Clone()).Show();
+        }
+
         private void OnLaunchSnakeCenter(object sender, EventArgs e)
         {
             PromptFromList prompt = new PromptFromList("Select Your Team", this.league.Teams.Select(t => t.Name));
@@ -247,6 +260,11 @@ namespace FantasyAuctionUI
         private void OnLaunchPlayerGroupAnalysisCenter(object sender, EventArgs e)
         {
             new PlayerGroupCenter("All players", LeagueConstants.For(this.league.FantasyLeague), this.league.AllPlayers).Show();
+        }
+
+        private void OnLaunchLeagueSettings(object sender, EventArgs e)
+        {
+            new LeagueSettings(this.league).Show();
         }
 
         private void OnWordWheel(object sender, EventArgs e)
@@ -325,7 +343,7 @@ namespace FantasyAuctionUI
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("Failed to find team " + csvTeams[i]);
+                            MessageBox.Show("Failed to find team " + csvTeams[i]);
                             return;
                         }
                     }
@@ -336,6 +354,7 @@ namespace FantasyAuctionUI
                         player.FantasyTeam = string.Empty;
                     }
 
+                    List<ImportResult> errors = new List<ImportResult>();
                     string line;
                     while (!string.IsNullOrEmpty(line = reader.ReadLine()))
                     {
@@ -344,18 +363,25 @@ namespace FantasyAuctionUI
                         {
                             if (!string.IsNullOrEmpty(players[i]))
                             {
+                                if (players[i].StartsWith("\""))
+                                {
+                                    MessageBox.Show("Before you save the csv file, remove all of the commas from the values in the cells!");
+                                    return;
+                                }
                                 string name = players[i].Substring(0, players[i].IndexOf('(') - 1);
                                 string cost = players[i].Substring(players[i].IndexOf('$') + 1);
                                 string team = teams[i];
                                 List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(name)));
                                 if (allPlayers.Count == 0)
                                 {
+                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "No player with that name in the league data!" });
                                     System.Diagnostics.Debug.WriteLine("No player named " + name + " when assigning to team " + team + " with cost " + cost);
                                     continue;
                                 }
 
                                 if (allPlayers.Count > 1)
                                 {
+                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "Too many players with that name in the league data!" });
                                     System.Diagnostics.Debug.WriteLine("Too many players named " + name + " when assigning to team " + team + " with cost " + cost);
                                     continue;
                                 }
@@ -370,15 +396,21 @@ namespace FantasyAuctionUI
                                     }
                                     else if (player.FantasyTeam.ToLowerInvariant() != team.ToLowerInvariant() || player.AuctionPrice != float.Parse(cost))
                                     {
+                                        errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "Player data isn't right!" });
                                         System.Diagnostics.Debug.WriteLine("Player " + name + " data isn't right!");
                                     }
                                 }
                                 else
                                 {
+                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "No player with that name in the league data!" });
                                     System.Diagnostics.Debug.WriteLine("Failed to find player with name " + name + " who should be on team " + team);
                                 }
                             }
                         }
+                    }
+                    if (errors.Count > 0)
+                    {
+                        new ImportResults(errors).Show();
                     }
                     //this.league.Save(this.fileName);
                 }

@@ -15,5 +15,7 @@ namespace ESPNProjections
         Dictionary<string, string> Stats { get; }
 
         string SeasonOutlook { get; }
+
+        bool IsBatter { get; }
     }
 }
