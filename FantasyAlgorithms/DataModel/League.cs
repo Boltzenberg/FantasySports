@@ -294,7 +294,7 @@ namespace FantasyAlgorithms.DataModel
                     };
                     _rounders2023.PitchingScoringStatExtractors = new List<IStatExtractor>()
                     {
-                        new CountingStatExtractor("Wins", true, Extractors.ExtractPitcherWins),
+                        new CountingStatExtractor("Quality Starts", true, Extractors.ExtractPitcherQualityStarts),
                         new CountingStatExtractor("Saves + Holds", true, Extractors.ExtractPitcherSavesPlusHolds),
                         new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
                         new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),

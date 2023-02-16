@@ -114,6 +114,17 @@ namespace FantasyAlgorithms
             return p.ProjectedW;
         }
 
+        public static int? ExtractPitcherQualityStarts(IPlayer player)
+        {
+            Pitcher p = player as Pitcher;
+            if (p == null)
+            {
+                return null;
+            }
+
+            return p.ProjectedQS;
+        }
+
         public static int? ExtractPitcherSaves(IPlayer player)
         {
             Pitcher p = player as Pitcher;

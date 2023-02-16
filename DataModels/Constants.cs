@@ -34,6 +34,7 @@ namespace FantasySports.DataModels
             P_Losses,
             P_Saves,
             P_Holds,
+            P_QualityStarts,
         }
 
         public static string StatIDToString(StatID id)
@@ -59,6 +60,7 @@ namespace FantasySports.DataModels
                 case StatID.P_Losses: return "Losses";
                 case StatID.P_Saves: return "Saves";
                 case StatID.P_Holds: return "Holds";
+                case StatID.P_QualityStarts: return "Quality Starts";
 
                 default: return "Unknown";
             }

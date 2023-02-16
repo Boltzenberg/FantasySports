@@ -35,9 +35,10 @@ namespace ESPNProjections
                 public const string L = "54";
                 public const string SV = "57";
                 public const string Hld = "60";
+                public const string QS = "63";
                 public static List<string> All = new List<string>()
                 {
-                    OutsRecorded, H, ER, BB, K, W, L, SV, Hld
+                    OutsRecorded, H, ER, BB, K, W, L, SV, Hld, QS
                 };
             }
 
@@ -57,6 +58,7 @@ namespace ESPNProjections
                         case Batters.BB: OneToOneMapping(espnStats[espnStatID], Constants.StatID.B_Walks, dmStats); break;
                         case Pitchers.ER: OneToOneMapping(espnStats[espnStatID], Constants.StatID.P_EarnedRuns, dmStats); break;
                         case Pitchers.Hld: OneToOneMapping(espnStats[espnStatID], Constants.StatID.P_Holds, dmStats); break;
+                        case Pitchers.QS: OneToOneMapping(espnStats[espnStatID], Constants.StatID.P_QualityStarts, dmStats); break;
                         case Pitchers.L: OneToOneMapping(espnStats[espnStatID], Constants.StatID.P_Losses, dmStats); break;
                         case Pitchers.OutsRecorded: OneToOneMapping(espnStats[espnStatID], Constants.StatID.P_OutsRecorded, dmStats); break;
                         case Pitchers.SV: OneToOneMapping(espnStats[espnStatID], Constants.StatID.P_Saves, dmStats); break;
