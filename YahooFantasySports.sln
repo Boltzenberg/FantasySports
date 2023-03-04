@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29911.84
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YahooFantasySports", "YahooFantasySports\YahooFantasySports.csproj", "{CEB059F5-C8F0-4358-B3F0-4D6FBA8B76B4}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yahoo", "Yahoo\Yahoo.csproj", "{D49EDBCB-B97A-4901-9990-F02D8BE0D9DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FantasyProsProjects", "FantasyProsProjects\FantasyProsProjects.csproj", "{44A417CF-B742-43FB-BD21-253C25AC4DFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigLib", "ConfigLib\ConfigLib.csproj", "{273D11CC-0955-4F78-88CA-DBD1587FD442}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{44A417CF-B742-43FB-BD21-253C25AC4DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44A417CF-B742-43FB-BD21-253C25AC4DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44A417CF-B742-43FB-BD21-253C25AC4DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273D11CC-0955-4F78-88CA-DBD1587FD442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273D11CC-0955-4F78-88CA-DBD1587FD442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273D11CC-0955-4F78-88CA-DBD1587FD442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273D11CC-0955-4F78-88CA-DBD1587FD442}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

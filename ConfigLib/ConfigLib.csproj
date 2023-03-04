@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1DD560C2-66EC-45C5-8DBE-10E571344C95}</ProjectGuid>
+    <ProjectGuid>{273D11CC-0955-4F78-88CA-DBD1587FD442}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESPNProjections</RootNamespace>
-    <AssemblyName>ESPNProjections</AssemblyName>
+    <RootNamespace>ConfigLib</RootNamespace>
+    <AssemblyName>ConfigLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,28 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Directories.cs" />
-    <Compile Include="ESPNAPI.cs" />
-    <Compile Include="ESPNPlayerData.cs" />
-    <Compile Include="IPlayer.cs" />
-    <Compile Include="ESPNConstants.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ConfigLib\ConfigLib.csproj">
-      <Project>{273d11cc-0955-4f78-88ca-dbd1587fd442}</Project>
-      <Name>ConfigLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataModels\DataModels.csproj">
-      <Project>{c1337d3a-e467-467c-93dc-55e71a0544a0}</Project>
-      <Name>DataModels</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

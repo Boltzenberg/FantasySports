@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.CodeDom;
 using System.IO;
 using System.Net;
@@ -29,8 +30,8 @@ namespace ESPNProjections
             public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
             public int PlayerCount { get { return 300; } }
             public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2020]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[1]}},\"sortAppliedStatTotal\":{{\"sortPriority\":2,\"sortAsc\":false,\"value\":\"102020\"}},\"sortDraftRanks\":{{\"sortPriority\":3,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"offset\":0,\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterRanksForRankTypes\":{{\"value\":[\"STANDARD\"]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002020\",\"102020\",\"002019\",\"012020\",\"022020\",\"032020\",\"042020\",\"010002020\"]}}}}}}"; } }
-            public string BatterCacheFile { get { return @"C:\Users\jon_r\OneDrive\Documents\2020ESPNBatters.json"; } }
-            public string PitcherCacheFile { get { return @"C:\Users\jon_r\OneDrive\Documents\2020ESPNPitchers.json"; } }
+            public string BatterCacheFile { get { return @"2020ESPNBatters.json"; } }
+            public string PitcherCacheFile { get { return @"2020ESPNPitchers.json"; } }
             public string PictureUrlFormatString { get { return string.Empty; } }
         }
 
@@ -42,8 +43,8 @@ namespace ESPNProjections
             public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
             public int PlayerCount { get { return 300; } }
             public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2021]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[1]}},\"sortAppliedStatTotal\":{{\"sortPriority\":2,\"sortAsc\":false,\"value\":\"102021\"}},\"sortDraftRanks\":{{\"sortPriority\":3,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"offset\":0,\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterRanksForRankTypes\":{{\"value\":[\"STANDARD\"]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002021\",\"102021\",\"002020\",\"012021\",\"022021\",\"032021\",\"042021\",\"010002021\"]}}}}}}"; } }
-            public string BatterCacheFile { get { return @"C:\Users\jon_r\OneDrive\Documents\2021ESPNBatters.json"; } }
-            public string PitcherCacheFile { get { return @"C:\Users\jon_r\OneDrive\Documents\2021ESPNPitchers.json"; } }
+            public string BatterCacheFile { get { return @"2021ESPNBatters.json"; } }
+            public string PitcherCacheFile { get { return @"2021ESPNPitchers.json"; } }
             public string PictureUrlFormatString { get { return string.Empty; } }
         }
 
@@ -55,8 +56,8 @@ namespace ESPNProjections
             public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
             public int PlayerCount { get { return 300; } }
             public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2022]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[1]}},\"sortAppliedStatTotal\":{{\"sortPriority\":2,\"sortAsc\":false,\"value\":\"102022\"}},\"sortDraftRanks\":{{\"sortPriority\":3,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"offset\":0,\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterRanksForRankTypes\":{{\"value\":[\"STANDARD\"]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002022\",\"102022\",\"002020\",\"012022\",\"022022\",\"032022\",\"042022\",\"010002022\"]}}}}}}"; } }
-            public string BatterCacheFile { get { return @"C:\OneDrive\Documents\2022ESPNBatters.json"; } }
-            public string PitcherCacheFile { get { return @"C:\OneDrive\Documents\2022ESPNPitchers.json"; } }
+            public string BatterCacheFile { get { return @"2022ESPNBatters.json"; } }
+            public string PitcherCacheFile { get { return @"2022ESPNPitchers.json"; } }
             public string PictureUrlFormatString { get { return string.Empty; } }
         }
 
@@ -67,10 +68,9 @@ namespace ESPNProjections
             public string Pitchers { get { return "13,14,15"; } }
             public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
             public int PlayerCount { get { return 300; } }
-            //public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2022,2023]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[0,1]}},\"useFullProjectionTable\":{{\"value\":true}},\"sortAppliedStatTotal\":{{\"sortAsc\":false,\"sortPriority\":3,\"value\":\"102023\"}},\"sortDraftRanks\":{{\"sortPriority\":2,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002023\",\"102023\",\"002022\",\"012023\",\"022023\",\"032023\",\"042023\",\"062023\",\"010002023\"]}}}}}}"; } }
             public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2023]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[0,1]}},\"useFullProjectionTable\":{{\"value\":true}},\"sortAppliedStatTotal\":{{\"sortAsc\":false,\"sortPriority\":3,\"value\":\"102023\"}},\"sortDraftRanks\":{{\"sortPriority\":2,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002023\",\"102023\",\"012023\",\"022023\",\"032023\",\"042023\",\"062023\",\"010002023\"]}}}}}}"; } }
-            public string BatterCacheFile { get { return @"C:\Users\jon_r\OneDrive\Documents\2023ESPNBatters.json"; } }
-            public string PitcherCacheFile { get { return @"C:\Users\jon_r\OneDrive\Documents\2023ESPNPitchers.json"; } }
+            public string BatterCacheFile { get { return @"2023ESPNBatters.json"; } }
+            public string PitcherCacheFile { get { return @"2023ESPNPitchers.json"; } }
             public string PictureUrlFormatString { get { return "https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/{0}.png&h=120&w=120&scale=crop"; } }
         }
 
@@ -111,9 +111,10 @@ namespace ESPNProjections
 
         public static string LoadBatterProjections()
         {
-            if (File.Exists(Constants.BatterCacheFile))
+            string cacheFile = Path.Combine(ConfigLib.Directories.ProjectionCacheDirectory, Constants.BatterCacheFile);
+            if (File.Exists(cacheFile))
             {
-                return File.ReadAllText(Constants.BatterCacheFile);
+                return File.ReadAllText(cacheFile);
             }
 
             HttpWebRequest req = HttpWebRequest.CreateHttp(Constants.Url);
@@ -128,7 +129,7 @@ namespace ESPNProjections
                     using (StreamReader reader = new StreamReader(res.GetResponseStream()))
                     {
                         string result = reader.ReadToEnd();
-                        File.WriteAllText(Constants.BatterCacheFile, result);
+                        File.WriteAllText(cacheFile, result);
                         return result;
                     }
                 }
@@ -139,9 +140,10 @@ namespace ESPNProjections
 
         public static string LoadPitcherProjections()
         {
-            if (File.Exists(Constants.PitcherCacheFile))
+            string cacheFile = Path.Combine(ConfigLib.Directories.ProjectionCacheDirectory, Constants.PitcherCacheFile);
+            if (File.Exists(cacheFile))
             {
-                return File.ReadAllText(Constants.PitcherCacheFile);
+                return File.ReadAllText(cacheFile);
             }
 
             HttpWebRequest req = HttpWebRequest.CreateHttp(Constants.Url);
@@ -156,7 +158,7 @@ namespace ESPNProjections
                     using (StreamReader reader = new StreamReader(res.GetResponseStream()))
                     {
                         string result = reader.ReadToEnd();
-                        File.WriteAllText(Constants.PitcherCacheFile, result);
+                        File.WriteAllText(cacheFile, result);
                         return result;
                     }
                 }

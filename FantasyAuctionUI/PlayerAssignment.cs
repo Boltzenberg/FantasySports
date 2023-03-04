@@ -21,7 +21,7 @@ namespace FantasyAuctionUI
         public PlayerAssignment()
         {
             InitializeComponent();
-            this.LoadPlayers(Path.Combine("C:\\Users\\jon_r\\OneDrive\\Documents", Constants.Files.League));
+            this.LoadPlayers(Path.Combine(ConfigLib.Directories.LeagueFileDirectory, Constants.Files.League));
         }
 
         private void OnLoadLeague(object sender, EventArgs e)
@@ -182,6 +182,7 @@ namespace FantasyAuctionUI
             teams.Insert(0, string.Empty);
             this.cbFantasyTeam.Items.Clear();
             this.cbFantasyTeam.Items.AddRange(teams.ToArray());
+            this.Text = "Fantasy Auction - " + Path.GetFileNameWithoutExtension(this.fileName);
         }
 
         private void OnSave(object sender, EventArgs e)
