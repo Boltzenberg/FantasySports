@@ -93,6 +93,10 @@
       <Project>{8f7dff1b-1d1c-4fd1-912e-22a7ecef5414}</Project>
       <Name>FantasyAlgorithms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NirSiteLib\NirSiteLib.csproj">
+      <Project>{4362c386-02f9-4ea5-a854-e4e3ff982f6c}</Project>
+      <Name>NirSiteLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YahooFantasySports\YahooFantasySports.csproj">
       <Project>{ceb059f5-c8f0-4358-b3f0-4d6fba8b76b4}</Project>
       <Name>YahooFantasySports</Name>

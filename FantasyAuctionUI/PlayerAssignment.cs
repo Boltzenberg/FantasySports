@@ -1,7 +1,10 @@
 ﻿using FantasyAlgorithms;
 using FantasyAlgorithms.DataModel;
+using NirSiteLib;
+using NirSiteLib.DataModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -17,6 +20,7 @@ namespace FantasyAuctionUI
         private IPlayer currentPlayer;
         private string yahooAuthToken = string.Empty;
         private string fileName = string.Empty;
+        private NirDriver driver = null;
 
         public PlayerAssignment()
         {
@@ -161,6 +165,17 @@ namespace FantasyAuctionUI
             UpdateCurrentPlayer(this.lbPlayers.SelectedItem as IPlayer);
         }
 
+        private void SetPlayerList(IEnumerable<IPlayer> players)
+        {
+            this.allPlayers = new List<IPlayer>();
+            this.allPlayers.AddRange(players);
+            this.allPlayers.Sort((x, y) => x.Name.CompareTo(y.Name));
+            this.tbWordWheel.Text = string.Empty;
+            this.lbPlayers.Items.Clear();
+            this.lbPlayers.Items.AddRange(this.allPlayers.ToArray());
+            this.currentPlayer = null;
+        }
+
         private void LoadPlayers(string fileName)
         {
             if (!File.Exists(fileName))
@@ -170,13 +185,7 @@ namespace FantasyAuctionUI
 
             this.fileName = fileName;
             this.league = League.Load(fileName);
-            this.allPlayers = new List<IPlayer>();
-            this.allPlayers.AddRange(this.league.AllPlayers);
-            this.allPlayers.Sort((x, y) => x.Name.CompareTo(y.Name));
-            this.tbWordWheel.Text = string.Empty;
-            this.lbPlayers.Items.Clear();
-            this.lbPlayers.Items.AddRange(this.allPlayers.ToArray());
-            this.currentPlayer = null;
+            this.SetPlayerList(this.league.AllPlayers);
             List<string> teams = new List<string>(this.league.Teams.Select(t => t.Name));
             teams.Sort();
             teams.Insert(0, string.Empty);
@@ -317,105 +326,104 @@ namespace FantasyAuctionUI
 
         private void OnImportFromNirSite(object sender, EventArgs e)
         {
-            MessageBox.Show("Save the league table from Nir's site as a CSV file in excel.  First row is the team names, and then players after that.");
-
-            using (OpenFileDialog dlg = new OpenFileDialog())
+            if (this.driver == null)
             {
-                dlg.CheckFileExists = true;
-                dlg.CheckPathExists = true;
-                dlg.DefaultExt = "csv";
-                dlg.Multiselect = false;
-                dlg.Title = "Select CSV file from Nir's site";
-                if (dlg.ShowDialog() != DialogResult.OK)
+                this.driver = new NirDriver();
+            }
+
+            Dictionary<string, List<RosteredPlayer>> rosters = this.driver.GetTeamRosters();
+
+            foreach (string teamName in rosters.Keys)
+            {
+                Team team = this.league.Teams.Where(t => SanitizeTeamName(t.Name) == SanitizeTeamName(teamName)).FirstOrDefault();
+                if (team == null)
                 {
+                    // Fix this from Nir's site!
+                    MessageBox.Show("Failed to find team " + teamName);
                     return;
                 }
+            }
 
-                using (StreamReader reader = new StreamReader(File.OpenRead(dlg.FileName)))
+            foreach (IPlayer player in this.league.AllPlayers)
+            {
+                player.AuctionPrice = 0;
+                player.FantasyTeam = string.Empty;
+            }
+
+            List<ImportResult> errors = new List<ImportResult>();
+            foreach (string teamName in rosters.Keys)
+            {
+                foreach (RosteredPlayer rosteredPlayer in rosters[teamName])
                 {
-                    string[] csvTeams = reader.ReadLine().Split(',');
-                    Dictionary<int, string> teams = new Dictionary<int, string>();
-                    for (int i = 0; i < csvTeams.Length; i++)
+                    List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(rosteredPlayer.Name)));
+                    if (allPlayers.Count == 0)
                     {
-                        Team team = this.league.Teams.Where(t => SanitizeTeamName(t.Name) == SanitizeTeamName(csvTeams[i])).FirstOrDefault();
-                        if (team != null)
-                        {
-                            teams[i] = team.Name;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Failed to find team " + csvTeams[i]);
-                            return;
-                        }
+                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "No player with that name in the league data!" });
+                        continue;
                     }
 
-                    foreach (IPlayer player in this.league.AllPlayers)
+                    if (allPlayers.Count > 1)
                     {
-                        player.AuctionPrice = 0;
-                        player.FantasyTeam = string.Empty;
+                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Too many players with that name in the league data!" });
+                        continue;
                     }
 
-                    List<ImportResult> errors = new List<ImportResult>();
-                    string line;
-                    while (!string.IsNullOrEmpty(line = reader.ReadLine()))
+                    IPlayer player = allPlayers[0];
+                    if (player != null)
                     {
-                        string[] players = line.Split(',');
-                        for (int i = 0; i < players.Length; i++)
+                        if (string.IsNullOrEmpty(player.FantasyTeam))
                         {
-                            if (!string.IsNullOrEmpty(players[i]))
-                            {
-                                if (players[i].StartsWith("\""))
-                                {
-                                    MessageBox.Show("Before you save the csv file, remove all of the commas from the values in the cells!");
-                                    return;
-                                }
-                                string name = players[i].Substring(0, players[i].IndexOf('(') - 1);
-                                string cost = players[i].Substring(players[i].IndexOf('$') + 1);
-                                string team = teams[i];
-                                List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(name)));
-                                if (allPlayers.Count == 0)
-                                {
-                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "No player with that name in the league data!" });
-                                    System.Diagnostics.Debug.WriteLine("No player named " + name + " when assigning to team " + team + " with cost " + cost);
-                                    continue;
-                                }
-
-                                if (allPlayers.Count > 1)
-                                {
-                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "Too many players with that name in the league data!" });
-                                    System.Diagnostics.Debug.WriteLine("Too many players named " + name + " when assigning to team " + team + " with cost " + cost);
-                                    continue;
-                                }
-
-                                IPlayer player = allPlayers[0];
-                                if (player != null)
-                                {
-                                    if (string.IsNullOrEmpty(player.FantasyTeam))
-                                    {
-                                        player.FantasyTeam = team;
-                                        player.AuctionPrice = float.Parse(cost);
-                                    }
-                                    else if (player.FantasyTeam.ToLowerInvariant() != team.ToLowerInvariant() || player.AuctionPrice != float.Parse(cost))
-                                    {
-                                        errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "Player data isn't right!" });
-                                        System.Diagnostics.Debug.WriteLine("Player " + name + " data isn't right!");
-                                    }
-                                }
-                                else
-                                {
-                                    errors.Add(new ImportResult() { Player = name, Team = team, Cost = cost, Error = "No player with that name in the league data!" });
-                                    System.Diagnostics.Debug.WriteLine("Failed to find player with name " + name + " who should be on team " + team);
-                                }
-                            }
+                            player.FantasyTeam = teamName;
+                            player.AuctionPrice = rosteredPlayer.Price;
+                        }
+                        else if (player.FantasyTeam.ToLowerInvariant() != teamName.ToLowerInvariant() || player.AuctionPrice != rosteredPlayer.Price)
+                        {
+                            errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Player data isn't right!" });
                         }
                     }
-                    if (errors.Count > 0)
+                    else
                     {
-                        new ImportResults(errors).Show();
+                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "No player with that name in the league data!" });
                     }
-                    //this.league.Save(this.fileName);
                 }
             }
+
+            if (errors.Count > 0)
+            {
+                new ImportResults(errors).Show();
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (this.driver != null)
+            {
+                this.driver.Dispose();
+                this.driver = null;
+            }
+
+            base.OnClosing(e);
+        }
+
+        private void OnFilterToAllPlayers(object sender, EventArgs e)
+        {
+            this.SetPlayerList(this.league.AllPlayers);
+        }
+
+        private void OnFilterToAuctionEndingPlayers(object sender, EventArgs e)
+        {
+            List<IPlayer> players = new List<IPlayer>();
+            if (this.driver == null)
+            {
+                this.driver = new NirDriver();
+            }
+
+            List<BidItem> bidItems = this.driver.GetPlayersUpForAuction();
+            foreach (BidItem bidItem in bidItems)
+            {
+                players.AddRange(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(bidItem.PlayerName)));
+            }
+            this.SetPlayerList(players);
         }
     }
 }

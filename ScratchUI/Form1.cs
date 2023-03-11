@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NirSiteLib;
+using NirSiteLib.DataModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,7 +24,7 @@ namespace ScratchUI
 
         private void OnLoad(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(YahooFantasySports.Services.AuthManager.GetAuthUrl().AbsoluteUri);
+            //System.Diagnostics.Process.Start(YahooFantasySports.Services.AuthManager.GetAuthUrl().AbsoluteUri);
         }
 
         private async void button2_Click(object sender, EventArgs e)
@@ -150,6 +152,56 @@ namespace ScratchUI
             sb.Append("</TABLE></BODY></HTML>");
 
             this.wbOut.DocumentText = sb.ToString();
+        }
+
+        private void OnLaunchNirSite(object sender, EventArgs e)
+        {
+            using (NirDriver driver = new NirDriver())
+            {
+                Dictionary<string, List<RosteredPlayer>> rosters = driver.GetTeamRosters();
+                List<BidItem> bidItems = driver.GetPlayersUpForAuction();
+                StringBuilder sb = new StringBuilder("<HTML><BODY>");
+                sb.AppendLine("<TABLE><TR><TD>Player Name</TD><TD>MLB Team</TD><TD>Rank</TD><TD>Preseason Rank</TD><TD>Positions</TD><TD>Highest Bidding Team</TD><TD>Current Bid Price</TD><TD>Old Price</TD><TD>Time Left</TD><TD>Possible Topper</TD><TD>Yahoo ID</TD></TR>");
+                foreach (BidItem item in bidItems)
+                {
+                    StringBuilder positions = new StringBuilder(item.Positions[0]);
+                    for (int i = 1; i < item.Positions.Count; i++)
+                    {
+                        positions.AppendFormat(", {0}", item.Positions[i]);
+                    }
+
+                    sb.AppendFormat("<TR><TD>{0}</TD><TD>{1}</TD><TD>{2}</TD><TD>{3}</TD><TD>{4}</TD><TD>{5}</TD><TD>${6}</TD><TD>${7}</TD><TD>{8}</TD><TD>{9}</TD><TD>{10}</TD></TR>",
+                        item.PlayerName,
+                        item.MLBTeam,
+                        item.Rank,
+                        item.PreseasonRank,
+                        positions.ToString(),
+                        item.HighestBiddingTeam,
+                        item.CurrentBidPrice,
+                        item.OldPrice,
+                        item.TimeLeft,
+                        item.PossibleTopper,
+                        item.YahooId);
+                }
+                sb.AppendLine("</TABLE>");
+                foreach (string team in rosters.Keys)
+                {
+                    sb.AppendFormat("<H1>{0}</H1>", team);
+                    sb.Append("<OL>");
+                    foreach (RosteredPlayer player in rosters[team])
+                    {
+                        StringBuilder positions = new StringBuilder(player.Positions[0]);
+                        for (int i = 1; i < player.Positions.Count; i++)
+                        {
+                            positions.AppendFormat(", {0}", player.Positions[i]);
+                        }
+                        sb.AppendFormat("<LI>{0} - {1}, {2}, ${3}</LI>", player.Name, player.MLBTeamName, positions.ToString(), player.Price);
+                    }
+                    sb.AppendLine("</OL>");
+                }
+                sb.AppendLine("</BODY></HTML>");
+                this.wbOut.DocumentText = sb.ToString();
+            }
         }
     }
 }

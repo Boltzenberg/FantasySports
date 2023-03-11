@@ -36,12 +36,13 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(216, 17);
-            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button1.Margin = new System.Windows.Forms.Padding(6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(183, 42);
             this.button1.TabIndex = 0;
@@ -52,7 +53,7 @@
             // tbAuthCode
             // 
             this.tbAuthCode.Location = new System.Drawing.Point(22, 22);
-            this.tbAuthCode.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tbAuthCode.Margin = new System.Windows.Forms.Padding(6);
             this.tbAuthCode.Name = "tbAuthCode";
             this.tbAuthCode.Size = new System.Drawing.Size(180, 29);
             this.tbAuthCode.TabIndex = 1;
@@ -60,7 +61,7 @@
             // tbUrl
             // 
             this.tbUrl.Location = new System.Drawing.Point(22, 70);
-            this.tbUrl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tbUrl.Margin = new System.Windows.Forms.Padding(6);
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(1258, 29);
             this.tbUrl.TabIndex = 2;
@@ -70,7 +71,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(1294, 65);
-            this.button2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button2.Margin = new System.Windows.Forms.Padding(6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 42);
             this.button2.TabIndex = 3;
@@ -84,7 +85,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.wbOut.Location = new System.Drawing.Point(22, 118);
-            this.wbOut.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.wbOut.Margin = new System.Windows.Forms.Padding(6);
             this.wbOut.MinimumSize = new System.Drawing.Size(37, 37);
             this.wbOut.Name = "wbOut";
             this.wbOut.Size = new System.Drawing.Size(1423, 690);
@@ -93,7 +94,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(411, 18);
-            this.button3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button3.Margin = new System.Windows.Forms.Padding(6);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(138, 42);
             this.button3.TabIndex = 5;
@@ -104,7 +105,7 @@
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(559, 18);
-            this.button4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button4.Margin = new System.Windows.Forms.Padding(6);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(138, 42);
             this.button4.TabIndex = 6;
@@ -115,7 +116,7 @@
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(708, 18);
-            this.button5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button5.Margin = new System.Windows.Forms.Padding(6);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(211, 42);
             this.button5.TabIndex = 7;
@@ -123,11 +124,23 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(931, 18);
+            this.button6.Margin = new System.Windows.Forms.Padding(6);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(211, 42);
+            this.button6.TabIndex = 8;
+            this.button6.Text = "Launch Nir\'s Site";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.OnLaunchNirSite);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1467, 831);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -136,7 +149,7 @@
             this.Controls.Add(this.tbUrl);
             this.Controls.Add(this.tbAuthCode);
             this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.OnLoad);
@@ -155,6 +168,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
     }
 }
 
