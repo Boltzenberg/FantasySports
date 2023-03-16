@@ -358,7 +358,7 @@ namespace FantasyAuctionUI
                     List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(rosteredPlayer.Name)));
                     if (allPlayers.Count == 0)
                     {
-                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "No player with that name in the league data!" });
+                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, MLBTeam = rosteredPlayer.MLBTeamName, Positions = rosteredPlayer.Positions, FantasyTeam = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "No player with that name in the league data!" });
                         continue;
                     }
 
@@ -368,7 +368,7 @@ namespace FantasyAuctionUI
                         allPlayers = new List<IPlayer>(allPlayers.Where(p => p.IsBatter != rosteredPlayer.Positions.Contains("P")));
                         if (allPlayers.Count != 1)
                         {
-                            errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Too many players with that name in the league data!" });
+                            errors.Add(new ImportResult() { Player = rosteredPlayer.Name, MLBTeam = rosteredPlayer.MLBTeamName, Positions = rosteredPlayer.Positions, FantasyTeam = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Too many players with that name in the league data!" });
                             continue;
                         }
                     }
@@ -393,12 +393,12 @@ namespace FantasyAuctionUI
                         }
                         else if (player.FantasyTeam.ToLowerInvariant() != teamName.ToLowerInvariant() || player.AuctionPrice != rosteredPlayer.Price)
                         {
-                            errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Player data isn't right!" });
+                            errors.Add(new ImportResult() { Player = rosteredPlayer.Name, MLBTeam = rosteredPlayer.MLBTeamName, Positions = rosteredPlayer.Positions, FantasyTeam = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Player data isn't right!" });
                         }
                     }
                     else
                     {
-                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "No player with that name in the league data!" });
+                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, MLBTeam = rosteredPlayer.MLBTeamName, Positions = rosteredPlayer.Positions, FantasyTeam = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "No player with that name in the league data!" });
                     }
                 }
             }

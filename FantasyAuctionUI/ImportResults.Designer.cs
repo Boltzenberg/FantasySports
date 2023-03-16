@@ -34,6 +34,8 @@ namespace FantasyAuctionUI
             this.chTeam = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chError = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chPositions = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chMLBTeam = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvResults
@@ -43,14 +45,17 @@ namespace FantasyAuctionUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chName,
+            this.chMLBTeam,
+            this.chPositions,
             this.chTeam,
             this.chCost,
             this.chError});
             this.lvResults.GridLines = true;
             this.lvResults.HideSelection = false;
-            this.lvResults.Location = new System.Drawing.Point(12, 12);
+            this.lvResults.Location = new System.Drawing.Point(22, 22);
+            this.lvResults.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.lvResults.Name = "lvResults";
-            this.lvResults.Size = new System.Drawing.Size(905, 426);
+            this.lvResults.Size = new System.Drawing.Size(2084, 783);
             this.lvResults.TabIndex = 0;
             this.lvResults.UseCompatibleStateImageBehavior = false;
             this.lvResults.View = System.Windows.Forms.View.Details;
@@ -75,12 +80,23 @@ namespace FantasyAuctionUI
             this.chError.Text = "Error";
             this.chError.Width = 400;
             // 
+            // chPositions
+            // 
+            this.chPositions.Text = "Positions";
+            this.chPositions.Width = 150;
+            // 
+            // chMLBTeam
+            // 
+            this.chMLBTeam.Text = "MLB Team";
+            this.chMLBTeam.Width = 125;
+            // 
             // ImportResults
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(929, 450);
+            this.ClientSize = new System.Drawing.Size(2131, 831);
             this.Controls.Add(this.lvResults);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "ImportResults";
             this.Text = "Import Results";
             this.ResumeLayout(false);
@@ -94,5 +110,7 @@ namespace FantasyAuctionUI
         private System.Windows.Forms.ColumnHeader chTeam;
         private System.Windows.Forms.ColumnHeader chCost;
         private System.Windows.Forms.ColumnHeader chError;
+        private System.Windows.Forms.ColumnHeader chMLBTeam;
+        private System.Windows.Forms.ColumnHeader chPositions;
     }
 }
