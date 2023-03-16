@@ -67,7 +67,7 @@ namespace ESPNProjections
             public string Host { get { return "fantasy.espn.com"; } }
             public string Pitchers { get { return "13,14,15"; } }
             public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
-            public int PlayerCount { get { return 300; } }
+            public int PlayerCount { get { return 500; } }
             public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterStatsForExternalIds\":{{\"value\":[2023]}},\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForSourceIds\":{{\"value\":[0,1]}},\"useFullProjectionTable\":{{\"value\":true}},\"sortAppliedStatTotal\":{{\"sortAsc\":false,\"sortPriority\":3,\"value\":\"102023\"}},\"sortDraftRanks\":{{\"sortPriority\":2,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortPriority\":4,\"sortAsc\":false}},\"limit\":{1},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002023\",\"102023\",\"012023\",\"022023\",\"032023\",\"042023\",\"062023\",\"010002023\"]}}}}}}"; } }
             public string BatterCacheFile { get { return @"2023ESPNBatters.json"; } }
             public string PitcherCacheFile { get { return @"2023ESPNPitchers.json"; } }

@@ -364,8 +364,13 @@ namespace FantasyAuctionUI
 
                     if (allPlayers.Count > 1)
                     {
-                        errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Too many players with that name in the league data!" });
-                        continue;
+                        // Disambiguate by batter or pitcher
+                        allPlayers = new List<IPlayer>(allPlayers.Where(p => p.IsBatter != rosteredPlayer.Positions.Contains("P")));
+                        if (allPlayers.Count != 1)
+                        {
+                            errors.Add(new ImportResult() { Player = rosteredPlayer.Name, Team = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "Too many players with that name in the league data!" });
+                            continue;
+                        }
                     }
 
                     IPlayer player = allPlayers[0];
@@ -375,6 +380,16 @@ namespace FantasyAuctionUI
                         {
                             player.FantasyTeam = teamName;
                             player.AuctionPrice = rosteredPlayer.Price;
+
+                            if (player.Name == "Shohei Ohtani")
+                            {
+                                IPlayer otherOhtani = this.league.AllPlayers.Where(p => p.Name == player.Name && p != player).FirstOrDefault();
+                                if (otherOhtani != null)
+                                {
+                                    otherOhtani.FantasyTeam = teamName;
+                                    otherOhtani.AuctionPrice = 0;
+                                }
+                            }
                         }
                         else if (player.FantasyTeam.ToLowerInvariant() != teamName.ToLowerInvariant() || player.AuctionPrice != rosteredPlayer.Price)
                         {

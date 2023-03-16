@@ -11,10 +11,19 @@ namespace NirSiteLib.DataModel
 
         public RosteredPlayer(string name, string mlbTeamName, string positions, float price)
         {
-            this.Name = name;
+            this.Name = FixName(name);
             this.MLBTeamName = mlbTeamName;
             this.Positions = new List<string>(positions.Split(','));
             this.Price = price;
+        }
+
+        private static string FixName(string name)
+        {
+            switch (name)
+            {
+                case "Shohei Ohtani (Pitcher)": return "Shohei Ohtani";
+                default: return name;
+            }
         }
     }
 }
