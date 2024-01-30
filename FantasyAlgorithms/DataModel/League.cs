@@ -14,6 +14,7 @@ namespace FantasyAlgorithms.DataModel
         Rounders2021,
         Rounders2022,
         Rounders2023,
+        Rounders2024,
     }
 
     public class LeagueConstants
@@ -39,6 +40,7 @@ namespace FantasyAlgorithms.DataModel
                 case Leagues.Rounders2021: return Rounders2021;
                 case Leagues.Rounders2022: return Rounders2022;
                 case Leagues.Rounders2023: return Rounders2023;
+                case Leagues.Rounders2024: return Rounders2024;
                 default: return null;
             }
         }
@@ -317,13 +319,58 @@ namespace FantasyAlgorithms.DataModel
                 return _rounders2023;
             }
         }
+
+        private static LeagueConstants _rounders2024 = null;
+        public static LeagueConstants Rounders2024
+        {
+            get
+            {
+                if (_rounders2024 == null)
+                {
+                    _rounders2024 = new LeagueConstants();
+                    _rounders2024.TeamCount = 10;
+                    _rounders2024.RosterableBatterCountPerTeam = 15;
+                    _rounders2024.RosterablePitcherCountPerTeam = 13;
+                    _rounders2024.BattingScoringStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
+                        new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
+                        new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
+                        new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide)
+                    };
+                    _rounders2024.PitchingScoringStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("Quality Starts", true, Extractors.ExtractPitcherQualityStarts),
+                        new CountingStatExtractor("Saves + Holds", true, Extractors.ExtractPitcherSavesPlusHolds),
+                        new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
+                        new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
+                        new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
+                    };
+                    _rounders2024.ScoringStatExtractors = _rounders2024.BattingScoringStatExtractors.Union(_rounders2024.PitchingScoringStatExtractors).ToList();
+                    _rounders2024.BattingSupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
+                        new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
+                    };
+                    _rounders2024.PitchingSupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide),
+                    };
+                    _rounders2024.SupportingStatExtractors = _rounders2024.BattingSupportingStatExtractors.Union(_rounders2024.PitchingSupportingStatExtractors).ToList();
+                    _rounders2024.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2023;
+                }
+
+                return _rounders2024;
+            }
+        }
     }
 
     public class League
     {
+        public Team[] Teams;
         public Batter[] Batters;
         public Pitcher[] Pitchers;
-        public Team[] Teams;
         public Leagues FantasyLeague;
 
         public static League Create(Leagues fantasyLeague)

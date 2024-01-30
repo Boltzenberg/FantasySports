@@ -186,11 +186,14 @@ namespace FantasyAuctionUI
             this.fileName = fileName;
             this.league = League.Load(fileName);
             this.SetPlayerList(this.league.AllPlayers);
-            List<string> teams = new List<string>(this.league.Teams.Select(t => t.Name));
-            teams.Sort();
-            teams.Insert(0, string.Empty);
-            this.cbFantasyTeam.Items.Clear();
-            this.cbFantasyTeam.Items.AddRange(teams.ToArray());
+            if (this.league.Teams != null)
+            {
+                List<string> teams = new List<string>(this.league.Teams.Select(t => t.Name));
+                teams.Sort();
+                teams.Insert(0, string.Empty);
+                this.cbFantasyTeam.Items.Clear();
+                this.cbFantasyTeam.Items.AddRange(teams.ToArray());
+            }
             this.Text = "Fantasy Auction - " + Path.GetFileNameWithoutExtension(this.fileName);
         }
 

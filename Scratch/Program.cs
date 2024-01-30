@@ -40,8 +40,8 @@ namespace Scratch
 
         static void Main(string[] args)
         {
-            SetESPN2020ProjectionsInRoot();
-            //LoadESPNProjections();
+            //SetESPN2020ProjectionsInRoot();
+            LoadESPNProjections();
             //UpdateTeams();
             //YahooStuff();
             //Percentiles();
