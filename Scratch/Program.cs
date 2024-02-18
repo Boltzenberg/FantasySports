@@ -128,14 +128,16 @@ namespace Scratch
             FantasyAlgorithms.DataModel.LeagueConstants constants = FantasyAlgorithms.DataModel.LeagueConstants.For(league.FantasyLeague);
             foreach (FantasyAlgorithms.IStatExtractor extractor in  constants.ScoringStatExtractors)
             {
-                FantasyAlgorithms.PlayerGroupAnalysis analysis = analyzer.Analyze("Entire League, selecting Aaron Judge", extractor, league.AllPlayers, league.AllPlayers.FirstOrDefault(p => p.Name.Contains("Judge")));
-                byte[] img;
-                using (MemoryStream stm = new MemoryStream())
+                using (FantasyAlgorithms.PlayerGroupAnalysis analysis = analyzer.Analyze("Entire League, selecting Aaron Judge", extractor, league.AllPlayers, league.AllPlayers.FirstOrDefault(p => p.Name.Contains("Judge"))))
                 {
-                    analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    img = stm.ToArray();
+                    byte[] img;
+                    using (MemoryStream stm = new MemoryStream())
+                    {
+                        analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        img = stm.ToArray();
+                    }
+                    sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.DataPoints}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
                 }
-                sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.DataPoints}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
             }
             sb.AppendLine("</TABLE></BODY></HTML>");
             System.IO.File.WriteAllText("C:\\users\\jon\\desktop\\analysis.html", sb.ToString());

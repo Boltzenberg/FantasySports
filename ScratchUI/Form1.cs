@@ -24,7 +24,7 @@ namespace ScratchUI
 
         private void OnLoad(object sender, EventArgs e)
         {
-            //System.Diagnostics.Process.Start(YahooFantasySports.Services.AuthManager.GetAuthUrl().AbsoluteUri);
+            System.Diagnostics.Process.Start(YahooFantasySports.Services.AuthManager.GetAuthUrl().AbsoluteUri);
         }
 
         private async void button2_Click(object sender, EventArgs e)
@@ -41,7 +41,7 @@ namespace ScratchUI
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(YahooFantasySports.UrlGen.LeagueUrl(YahooFantasySports.Constants.Leagues.Rounders2019));
+            this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(YahooFantasySports.UrlGen.LeagueUrl(YahooFantasySports.Constants.Leagues.Rounders2024));
         }
 
         private string GetPositionList(YahooFantasySports.DataModel.Player player)

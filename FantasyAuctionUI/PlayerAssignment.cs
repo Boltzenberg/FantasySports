@@ -115,20 +115,41 @@ namespace FantasyAuctionUI
             int count = 0;
             foreach (IStatExtractor extractor in extractors)
             {
-                PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, players, player, p => p == player ? Brushes.Yellow : !string.IsNullOrEmpty(p.FantasyTeam) ? Brushes.Blue : Brushes.Violet);
-                byte[] img;
-                using (MemoryStream stm = new MemoryStream())
+                using (PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, players, player, p => p == player ? Brushes.Yellow : !string.IsNullOrEmpty(p.FantasyTeam) ? Brushes.Blue : Brushes.Violet))
                 {
-                    analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    img = stm.ToArray();
+                    byte[] img;
+                    using (MemoryStream stm = new MemoryStream())
+                    {
+                        analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        img = stm.ToArray();
+                    }
+                    sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.PlayerStatValue}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
+                    percentileSum += analysis.PlayerPercentile;
+                    count++;
                 }
-                sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.PlayerStatValue}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
-                percentileSum += analysis.PlayerPercentile;
-                count++;
             }
             sb.AppendLine("</TABLE>");
 
             return string.Format("<H1>{0} (Average Percentile: {1})</H1>{2}", tableTitle, percentileSum / count, sb.ToString());
+        }
+
+        private string GetPlayerHTML(IPlayer newCurrentPlayer)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<HTML><BODY><H1>Player Info</H1>");
+            sb.Append(newCurrentPlayer.GetHTML());
+            sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers, "Player analysis vs all players"));
+            foreach (Position position in newCurrentPlayer.Positions)
+            {
+                IEnumerable<IPlayer> positionPlayers = this.league.AllPlayers.Where(p => p.Positions.Contains(position));
+                if (position == Position.P)
+                {
+                    positionPlayers = this.league.Pitchers.Where(p => p.IsSP == ((Pitcher)newCurrentPlayer).IsSP);
+                }
+                sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, positionPlayers, string.Format("Player analysis vs all {0}", position)));
+            }
+            sb.Append("</BODY></HTML>");
+            return sb.ToString();
         }
 
         private void UpdateCurrentPlayer(IPlayer newCurrentPlayer)
@@ -140,22 +161,7 @@ namespace FantasyAuctionUI
                 this.tbFantasyTeam.Text = newCurrentPlayer.FantasyTeam;
                 this.cbFantasyTeam.SelectedItem = newCurrentPlayer.FantasyTeam;
                 this.tbAssumedFantasyTeam.Text = newCurrentPlayer.AssumedFantasyTeam;
-
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<HTML><BODY><H1>Player Info</H1>");
-                sb.Append(newCurrentPlayer.GetHTML());
-                sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, this.league.AllPlayers, "Player analysis vs all players"));
-                foreach (Position position in newCurrentPlayer.Positions)
-                {
-                    IEnumerable<IPlayer> positionPlayers = this.league.AllPlayers.Where(p => p.Positions.Contains(position));
-                    if (position == Position.P)
-                    {
-                        positionPlayers = this.league.Pitchers.Where(p => p.IsSP == ((Pitcher)newCurrentPlayer).IsSP);
-                    }
-                    sb.Append(this.GetPlayerAnalysisTable(newCurrentPlayer, positionPlayers, string.Format("Player analysis vs all {0}", position)));
-                }
-                sb.Append("</BODY></HTML>");
-                this.wbOut.DocumentText = sb.ToString();
+                this.wbOut.DocumentText = this.GetPlayerHTML(newCurrentPlayer);
             }
             this.currentPlayer = newCurrentPlayer;
         }
@@ -442,6 +448,35 @@ namespace FantasyAuctionUI
                 players.AddRange(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(bidItem.PlayerName)));
             }
             this.SetPlayerList(players);
+        }
+
+        private void OnExportWebUI(object sender, EventArgs e)
+        {
+            this.folderPicker.ShowNewFolderButton = true;
+            if (this.folderPicker.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string folder = this.folderPicker.SelectedPath;
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            StringBuilder sbIndex = new StringBuilder();
+            sbIndex.AppendFormat("<HTML><HEAD><TITLE>Fantasy Baseball info for {0} generated at {1}</TITLE></HEAD><BODY>", this.league.FantasyLeague, DateTime.Now.ToString("yyyy-MM-dd"));
+            sbIndex.AppendLine("<H1>Player List</H1><OL>");
+
+            foreach (IPlayer player in this.league.AllPlayers)
+            {
+                sbIndex.AppendFormat("<LI><a href=\"{0}.html\">{1}</a></LI>", player.ESPNId, player.Name);
+                File.WriteAllText(Path.Combine(folder, player.ESPNId + ".html"), this.GetPlayerHTML(player));
+            }
+
+            sbIndex.AppendLine("</OL></BODY></HTML>");
+            File.WriteAllText(Path.Combine(folder, "index.html"), sbIndex.ToString());
+            System.Diagnostics.Process.Start(Path.Combine(folder, "index.html"));
         }
     }
 }

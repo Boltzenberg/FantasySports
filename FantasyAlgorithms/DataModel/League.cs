@@ -358,7 +358,7 @@ namespace FantasyAlgorithms.DataModel
                         new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide),
                     };
                     _rounders2024.SupportingStatExtractors = _rounders2024.BattingSupportingStatExtractors.Union(_rounders2024.PitchingSupportingStatExtractors).ToList();
-                    _rounders2024.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2023;
+                    _rounders2024.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2024;
                 }
 
                 return _rounders2024;

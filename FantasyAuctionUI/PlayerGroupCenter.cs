@@ -65,14 +65,16 @@ namespace FantasyAuctionUI
             sb.Append("</H1><TABLE BORDER=1><TR><TD>Stat Name</TD><TD>Player's Stat Value</TD><TD>Max Value</TD><TD>Min Value</TD><TD>Graph</TD><TD>Player Percentile</TD></TR>");
             foreach (IStatExtractor extractor in extractors)
             {
-                PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, this.allPlayers, this.currentPlayer);
-                byte[] img;
-                using (MemoryStream stm = new MemoryStream())
+                using (PlayerGroupAnalysis analysis = analyzer.Analyze(this.Text, extractor, this.allPlayers, this.currentPlayer))
                 {
-                    analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
-                    img = stm.ToArray();
+                    byte[] img;
+                    using (MemoryStream stm = new MemoryStream())
+                    {
+                        analysis.Graph.Save(stm, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        img = stm.ToArray();
+                    }
+                    sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.PlayerStatValue}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
                 }
-                sb.AppendLine($"<TR><TD>{analysis.Stat}</TD><TD>{analysis.PlayerStatValue}</TD><TD>{analysis.MaxStatValue}</TD><TD>{analysis.MinStatValue}</TD><TD><img src=\"data:image/jpg;base64,{Convert.ToBase64String(img)}\"/></TD><TD>{analysis.PlayerPercentile}</TD></TR>");
             }
             sb.AppendLine("</TABLE></BODY></HTML>");
             this.wbOut.DocumentText = sb.ToString();

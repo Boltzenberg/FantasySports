@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FantasyAlgorithms
 {
-    public class PlayerGroupAnalysis
+    public class PlayerGroupAnalysis : IDisposable
     {
         public string GroupDescription { get; private set; }
 
@@ -39,6 +39,15 @@ namespace FantasyAlgorithms
             this.SelectedPlayer = selectedPlayer;
             this.PlayerStatValue = playerStatValue;
             this.PlayerPercentile = playerPercentile;
+        }
+
+        public void Dispose()
+        {
+            if (this.Graph != null)
+            {
+                this.Graph.Dispose();
+                this.Graph = null;
+            }
         }
     }
 }
