@@ -12,8 +12,8 @@ namespace NirSiteLib
 {
     public class NirDriver : IDisposable
     {
-        private const string HOMEPAGE = "http://fantasybaseball.westus.cloudapp.azure.com/";
-        private const string BIDITEMS = "http://fantasybaseball.westus.cloudapp.azure.com/BidItems.aspx";
+        private const string HOMEPAGE = "http://www.fantasybaseballdraft.top/";
+        private const string BIDITEMS = "http://www.fantasybaseballdraft.top/BidItems.aspx";
 
         private IWebDriver driver;
 
