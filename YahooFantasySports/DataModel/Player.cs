@@ -13,6 +13,7 @@ namespace YahooFantasySports.DataModel
         public bool IsBatter { get; }
         public string FirstName { get; }
         public string LastName { get; }
+        public string TeamAbbreviation { get; }
         public string Name { get { return FirstName + " " + LastName; } }
         public string Status { get; }
         public List<string> Positions { get; }
@@ -54,6 +55,7 @@ namespace YahooFantasySports.DataModel
             string status = nsmgr.GetValue(node, "status");
             string firstName = nsmgr.GetValue(node, "name", "ascii_first");
             string lastName = nsmgr.GetValue(node, "name", "ascii_last");
+            string teamAbbreviation = nsmgr.GetValue(node, "editorial_team_abbr");
 
             List<string> positions = new List<string>();
             XmlNode eligiblePositions = node["eligible_positions"];
@@ -77,16 +79,17 @@ namespace YahooFantasySports.DataModel
                 }
             }
 
-            return new Player(playerKey, playerId, positionType == "B", firstName, lastName, status, positions, stats);
+            return new Player(playerKey, playerId, positionType == "B", firstName, lastName, teamAbbreviation, status, positions, stats);
         }
 
-        private Player(string key, string id, bool isBatter, string firstName, string lastName, string status, List<string> positions, IReadOnlyDictionary<int, string> stats)
+        private Player(string key, string id, bool isBatter, string firstName, string lastName, string teamAbbreviation, string status, List<string> positions, IReadOnlyDictionary<int, string> stats)
         {
             this.Key = key;
             this.Id = id;
             this.IsBatter = isBatter;
             this.FirstName = firstName;
             this.LastName = lastName;
+            this.TeamAbbreviation = teamAbbreviation;
             this.Status = string.IsNullOrEmpty(status) ? "OK" : status;
             this.Positions = positions;
             this.Stats = stats;
@@ -101,6 +104,11 @@ namespace YahooFantasySports.DataModel
             }
 
             this.StatValues = statValues;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} ({2} - {3})", this.FirstName, this.LastName, this.TeamAbbreviation, string.Join(", ", this.Positions));
         }
     }
 }

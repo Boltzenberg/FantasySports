@@ -67,7 +67,7 @@ namespace NirSiteLib
                     int.Parse(timeRemainingStrs[3].Substring(0, timeRemainingStrs[3].Length - 1)));
                 string topper = cells[10].Text;
                 string yahooUrl = cells[11].FindElement(By.TagName("a")).GetAttribute("href");
-                int yahooId = int.Parse(yahooUrl.Substring(yahooUrl.LastIndexOf("/") + 1));
+                string yahooId = yahooUrl.Substring(yahooUrl.LastIndexOf("/") + 1);
                 items.Add(new BidItem(name, mlbTeam, rank, preseasonRank, positions, highestBidder, currentBid, oldPrice, timeRemaining, topper, yahooId));
             }
 
@@ -110,6 +110,8 @@ namespace NirSiteLib
                     {
                         IWebElement nameLink = cells[c].FindElement(By.TagName("a"));
                         string name = nameLink.Text.Trim();
+                        string yahooLink = nameLink.GetAttribute("href");
+                        string yahooId = yahooLink.Substring(yahooLink.LastIndexOf("/") + 1);
                         // (HOU - OF): $24.69
                         string rest = cells[c].Text;
                         int openParen = rest.LastIndexOf('(');
@@ -120,7 +122,7 @@ namespace NirSiteLib
                         string positions = rest.Substring(spaceBeforePositions + 1, closeParen - spaceBeforePositions - 1);
                         string priceStr = rest.Substring(rest.IndexOf('$') + 1).Trim();
                         float price = float.Parse(priceStr);
-                        results[colToTeamName[c]].Add(new RosteredPlayer(name, mlbTeamName, positions, price));
+                        results[colToTeamName[c]].Add(new RosteredPlayer(name, yahooId, mlbTeamName, positions, price));
                     }
                 }
             }

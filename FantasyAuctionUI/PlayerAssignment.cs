@@ -229,7 +229,9 @@ namespace FantasyAuctionUI
 
             if (!string.IsNullOrEmpty(this.yahooAuthToken))
             {
-                await this.league.UpdateYahooData();
+                List<YahooFantasySports.DataModel.Player> unmatchedYahooPlayers = await this.league.UpdateYahooData();
+                List<IPlayer> espnPlayersWithoutYahooIds = new List<IPlayer>(this.league.AllPlayers.Where(p => string.IsNullOrEmpty(p.YahooId)));
+                new PlayerMatcher(espnPlayersWithoutYahooIds, unmatchedYahooPlayers).Show();
             }
         }
 
@@ -333,6 +335,22 @@ namespace FantasyAuctionUI
             return p.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ñ', 'n').Replace('ó', 'o').Replace('ú', 'u');
         }
 
+        private bool MatchPlayer(IPlayer player1, RosteredPlayer player2)
+        {
+            if (!string.IsNullOrEmpty(player1.YahooId) &&
+                player1.YahooId == player2.YahooId)
+            {
+                return true;
+            }
+
+            if (SanitizePlayerName(player1.Name) == SanitizePlayerName(player2.Name))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private void OnImportFromNirSite(object sender, EventArgs e)
         {
             if (this.driver == null)
@@ -364,7 +382,7 @@ namespace FantasyAuctionUI
             {
                 foreach (RosteredPlayer rosteredPlayer in rosters[teamName])
                 {
-                    List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(rosteredPlayer.Name)));
+                    List<IPlayer> allPlayers = new List<IPlayer>(this.league.AllPlayers.Where(p => MatchPlayer(p, rosteredPlayer)));
                     if (allPlayers.Count == 0)
                     {
                         errors.Add(new ImportResult() { Player = rosteredPlayer.Name, MLBTeam = rosteredPlayer.MLBTeamName, Positions = rosteredPlayer.Positions, FantasyTeam = teamName, Cost = rosteredPlayer.Price.ToString(), Error = "No player with that name in the league data!" });
@@ -434,6 +452,22 @@ namespace FantasyAuctionUI
             this.SetPlayerList(this.league.AllPlayers);
         }
 
+        private bool MatchPlayer(IPlayer player1, BidItem player2)
+        {
+            if (!string.IsNullOrEmpty(player1.YahooId) &&
+                player1.YahooId == player2.YahooId)
+            {
+                return true;
+            }
+
+            if (SanitizePlayerName(player1.Name) == SanitizePlayerName(player2.PlayerName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private void OnFilterToAuctionEndingPlayers(object sender, EventArgs e)
         {
             List<IPlayer> players = new List<IPlayer>();
@@ -445,8 +479,17 @@ namespace FantasyAuctionUI
             List<BidItem> bidItems = this.driver.GetPlayersUpForAuction();
             foreach (BidItem bidItem in bidItems)
             {
-                players.AddRange(this.league.AllPlayers.Where(p => SanitizePlayerName(p.Name) == SanitizePlayerName(bidItem.PlayerName)));
+                IPlayer player = this.league.AllPlayers.FirstOrDefault(p => MatchPlayer(p, bidItem));
+                if (player != null)
+                {
+                    players.Add(player);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to find player " + bidItem.PlayerName + " in the player list!", bidItem.PlayerName);
+                }
             }
+
             this.SetPlayerList(players);
         }
 

@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Directories.cs" />
     <Compile Include="ESPNAPI.cs" />
     <Compile Include="ESPNPlayerData.cs" />
     <Compile Include="IPlayer.cs" />

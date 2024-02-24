@@ -74,6 +74,12 @@
     <Compile Include="PlayerGroupCenter.Designer.cs">
       <DependentUpon>PlayerGroupCenter.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlayerMatcher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayerMatcher.Designer.cs">
+      <DependentUpon>PlayerMatcher.cs</DependentUpon>
+    </Compile>
     <Compile Include="Prompt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     <EmbeddedResource Include="PlayerGroupCenter.resx">
       <DependentUpon>PlayerGroupCenter.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PlayerMatcher.resx">
+      <DependentUpon>PlayerMatcher.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Prompt.resx">
       <DependentUpon>Prompt.cs</DependentUpon>
     </EmbeddedResource>
@@ -200,6 +209,10 @@
     <ProjectReference Include="..\ConfigLib\ConfigLib.csproj">
       <Project>{273d11cc-0955-4f78-88ca-dbd1587fd442}</Project>
       <Name>ConfigLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESPNProjections\ESPNProjections.csproj">
+      <Project>{1dd560c2-66ec-45c5-8dbe-10e571344c95}</Project>
+      <Name>ESPNProjections</Name>
     </ProjectReference>
     <ProjectReference Include="..\FantasyAlgorithms\FantasyAlgorithms.csproj">
       <Project>{8F7DFF1B-1D1C-4FD1-912E-22A7ECEF5414}</Project>

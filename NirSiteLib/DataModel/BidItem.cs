@@ -18,9 +18,9 @@ namespace NirSiteLib.DataModel
         public float OldPrice { get; private set; }
         public TimeSpan TimeLeft { get; private set; }
         public string PossibleTopper { get; private set; }
-        public int YahooId { get; private set; }
+        public string YahooId { get; private set; }
 
-        public BidItem(string playerName, string mLBTeam, int rank, int preseasonRank, string positions, string highestBiddingTeam, float currentBidPrice, float oldPrice, TimeSpan timeLeft, string possibleTopper, int yahooId)
+        public BidItem(string playerName, string mLBTeam, int rank, int preseasonRank, string positions, string highestBiddingTeam, float currentBidPrice, float oldPrice, TimeSpan timeLeft, string possibleTopper, string yahooId)
         {
             this.PlayerName = playerName;
             this.MLBTeam = mLBTeam;

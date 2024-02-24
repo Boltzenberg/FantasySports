@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -443,8 +444,9 @@ namespace FantasyAlgorithms.DataModel
             }
         }
 
-        public async Task UpdateYahooData()
+        public async Task<List<YahooFantasySports.DataModel.Player>> UpdateYahooData()
         {
+            List<YahooFantasySports.DataModel.Player> unmatchedYahooPlayers = new List<YahooFantasySports.DataModel.Player>();
             foreach (YahooFantasySports.DataModel.Player yPlayer in await YahooFantasySports.DataModel.Player.GetAllPlayers(LeagueConstants.For(this.FantasyLeague).YahooLeagueId))
             {
                 IPlayer player = this.AllPlayers.FirstOrDefault(p => p.YahooId == yPlayer.Id);
@@ -458,6 +460,7 @@ namespace FantasyAlgorithms.DataModel
                     if (sameName.Count == 0)
                     {
                         System.Diagnostics.Debug.WriteLine(string.Format("Couldn't find player with name '{0}'", yPlayer.Name));
+                        unmatchedYahooPlayers.Add(yPlayer);
                         continue;
                     }
                     if (sameName.Count == 1)
@@ -474,10 +477,13 @@ namespace FantasyAlgorithms.DataModel
                         else
                         {
                             System.Diagnostics.Debug.WriteLine(string.Format("Couldn't match player {0}", yPlayer.Name));
+                            unmatchedYahooPlayers.Add(yPlayer);
                         }
                     }
                 }
             }
+
+            return unmatchedYahooPlayers;
         }
 
         public League Clone()

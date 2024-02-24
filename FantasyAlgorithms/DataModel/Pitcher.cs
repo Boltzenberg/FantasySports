@@ -135,6 +135,12 @@ namespace FantasyAlgorithms.DataModel
             this.Status = player.Status;
         }
 
+        public void ClearYahooData()
+        {
+            this.YahooId = null;
+            this.Status = null;
+        }
+
         public static Pitcher[] Load(string serialized)
         {
             return JsonConvert.DeserializeObject<Pitcher[]>(serialized);

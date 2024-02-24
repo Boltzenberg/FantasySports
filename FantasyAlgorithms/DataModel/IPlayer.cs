@@ -18,5 +18,6 @@ namespace FantasyAlgorithms.DataModel
 
         void Update(ESPNProjections.IPlayer batter);
         void Update(YahooFantasySports.DataModel.Player player);
+        void ClearYahooData();
     }
 }

@@ -146,6 +146,12 @@ namespace FantasyAlgorithms.DataModel
             this.IsOF |= player.Positions.Contains(YahooFantasySports.Constants.Positions.Outfield);
         }
 
+        public void ClearYahooData()
+        {
+            this.YahooId = null;
+            this.Status = null;
+        }
+
         public static Batter[] Load(string serialized)
         {
             return JsonConvert.DeserializeObject<Batter[]>(serialized);
