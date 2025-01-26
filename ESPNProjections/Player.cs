@@ -37,6 +37,8 @@ namespace ESPNProjections
                         p.Id = int.Parse((string)player["player"]["id"]);
                         p.Rank = TryGetValue(player, "player", "draftRanksByRankType", "STANDARD", "rank");
                         p.SeasonOutlook = (string)player["player"]["seasonOutlook"];
+                        p.TotalRanking = TryGetValue(player, "ratings", "0", "totalRanking");
+                        p.TotalRating = TryGetValue(player, "ratings", "0", "totalRating");   
                         p.Positions = new List<int>(((JArray)player["player"]["eligibleSlots"]).Select(s => (int)s).ToArray());
                         p.Stats = new Dictionary<string, string>();
                         p.IsBatter = playerSet.Item2;
@@ -88,6 +90,8 @@ namespace ESPNProjections
         public Dictionary<string, string> Stats { get; private set; }
         public string SeasonOutlook { get; private set; }
         public bool IsBatter { get; private set; }
+        public string TotalRanking { get; private set; }
+        public string TotalRating { get; private set; }
 
         private Player()
         { }

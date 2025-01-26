@@ -81,13 +81,27 @@ namespace ESPNProjections
             public string Pitchers { get { return "13,14,15"; } }
             public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
             public int PlayerCount { get { return 500; } }
-            public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForExternalIds\":{{\"value\":[2024]}},\"filterStatsForSourceIds\":{{\"value\":[0,1]}},\"useFullProjectionTable\":{{\"value\":true}},\"sortAppliedStatTotal\":{{\"sortAsc\":false,\"sortPriority\":3,\"value\":\"102024\"}},\"sortDraftRanks\":{{\"sortPriority\":2,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortAsc\":false,\"sortPriority\":4}},\"limit\":{1},\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterRanksForRankTypes\":{{\"value\":[\"STANDARD\"]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002024\",\"102024\",\"002023\",\"012024\",\"022024\",\"032024\",\"042024\",\"062024\",\"010002024\"]}}}}}}";  } }
+            public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForExternalIds\":{{\"value\":[2024]}},\"filterStatsForSourceIds\":{{\"value\":[0,1]}},\"useFullProjectionTable\":{{\"value\":true}},\"sortAppliedStatTotal\":{{\"sortAsc\":false,\"sortPriority\":3,\"value\":\"102024\"}},\"sortDraftRanks\":{{\"sortPriority\":2,\"sortAsc\":true,\"value\":\"STANDARD\"}},\"sortPercOwned\":{{\"sortAsc\":false,\"sortPriority\":4}},\"limit\":{1},\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterRanksForRankTypes\":{{\"value\":[\"STANDARD\"]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002024\",\"102024\",\"002023\",\"012024\",\"022024\",\"032024\",\"042024\",\"062024\",\"010002024\"]}}}}}}"; } }
             public string BatterCacheFile { get { return @"2024ESPNBatters.json"; } }
             public string PitcherCacheFile { get { return @"2024ESPNPitchers.json"; } }
             public string PictureUrlFormatString { get { return "https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/{0}.png&h=120&w=120&scale=crop"; } }
         }
 
-        private static readonly IConstants Constants = new Constants2024();
+
+        private class Constants2025 : IConstants
+        {
+            public string Url { get { return "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/2025/segments/0/leaguedefaults/1?view=kona_player_info"; } }
+            public string Host { get { return "lm-api-reads.fantasy.espn.com"; } }
+            public string Pitchers { get { return "13,14,15"; } }
+            public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
+            public int PlayerCount { get { return 500; } }
+            public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForExternalIds\":{{\"value\":[2025]}},\"filterStatsForSourceIds\":{{\"value\":[0,1]}},\"useFullProjectionTable\":{{\"value\":true}},\"sortAppliedStatTotal\":{{\"sortAsc\":false,\"sortPriority\":3,\"value\":\"102025\"}},\"sortDraftRanks\":{{\"sortPriority\":2,\"sortAsc\":true,\"value\":\"ROTO\"}},\"sortPercOwned\":{{\"sortAsc\":false,\"sortPriority\":4}},\"limit\":{1},\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002025\",\"102025\",\"002024\",\"012025\",\"022025\",\"032025\",\"042025\",\"062025\",\"010002025\"]}}}}}}"; } }
+            public string BatterCacheFile { get { return @"2025ESPNBatters.json"; } }
+            public string PitcherCacheFile { get { return @"2025ESPNPitchers.json"; } }
+            public string PictureUrlFormatString { get { return "https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/{0}.png&h=120&w=120&scale=crop"; } }
+        }
+
+        private static readonly IConstants Constants = new Constants2025();
 
         public static string GetPlayerImage(int playerId)
         {
@@ -116,7 +130,7 @@ namespace ESPNProjections
                     return string.Empty;
                 }
             }
-            catch (WebException wex)
+            catch (WebException)
             {
                 return string.Empty;
             }

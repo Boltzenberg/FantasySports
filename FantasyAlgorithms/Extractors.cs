@@ -4,6 +4,66 @@ namespace FantasyAlgorithms
 {
     public static class Extractors
     {
+        public static int? ExtractRank(IPlayer player)
+        {
+            string strRank = string.Empty;
+            Batter b = player as Batter;
+            if (b == null)
+            {
+                Pitcher p = player as Pitcher;
+                if (p == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    strRank = p.Rank;
+                }
+            }
+            else
+            {
+                strRank = b.Rank;
+            }
+
+            int rank;
+            if (!int.TryParse(strRank, out rank))
+            {
+                return null;
+            }
+
+            return rank;
+        }
+
+        public static int? ExtractTotalRanking(IPlayer player)
+        {
+            string strTotalRanking = string.Empty;
+            Batter b = player as Batter;
+            if (b == null)
+            {
+                Pitcher p = player as Pitcher;
+                if (p == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    strTotalRanking = p.TotalRanking;
+                }
+            }
+            else
+            {
+                strTotalRanking = b.TotalRanking;
+            }
+
+            int totalRanking;
+            if (!int.TryParse(strTotalRanking, out totalRanking))
+            {
+                return null;
+            }
+
+            return totalRanking;
+        }
+
         public static int? ExtractBatterRuns(IPlayer player)
         {
             Batter b = player as Batter;

@@ -10,6 +10,10 @@ namespace ESPNProjections
 
         string Rank { get; }
 
+        string TotalRanking { get; }
+
+        string TotalRating { get; }
+
         List<int> Positions { get; }
 
         Dictionary<string, string> Stats { get; }

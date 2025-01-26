@@ -37,6 +37,10 @@ namespace FantasyAlgorithms.DataModel
         public float ProjectedERA { get; set; }
         public float ProjectedWHIP { get; set; }
 
+        public string Rank { get; set; }
+        public string TotalRanking { get; set; }
+        public string TotalRating { get; set; }
+
         public override string ToString()
         {
             List<string> positions = new List<string>();
@@ -62,6 +66,9 @@ namespace FantasyAlgorithms.DataModel
             }
             sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
             sb.AppendFormat("<TR><TD>Yahoo ID</TD><TD>{0}</TD></TR>", this.YahooId);
+            sb.AppendFormat("<TR><TD>Rank</TD><TD>{0}</TD></TR>", this.Rank);
+            sb.AppendFormat("<TR><TD>Total Ranking</TD><TD>{0}</TD></TR>", this.TotalRanking);
+            sb.AppendFormat("<TR><TD>Total Rating</TD><TD>{0}</TD></TR>", this.TotalRating);
             sb.AppendFormat("<TR><TD>Is SP</TD><TD>{0}</TD></TR>", this.IsSP ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is RP</TD><TD>{0}</TD></TR>", this.IsRP ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Projected Innings Pitched</TD><TD>{0}</TD></TR>", this.ProjectedIP);
@@ -106,6 +113,9 @@ namespace FantasyAlgorithms.DataModel
         {
             this.Name = pitcher.FullName;
             this.ESPNId = pitcher.Id;
+            this.Rank = pitcher.Rank;
+            this.TotalRanking = pitcher.TotalRanking;
+            this.TotalRating = pitcher.TotalRating;
             this.IsSP = pitcher.Positions.Contains(ESPNProjections.ESPNConstants.Positions.SP);
             this.IsRP = pitcher.Positions.Contains(ESPNProjections.ESPNConstants.Positions.RP);
             this.ProjectedOutsRecorded = GetStat(pitcher.Stats[ESPNProjections.ESPNConstants.Stats.Pitchers.OutsRecorded], 0);

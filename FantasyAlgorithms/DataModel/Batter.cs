@@ -38,6 +38,10 @@ namespace FantasyAlgorithms.DataModel
         public bool IsBatter { get { return true; } }
         public string ProfilePicture { get; set; }
 
+        public string Rank { get; set; }
+        public string TotalRanking { get; set; }
+        public string TotalRating { get; set; }
+
         public override string ToString()
         {
             List<string> positions = new List<string>();
@@ -63,6 +67,9 @@ namespace FantasyAlgorithms.DataModel
             }
             sb.AppendFormat("<TR><TD>ESPN ID</TD><TD>{0}</TD></TR>", this.ESPNId);
             sb.AppendFormat("<TR><TD>Yahoo ID</TD><TD>{0}</TD></TR>", this.YahooId);
+            sb.AppendFormat("<TR><TD>Rank</TD><TD>{0}</TD></TR>", this.Rank);
+            sb.AppendFormat("<TR><TD>Total Ranking</TD><TD>{0}</TD></TR>", this.TotalRanking);
+            sb.AppendFormat("<TR><TD>Total Rating</TD><TD>{0}</TD></TR>", this.TotalRating);
             sb.AppendFormat("<TR><TD>Is C</TD><TD>{0}</TD></TR>", this.IsC ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is 1B</TD><TD>{0}</TD></TR>", this.Is1B ? "Yes" : "No");
             sb.AppendFormat("<TR><TD>Is 2B</TD><TD>{0}</TD></TR>", this.Is2B ? "Yes" : "No");
@@ -113,6 +120,9 @@ namespace FantasyAlgorithms.DataModel
         {
             this.Name = batter.FullName;
             this.ESPNId = batter.Id;
+            this.Rank = batter.Rank;
+            this.TotalRanking = batter.TotalRanking;
+            this.TotalRating = batter.TotalRating;
             this.IsC |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.C);
             this.Is1B |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.B1);
             this.Is2B |= batter.Positions.Contains(ESPNProjections.ESPNConstants.Positions.B2);
