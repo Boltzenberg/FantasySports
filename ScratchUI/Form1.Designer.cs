@@ -37,6 +37,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -93,7 +94,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(411, 18);
+            this.button3.Location = new System.Drawing.Point(578, 17);
             this.button3.Margin = new System.Windows.Forms.Padding(6);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(138, 42);
@@ -104,7 +105,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(559, 18);
+            this.button4.Location = new System.Drawing.Point(726, 17);
             this.button4.Margin = new System.Windows.Forms.Padding(6);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(138, 42);
@@ -115,7 +116,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(708, 18);
+            this.button5.Location = new System.Drawing.Point(875, 17);
             this.button5.Margin = new System.Windows.Forms.Padding(6);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(211, 42);
@@ -126,7 +127,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(931, 18);
+            this.button6.Location = new System.Drawing.Point(1098, 17);
             this.button6.Margin = new System.Windows.Forms.Padding(6);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(211, 42);
@@ -135,11 +136,23 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.OnLaunchNirSite);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(402, 17);
+            this.button7.Margin = new System.Windows.Forms.Padding(6);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(164, 42);
+            this.button7.TabIndex = 9;
+            this.button7.Text = "Get League ID";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.OnGetMyTeam);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1467, 831);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -169,6 +182,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
     }
 }
 

@@ -12,7 +12,7 @@ namespace NirSiteLib
 {
     public class NirDriver : IDisposable
     {
-        private const string HOMEPAGE = "http://www.fantasybaseballdraft.top/";
+        private const string HOMEPAGE = "http://www.fantasybaseballdraft.top/League.aspx";
         private const string BIDITEMS = "http://www.fantasybaseballdraft.top/BidItems.aspx";
 
         private IWebDriver driver;

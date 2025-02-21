@@ -39,6 +39,19 @@ namespace ScratchUI
             }
         }
 
+        private async void OnGetMyTeam(object sender, EventArgs e)
+        {
+            string myTeamUrl = "https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/games;game_keys=mlb/teams";
+            try
+            {
+                this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(new Uri(myTeamUrl));
+            }
+            catch (Exception ex)
+            {
+                this.wbOut.DocumentText = ex.ToString();
+            }
+        }
+
         private async void button3_Click(object sender, EventArgs e)
         {
             this.wbOut.DocumentText = await YahooFantasySports.Services.Http.GetRawDataAsync(YahooFantasySports.UrlGen.LeagueUrl(YahooFantasySports.Constants.Leagues.Rounders2024));
