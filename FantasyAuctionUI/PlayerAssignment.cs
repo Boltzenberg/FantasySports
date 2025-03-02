@@ -468,7 +468,7 @@ namespace FantasyAuctionUI
             return false;
         }
 
-        private void OnFilterToAuctionEndingPlayers(object sender, EventArgs e)
+        private void FilterToAuctionEndingPlayers(bool byTomorrow)
         {
             List<IPlayer> players = new List<IPlayer>();
             if (this.driver == null)
@@ -479,6 +479,11 @@ namespace FantasyAuctionUI
             List<BidItem> bidItems = this.driver.GetPlayersUpForAuction();
             foreach (BidItem bidItem in bidItems)
             {
+                if (byTomorrow && bidItem.TimeLeft.Ticks > TimeSpan.TicksPerDay)
+                {
+                    continue;
+                }
+
                 IPlayer player = this.league.AllPlayers.FirstOrDefault(p => MatchPlayer(p, bidItem));
                 if (player != null)
                 {
@@ -491,6 +496,16 @@ namespace FantasyAuctionUI
             }
 
             this.SetPlayerList(players);
+        }
+
+        private void OnFilterToAuctionEndingPlayers(object sender, EventArgs e)
+        {
+            this.FilterToAuctionEndingPlayers(false);
+        }
+
+        private void OnFilterToAuctionEndingTomorrowPlayers(object sender, EventArgs e)
+        {
+            this.FilterToAuctionEndingPlayers(true);
         }
 
         private void OnExportWebUI(object sender, EventArgs e)
