@@ -17,6 +17,7 @@ namespace FantasyAlgorithms.DataModel
         Rounders2023,
         Rounders2024,
         Rounders2025,
+        Rounders2026,
     }
 
     public class LeagueConstants
@@ -44,6 +45,7 @@ namespace FantasyAlgorithms.DataModel
                 case Leagues.Rounders2023: return Rounders2023;
                 case Leagues.Rounders2024: return Rounders2024;
                 case Leagues.Rounders2025: return Rounders2025;
+                case Leagues.Rounders2026: return Rounders2026;
                 default: return null;
             }
         }
@@ -414,6 +416,55 @@ namespace FantasyAlgorithms.DataModel
                 }
 
                 return _rounders2025;
+            }
+        }
+
+        private static LeagueConstants _rounders2026 = null;
+        public static LeagueConstants Rounders2026
+        {
+            get
+            {
+                if (_rounders2026 == null)
+                {
+                    _rounders2026 = new LeagueConstants();
+                    _rounders2026.TeamCount = 9;
+                    _rounders2026.RosterableBatterCountPerTeam = 15;
+                    _rounders2026.RosterablePitcherCountPerTeam = 13;
+                    _rounders2026.BattingScoringStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("Runs", true, Extractors.ExtractBatterRuns),
+                        new CountingStatExtractor("Home Runs", true, Extractors.ExtractBatterHomeRuns),
+                        new CountingStatExtractor("RBIs", true, Extractors.ExtractBatterRBIs),
+                        new CountingStatExtractor("Steals", true, Extractors.ExtractBatterSteals),
+                        new RatioStatExtractor("OBP", true, Extractors.ExtractBatterHitsPlusWalks, Extractors.ExtractBatterAtBats, Ratios.Divide)
+                    };
+                    _rounders2026.PitchingScoringStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("Quality Starts", true, Extractors.ExtractPitcherQualityStarts),
+                        new CountingStatExtractor("Saves + Holds", true, Extractors.ExtractPitcherSavesPlusHolds),
+                        new CountingStatExtractor("Strikeouts", true, Extractors.ExtractPitcherStrikeouts),
+                        new RatioStatExtractor("ERA", false, Extractors.ExtractPitcherEarnedRuns, Extractors.ExtractPitcherOutsRecorded, Ratios.PerNineInnings),
+                        new RatioStatExtractor("WHIP", false, Extractors.ExtractPitcherWalksPlusHits, Extractors.ExtractPitcherOutsRecorded, Ratios.PerInning)
+                    };
+                    _rounders2026.ScoringStatExtractors = _rounders2026.BattingScoringStatExtractors.Union(_rounders2026.PitchingScoringStatExtractors).ToList();
+                    _rounders2026.BattingSupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new CountingStatExtractor("At Bats", true, Extractors.ExtractBatterAtBats),
+                        new CountingStatExtractor("Hits + Walks", true, Extractors.ExtractBatterHitsPlusWalks),
+                        new CountingStatExtractor("Rank", false, Extractors.ExtractRank),
+                        new CountingStatExtractor("TotalRanking", false, Extractors.ExtractTotalRanking),
+                    };
+                    _rounders2026.PitchingSupportingStatExtractors = new List<IStatExtractor>()
+                    {
+                        new RatioStatExtractor("Innings Pitched", true, Extractors.ExtractPitcherOutsRecorded, p => 3, Ratios.Divide),
+                        new CountingStatExtractor("Rank", false, Extractors.ExtractRank),
+                        new CountingStatExtractor("TotalRanking", false, Extractors.ExtractTotalRanking),
+                    };
+                    _rounders2026.SupportingStatExtractors = _rounders2026.BattingSupportingStatExtractors.Union(_rounders2026.PitchingSupportingStatExtractors).ToList();
+                    _rounders2026.YahooLeagueId = YahooFantasySports.Constants.Leagues.Rounders2026;
+                }
+
+                return _rounders2026;
             }
         }
     }

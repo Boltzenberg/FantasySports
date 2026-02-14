@@ -25,6 +25,7 @@ namespace YahooFantasySports
             public const string Rounders2023 = "422.l.34352";
             public const string Rounders2024 = "431.l.14487";
             public const string Rounders2025 = "458.l.25419";
+            public const string Rounders2026 = "458.l.25419";
             public const string CrossCountryRivals2019 = "388.l.41352";
         }
 

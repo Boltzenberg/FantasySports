@@ -87,7 +87,6 @@ namespace ESPNProjections
             public string PictureUrlFormatString { get { return "https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/{0}.png&h=120&w=120&scale=crop"; } }
         }
 
-
         private class Constants2025 : IConstants
         {
             public string Url { get { return "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/2025/segments/0/leaguedefaults/1?view=kona_player_info"; } }
@@ -101,7 +100,20 @@ namespace ESPNProjections
             public string PictureUrlFormatString { get { return "https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/{0}.png&h=120&w=120&scale=crop"; } }
         }
 
-        private static readonly IConstants Constants = new Constants2025();
+        private class Constants2026 : IConstants
+        {
+            public string Url { get { return "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/2026/segments/0/leaguedefaults/1?view=kona_player_info"; } }
+            public string Host { get { return "lm-api-reads.fantasy.espn.com"; } }
+            public string Pitchers { get { return "13,14,15"; } }
+            public string Batters { get { return "0,1,2,3,4,5,6,7,8,9,10,11,12,19"; } }
+            public int PlayerCount { get { return 500; } }
+            public string FantasyFilterFormatString { get { return "{{\"players\":{{\"filterSlotIds\":{{\"value\":[{0}]}},\"filterStatsForExternalIds\":{{\"value\":[2026]}},\"filterStatsForSourceIds\":{{\"value\":[0,1]}},\"useFullProjectionTable\":{{\"value\":true}},\"sortAppliedStatTotal\":{{\"sortAsc\":false,\"sortPriority\":3,\"value\":\"102025\"}},\"sortDraftRanks\":{{\"sortPriority\":2,\"sortAsc\":true,\"value\":\"ROTO\"}},\"sortPercOwned\":{{\"sortAsc\":false,\"sortPriority\":4}},\"limit\":{1},\"filterRanksForScoringPeriodIds\":{{\"value\":[1]}},\"filterStatsForTopScoringPeriodIds\":{{\"value\":5,\"additionalValue\":[\"002026\",\"102026\",\"002025\",\"012026\",\"022026\",\"032026\",\"042026\",\"062026\",\"010002026\"]}}}}}}"; } }
+            public string BatterCacheFile { get { return @"2026ESPNBatters.json"; } }
+            public string PitcherCacheFile { get { return @"2026ESPNPitchers.json"; } }
+            public string PictureUrlFormatString { get { return "https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/{0}.png&h=120&w=120&scale=crop"; } }
+        }
+
+        private static readonly IConstants Constants = new Constants2026();
 
         public static string GetPlayerImage(int playerId)
         {
