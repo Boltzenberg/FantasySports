@@ -46,7 +46,20 @@ namespace ClaudeExporter
 
             foreach (var player in auction)
             {
-                sb.AppendLine(player.PlayerName + " on MLB team " + player.MLBTeam + " going for $" + player.CurrentBidPrice + " to " + player.HighestBiddingTeam + " with " + player.TimeLeft + " time remaining.");
+                string topperSuffix = string.Empty;
+                if (!string.IsNullOrEmpty(player.PossibleTopper))
+                {
+                    topperSuffix = string.Format(" with {0} as a possible topper", player.PossibleTopper);
+                }
+
+                sb.AppendFormat("{0} on MLB team {1} going for ${2} to {3} with {4} time remaining{5}.",
+                    player.PlayerName,
+                    player.MLBTeam,
+                    player.CurrentBidPrice,
+                    player.HighestBiddingTeam,
+                    player.TimeLeft,
+                    topperSuffix);
+                sb.AppendLine();
             }
 
             this.tbOutput.Text = sb.ToString();
