@@ -64,11 +64,11 @@ namespace ClaudeExporter
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("# Auctions #");
 
-            sb.AppendLine("| Player Name | MLB Team | Current Bid Price | Highest Bidding Team | Time Left | Team with Topper |");
-            sb.AppendLine("|-------------|----------|-------------------|----------------------|-----------|------------------|");
+            sb.AppendLine("| Player Name | MLB Team | Current Bid Price | Highest Bidding Team | Auction Ends | Team with Topper |");
+            sb.AppendLine("|-------------|----------|-------------------|----------------------|--------------|------------------|");
             foreach (var player in auction)
             {
-                sb.AppendFormat("| {0} | {1} | {2} | {3} | {4} | {5} |", player.PlayerName, player.MLBTeam, player.CurrentBidPrice, player.HighestBiddingTeam, player.TimeLeft, player.PossibleTopper);
+                sb.AppendFormat("| {0} | {1} | {2} | {3} | {4} | {5} |", player.PlayerName, player.MLBTeam, player.CurrentBidPrice, player.HighestBiddingTeam, player.AuctionEnds, player.PossibleTopper);
                 sb.AppendLine();
             }
 

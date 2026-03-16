@@ -14,6 +14,7 @@ namespace ClaudeExporter.DataModel
         public float CurrentBidPrice { get; private set; }
         public float OldPrice { get; private set; }
         public TimeSpan TimeLeft { get; private set; }
+        public DateTime AuctionEnds { get; private set; }
         public string PossibleTopper { get; private set; }
         public string YahooId { get; private set; }
 
@@ -28,6 +29,7 @@ namespace ClaudeExporter.DataModel
             this.CurrentBidPrice = currentBidPrice;
             this.OldPrice = oldPrice;
             this.TimeLeft = timeLeft;
+            this.AuctionEnds = DateTime.Now.Add(timeLeft);
             this.PossibleTopper = possibleTopper;
             this.YahooId = yahooId;
         }
