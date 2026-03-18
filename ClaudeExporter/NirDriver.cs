@@ -58,105 +58,168 @@ namespace ClaudeExporter
             await tcs.Task; // Wait for navigation to finish
         }
 
+
+        private async Task WaitForPageChangeAsync(int previousPage)
+        {
+            while (true)
+            {
+                string js = @"
+            (() => {
+                const pager = document.querySelector('#dgPlayers tr td[colspan]');
+                if (!pager) return -1;
+
+                const current = pager.querySelector('span');
+                if (!current) return -1;
+
+                return parseInt(current.innerText.trim(), 10);
+            })();
+        ";
+
+                var json = await webview.CoreWebView2.ExecuteScriptAsync(js);
+                int currentPage = JsonSerializer.Deserialize<int>(json);
+
+                if (currentPage != previousPage)
+                    break;
+
+                await Task.Delay(100);
+            }
+        }
+
         public async Task<List<BidItem>> GetPlayersUpForAuction()
         {
-            await this.NavigateAsync(BIDITEMS);
+            await NavigateAsync(BIDITEMS);
 
-            string script = @"
-                (() => {
-                    const table = document.getElementById('dgPlayers');
-                    if (!table) return [];
+            var results = new List<BidItem>();
 
-                    const rows = Array.from(table.querySelectorAll('tr')).slice(1, -1);
+            // JS: extract rows
+            string jsExtractRows = @"
+        (() => {
+            const table = document.getElementById('dgPlayers');
+            if (!table) return [];
 
-                    return rows.map(row => {
-                        const cells = row.querySelectorAll('td');
+            const rows = Array.from(table.querySelectorAll('tr')).slice(1, -1);
 
-                        const name = cells[0].innerText.trim();
-                        const mlbTeam = cells[1].innerText.trim();
-                        const rank = parseInt(cells[2].innerText.trim());
-                        const preseasonRank = parseInt(cells[3].innerText.trim());
-                        const positions = cells[4].innerText.trim();
-                        const highestBidder = cells[5].innerText.trim();
+            return rows.map(row => {
+                const cells = row.querySelectorAll('td');
 
-                        const currentBid = cells[6].innerText.trim();
-                        const oldPrice = cells[7].innerText.trim();
+                const name = cells[0].innerText.trim();
+                const mlbTeam = cells[1].innerText.trim();
+                const rank = parseInt(cells[2].innerText.trim());
+                const preseasonRank = parseInt(cells[3].innerText.trim());
+                const positions = cells[4].innerText.trim();
+                const highestBidder = cells[5].innerText.trim();
 
-                        const timeParts = cells[8].innerText.trim().split(' ');
+                const currentBidText = cells[6].innerText.trim();
+                const currentBid = currentBidText.startsWith('$')
+                    ? parseFloat(currentBidText.substring(1))
+                    : 0;
 
-                        const topper = cells[10].innerText.trim();
+                const oldPriceText = cells[7].innerText.trim();
+                const oldPrice = oldPriceText.startsWith('$')
+                    ? parseFloat(oldPriceText.substring(1))
+                    : 0;
 
-                        const yahooUrl = cells[11].querySelector('a')?.href ?? '';
-                        const yahooId = yahooUrl.substring(yahooUrl.lastIndexOf('/') + 1);
+                const timeParts = cells[8].innerText.trim().split(' ');
+                const timeRemaining = {
+                    days: parseInt(timeParts[0]),
+                    hours: parseInt(timeParts[1]),
+                    minutes: parseInt(timeParts[2]),
+                    seconds: parseInt(timeParts[3])
+                };
 
-                        return {
-                            name,
-                            mlbTeam,
-                            rank,
-                            preseasonRank,
-                            positions,
-                            highestBidder,
-                            currentBid,
-                            oldPrice,
-                            timeParts,
-                            topper,
-                            yahooId
-                        };
-                    });
-                })();
-                ";
+                const topper = cells[10].innerText.trim();
 
-            string json = await this.webview.CoreWebView2.ExecuteScriptAsync(script);
-            var rawitems = JsonSerializer.Deserialize<List<RawBidItem>>(json);
+                const yahooUrl = cells[11].querySelector('a')?.href ?? '';
+                const yahooId = yahooUrl
+                    ? yahooUrl.substring(yahooUrl.lastIndexOf('/') + 1)
+                    : '';
 
-            List<BidItem> items = new List<BidItem>();
-            foreach (var r in rawitems)
-            {
-                var culture = System.Globalization.CultureInfo.InvariantCulture;
-
-                float currentBid = string.IsNullOrWhiteSpace(r.currentBid)
-                    ? 0f
-                    : float.Parse(r.currentBid.Substring(1), culture);
-
-                float oldPrice = string.IsNullOrWhiteSpace(r.oldPrice)
-                    ? 0f
-                    : float.Parse(r.oldPrice.Substring(1), culture);
-
-                string daysStr = r.timeParts[0].Substring(0, r.timeParts[0].Length - 1);
-                string hoursStr = r.timeParts[1].Substring(0, r.timeParts[1].Length - 1);
-                string minutesStr = r.timeParts[2].Substring(0, r.timeParts[2].Length - 1);
-                string secondsStr = r.timeParts[3].Substring(0, r.timeParts[3].Length - 1);
-
-                TimeSpan timeRemaining = new TimeSpan(
-                    int.Parse(daysStr),
-                    int.Parse(hoursStr),
-                    int.Parse(minutesStr),
-                    int.Parse(secondsStr)
-                );
-
-
-                string topper = string.Empty;
-                if (r.topper.Length > 2 && int.TryParse(r.topper.Substring(r.topper.Length - 2), out int remaining) && remaining > 0)
-                {
-                    topper = r.topper.Substring(0, r.topper.Length - 4);
-                }
-
-                items.Add(new BidItem(
-                    r.name,
-                    r.mlbTeam,
-                    r.rank,
-                    r.preseasonRank,
-                    r.positions,
-                    r.highestBidder,
+                return {
+                    name,
+                    mlbTeam,
+                    rank,
+                    preseasonRank,
+                    positions,
+                    highestBidder,
                     currentBid,
                     oldPrice,
                     timeRemaining,
                     topper,
-                    r.yahooId
-                ));
+                    yahooId
+                };
+            });
+        })();
+    ";
+
+            // JS: click next page
+            string jsClickNext = @"
+        (() => {
+            const pager = document.querySelector('#dgPlayers tr td[colspan]');
+            if (!pager) return false;
+
+            const links = [...pager.querySelectorAll('a')];
+
+            const ellipsis = links.find(a => a.innerText.trim() === '...');
+            if (ellipsis) {
+                ellipsis.click();
+                return true;
             }
 
-            return items;
+            const current = pager.querySelector('span');
+            if (!current) return false;
+
+            const currentPage = parseInt(current.innerText.trim(), 10);
+            const next = links.find(a => parseInt(a.innerText.trim(), 10) === currentPage + 1);
+
+            if (next) {
+                next.click();
+                return true;
+            }
+
+            return false;
+        })();
+    ";
+
+            // JS to read current page number
+            string jsGetPage = @"
+        (() => {
+            const pager = document.querySelector('#dgPlayers tr td[colspan]');
+            if (!pager) return -1;
+
+            const current = pager.querySelector('span');
+            if (!current) return -1;
+
+            return parseInt(current.innerText.trim(), 10);
+        })();
+    ";
+
+            while (true)
+            {
+                // Extract rows
+                var json = await webview.CoreWebView2.ExecuteScriptAsync(jsExtractRows);
+
+                var items = JsonSerializer.Deserialize<List<BidItem>>(json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (items != null)
+                    results.AddRange(items);
+
+                // Read current page number
+                var pageJson = await webview.CoreWebView2.ExecuteScriptAsync(jsGetPage);
+                int currentPage = JsonSerializer.Deserialize<int>(pageJson);
+
+                // Try to click next page
+                var clickedJson = await webview.CoreWebView2.ExecuteScriptAsync(jsClickNext);
+                bool clicked = JsonSerializer.Deserialize<bool>(clickedJson);
+
+                if (!clicked)
+                    break;
+
+                // Wait for DOM to stabilize (pager number changes)
+                await WaitForPageChangeAsync(currentPage);
+            }
+
+            return results;
         }
 
         public async Task<Dictionary<Team, List<RosteredPlayer>>> GetTeamRosters()
@@ -213,7 +276,7 @@ namespace ClaudeExporter
             {
                 string[] raw = data.teams[i].Split('\n');
                 string teamName = raw[0].Trim();
-                string balance = raw[1].Substring(raw[1].IndexOf("$")).Trim();
+                string balance = raw[1].Substring(raw[1].IndexOf(":") + 1).Trim();
 
                 Team team = new Team(teamName, balance);
                 colToTeam[i + 1] = team;

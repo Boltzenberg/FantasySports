@@ -68,7 +68,15 @@ namespace ClaudeExporter
             sb.AppendLine("|-------------|----------|-------------------|----------------------|--------------|------------------|");
             foreach (var player in auction)
             {
-                sb.AppendFormat("| {0} | {1} | {2} | {3} | {4} | {5} |", player.PlayerName, player.MLBTeam, player.CurrentBidPrice, player.HighestBiddingTeam, player.AuctionEnds, player.PossibleTopper);
+                string topper = string.Empty;
+                if (player.Topper.Length > 2 && int.TryParse(player.Topper.Substring(player.Topper.Length - 2), out int remaining) && remaining > 0)
+                {
+                    topper = player.Topper.Substring(0, player.Topper.Length - 4);
+                }
+
+                TimeSpan duration = new TimeSpan(player.TimeRemaining.Days, player.TimeRemaining.Hours, player.TimeRemaining.Minutes, player.TimeRemaining.Seconds);
+
+                sb.AppendFormat("| {0} | {1} | {2} | {3} | {4} | {5} |", player.Name, player.MlbTeam, player.CurrentBid, player.HighestBidder, DateTime.Now.Add(duration), topper);
                 sb.AppendLine();
             }
 
