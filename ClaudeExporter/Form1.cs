@@ -64,10 +64,17 @@ namespace ClaudeExporter
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("# Auctions #");
 
-            sb.AppendLine("| Player Name | MLB Team | Current Bid Price | Highest Bidding Team | Auction Ends | Team with Topper |");
-            sb.AppendLine("|-------------|----------|-------------------|----------------------|--------------|------------------|");
+            sb.AppendLine("| Player Name | MLB Team | Rank | Preseason Rank | Current Bid Price | Highest Bidding Team | Auction Ends | Team with Topper |");
+            sb.AppendLine("|-------------|----------|------|----------------|-------------------|----------------------|--------------|------------------|");
             foreach (var player in auction)
             {
+                if (player.Rank > 300 &&
+                    player.PreseasonRank > 300 &&
+                    string.IsNullOrEmpty(player.HighestBidder))
+                {
+                    continue;
+                }
+
                 string topper = string.Empty;
                 if (player.Topper.Length > 2 && int.TryParse(player.Topper.Substring(player.Topper.Length - 2), out int remaining) && remaining > 0)
                 {
@@ -76,7 +83,7 @@ namespace ClaudeExporter
 
                 TimeSpan duration = new TimeSpan(player.TimeRemaining.Days, player.TimeRemaining.Hours, player.TimeRemaining.Minutes, player.TimeRemaining.Seconds);
 
-                sb.AppendFormat("| {0} | {1} | {2} | {3} | {4} | {5} |", player.Name, player.MlbTeam, player.CurrentBid, player.HighestBidder, DateTime.Now.Add(duration), topper);
+                sb.AppendFormat("| {0} | {1} | {2} | {3} | {4} | {5} | {6} | {7} |", player.Name, player.MlbTeam, player.Rank, player.PreseasonRank, player.CurrentBid.ToString("C"), player.HighestBidder, DateTime.Now.Add(duration), topper);
                 sb.AppendLine();
             }
 
