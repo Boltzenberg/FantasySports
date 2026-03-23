@@ -159,12 +159,6 @@ namespace ClaudeExporter
 
             const links = [...pager.querySelectorAll('a')];
 
-            const ellipsis = links.find(a => a.innerText.trim() === '...');
-            if (ellipsis) {
-                ellipsis.click();
-                return true;
-            }
-
             const current = pager.querySelector('span');
             if (!current) return false;
 
@@ -173,6 +167,14 @@ namespace ClaudeExporter
 
             if (next) {
                 next.click();
+                return true;
+            }
+
+            const ellipsis = links.find(a => 
+                a.innerText.trim() === '...' &&
+                (current.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING));
+            if (ellipsis) {
+                ellipsis.click();
                 return true;
             }
 
